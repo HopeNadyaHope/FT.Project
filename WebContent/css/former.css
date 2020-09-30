@@ -1,0 +1,32 @@
+.data-form{
+	box-sizing: border-box;
+	margin:auto;
+	margin-top:40px;
+	border-radius:30px;
+	background-color:rgba(122, 122, 122,0.5);
+	font-size:30px;
+	text-align: center;
+	color:white;
+	padding-bottom: 20px;
+}
+
+.data-form input{
+	height:35px;
+	border-radius:10px;
+	width:400px;
+	margin:10px 50px 10px 50px;
+}
+.data-form input[type=submit]{
+    background-color: #3345e8;
+    color: white;
+    padding: 12px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: left;
+    width: 200 px;
+}
+
+.data-form input[type=submit]:hover {
+    background-color: #3f91eb;
+}
