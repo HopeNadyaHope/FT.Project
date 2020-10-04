@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
- 
- 	<c:set var = "adress" scope = "session" value = "/main.jsp"/>
- 	<c:redirect url = "/main.jsp"/>
-	
+	<form action="Controller" method="post">
+		<input type="hidden" name="command" value="forward" />
+		Enter login<br/>
+		<input type="text" name="login" value=""/><br />
+		Enter password<br/>
+		<input type="password" name="password" value="" /><br />
+		
+		<input type="submit" value="Отправить" /><br />
+	</form>
 </body>
 </html>
