@@ -8,16 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
-import by.epam.lobanok.service.ServiceException;
+import by.epam.lobanok.service.exception.ServiceException;
 
 public class GoToRegistrationPage implements Command{
 
+	private final String REGISTRATION_PAGE = "/registration.jsp";
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		request.getSession(true).setAttribute("adress", "/registration.jsp");
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registration.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(REGISTRATION_PAGE);
 		requestDispatcher.forward(request, response);
 		
 	}

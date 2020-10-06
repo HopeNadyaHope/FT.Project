@@ -1,25 +1,35 @@
 package by.epam.lobanok.service.impl;
 
-import by.epam.lobanok.dao.DAOException;
 import by.epam.lobanok.dao.DAOFactory;
 import by.epam.lobanok.dao.RegistrationDAO;
+import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.entity.RegistrationData;
 import by.epam.lobanok.service.RegistrationService;
-import by.epam.lobanok.service.ServiceException;
+import by.epam.lobanok.service.exception.DublicateUserServiceException;
+import by.epam.lobanok.service.exception.ServiceException;
 
 public class RegistrationServiceImpl implements RegistrationService {
 
 	@Override
 	public boolean registration(RegistrationData regData) throws ServiceException {
-		System.out.println(regData);////////////////////////////////////////////
 		RegistrationDAO registrationDAO = DAOFactory.getInstance().getRegistrationDAO(); 
+		
+		boolean dublicateLogin;
+		try {
+			dublicateLogin = registrationDAO.findLogin(regData.getLogin());
+		}catch(DAOException e) {
+			throw new ServiceException(e);
+		}		
+		if(dublicateLogin) {
+			throw new DublicateUserServiceException();
+		}
+		
 		boolean registration;
 		try { 
-			System.out.println("SERVICE_REG"); ///////////////////////////////////////////
 			registration = registrationDAO.registration(regData); 
-			} catch (DAOException e) { 
-				throw new ServiceException(e);
-			} 
+		} catch (DAOException e) {
+			throw new ServiceException(e); 
+		}
 		return registration;
 	}
 }

@@ -1,3 +1,8 @@
+body{
+	 background-image: url("https://image.freepik.com/free-vector/light-blue-polygonal-background_56103-549.jpg");
+	 background-size: cover;
+}
+
 h1, h2, h3, h4, h5, h6, p {
  margin: 0;
  padding: 0;
@@ -13,7 +18,6 @@ p {
  line-height: 1.5em;
 }
 
-
 body {
  font-family: Helvetica, Arial, sans-serif;
  padding: 0;
@@ -21,13 +25,11 @@ body {
  background-color: #ffffff;
 }
 
-
 img {
  max-width: 100%;
  height: auto;
  margin: 0 0 10px 0;
 }
-
 
 .logo {
  font-size: 30px;
@@ -35,37 +37,39 @@ img {
  color: #4b4b4b;
 }
 
-
-/* Section Inner */
-div.section-inner {
- max-width: 1100px;
- padding: 0 20px;
- margin: 0 auto;
-}
-
-
 /* Header */
 div.header {
+ height: 150px;
  background-color: #E9E9E9;
  background-image: url("../images/whirlpool.png");
  padding: 40px 0;
 }
 
 
+/* Section Inner */
+div.section-inner {
+ max-width: 100%;
+ margin: 0 auto;
+ 
+}
+
+
 /* Navigation */
-header nav,
+header nav
 header .leb-menu {
- background-color: 151278;
+ 	background-color: #0000a0;
+
 }
 
 .menu {
  z-index: 100;
 }
 .menu ul {
- margin: 0;
- list-style: none;
- padding: 0;
- display: flex;
+	background-color: #0000a0;
+ 	margin: 0;
+ 	list-style: none;
+ 	padding: 0;
+ 	display: flex;
 }
 .menu li:hover {
  background: rgba(0,0,0,0.3);
@@ -82,7 +86,7 @@ header .leb-menu {
 /* Body Content */
 div.body-content {
  padding: 30px 0;
- background-color: #f7d0e8;
+ background-color: #004080;
 }
 
 div.banner {
@@ -103,9 +107,7 @@ h2.text-banner {
  font-size: 2em;
 }
 
-
-
-
+/* Localization */
 div.localization{}
 
 .localization input[type=submit] {
@@ -122,10 +124,45 @@ div.localization{}
     background-color: #3f91eb;
 }
 
+
 /* Footer */
 div.footer {
- background-color: #3f3f3f;
+ background-color: #0000a0;
  color: #FFF;
  padding: 15px 0;
  text-align: center;
+}
+
+
+
+.services-photo{
+	margin:30px auto;
+	width:90%;
+	display:flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+.services-photo img{
+	/* overflow:hidden; */
+
+	width:100px;
+	height:100px;
+	opacity:0.8;
+	-moz-transition:  all 1s ease-in-out;
+   	-o-transition:  all 1s ease-in-out;
+   	-webkit-transition:  all 1s ease-in-out;
+}
+
+.services-photo img:hover{
+	opacity:1.2;
+	-webkit-transform: scale(1.3);
+	-moz-transform: scale(1.3);
+ 	-o-transform: scale(1.3);
+}
+
+.photo{  
+	width:600px;  
+	margin: 120px 10px 40px 200px;  
+	float:left;
 }

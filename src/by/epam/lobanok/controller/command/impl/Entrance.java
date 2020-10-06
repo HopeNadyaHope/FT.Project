@@ -2,17 +2,18 @@ package by.epam.lobanok.controller.command.impl;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import by.epam.lobanok.controller.command.Command;
+import by.epam.lobanok.controller.validator.Validator;
+import by.epam.lobanok.entity.EntranceData;
 import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.EntranceService;
-import by.epam.lobanok.service.ServiceException;
 import by.epam.lobanok.service.ServiceFactory;
+import by.epam.lobanok.service.exception.NoSuchUserServiceException;
+import by.epam.lobanok.service.exception.ServiceException;
 
 
 public class Entrance implements Command {
@@ -20,45 +21,46 @@ public class Entrance implements Command {
 	private final String LOGIN = "login";
 	private final String PASSWORD = "password";
 	
+	private final String USER = "user";	
+	private final String EXCEPTION_MESSAGE = "exceptionMessage";
+	
+	private final String MAIN_PAGE = "/main.jsp";
+	private final String USER_PAGE = "/WEB-INF/jsp/userPage.jsp";
+	
+	private final String SERVER_EXCEPTION = "Ошибка сервера";
+	private final String NO_SUCH_USER = "Нет пользователя с таким логином и паролем";
+	private final String UNCORRECT_DATA = "Некорректные данные";
+	
 	
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException{
-		System.out.println("ENTRANCE");
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException{	
+		EntranceData entrData = new EntranceData();
+		entrData.setLogin(request.getParameter(LOGIN));
+		entrData.setPassword(request.getParameter(PASSWORD));
+		
+		if(Validator.getInstance().validateEntranceData(entrData)) {
+			EntranceService entranceService = ServiceFactory.getInstance().getEntranceService();
+			User user;
+			try {
+				user = entranceService.entrance(entrData);
 				
-		String login; 
-		String password;
-		login = request.getParameter(LOGIN);
-		password = request.getParameter(PASSWORD);
-		
-		EntranceService entranceService = ServiceFactory.getInstance().getEntranceService();
-		User user;
-		user = entranceService.entrance(login, password);
-	
-		
-		if(user == null) {
-			request.getSession(true).setAttribute("adress", "/main.jsp");			
-			response.getWriter().println("Неверные входные данные");
-			request.getRequestDispatcher("/main.jsp").include(request, response);
-			/*
-			 * RequestDispatcher requestDispatcher =
-			 * request.getRequestDispatcher("/main.jsp"); requestDispatcher.forward(request,
-			 * response);
-			 */
-		}
-		else {
-			//request.setAttribute("user", user);
-			HttpSession session = request.getSession(true);
-			session.setAttribute("adress", "/WEB-INF/jsp/userPage.jsp");
-			session.setAttribute("user", user);
+				request.setAttribute(EXCEPTION_MESSAGE, null);
+				request.getSession(true).setAttribute(USER, user);
+				
+				request.getRequestDispatcher(USER_PAGE).forward(request, response);
+				
+			}catch(NoSuchUserServiceException e) {
+				request.setAttribute(EXCEPTION_MESSAGE, NO_SUCH_USER);
+				request.getRequestDispatcher(MAIN_PAGE).forward(request, response);
+				
+			}catch(ServiceException e) {
+				request.setAttribute(EXCEPTION_MESSAGE, SERVER_EXCEPTION);
+				request.getRequestDispatcher(MAIN_PAGE).forward(request, response);
+			}
 			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
-			requestDispatcher.forward(request, response);
-			 
-			/*
-			 * response.getWriter().println("Неверные входные данные");
-			 * request.getRequestDispatcher("/WEB-INF/jsp/entrance.jsp").include(request,
-			 * response);
-			 */
+		}else {			
+			request.setAttribute(EXCEPTION_MESSAGE, UNCORRECT_DATA);			
+			request.getRequestDispatcher(MAIN_PAGE).forward(request, response);
 		}
-	}
+	}	
 }

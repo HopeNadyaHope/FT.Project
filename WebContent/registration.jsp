@@ -1,23 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Регистрация</title>
 
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/former.css">
-<link rel="stylesheet" href="css/form-style.css">
-
-
-<fmt:setLocale value="${sessionScope.local}" />
-<fmt:setBundle basename="localization.local" var="loc" />
-
-<fmt:message bundle="${loc}" key="local.locbutton.en" var="en_button" />
-<fmt:message bundle="${loc}" key="local.locbutton.ru" var="ru_button" />
+<%@include file="header.jsp"%>
 
 <fmt:message bundle="${loc}" key="local.login" var="login" />
 <fmt:message bundle="${loc}" key="local.password" var="password" />
@@ -37,60 +23,16 @@
 
 <fmt:message bundle="${loc}" key="local.registration" var="registration" />
 
-</head>
-
-<header>
-	<div class="header">
-		<div class="section-inner">
-			<div class="logo">	<c:out value="${message}" /></div>
-			<div class = "localization">
-				<form action="Controller" method="post">
-					<input type="hidden" name="command" value="localization" />	
-					<input type="hidden" name="local" value="ru" />	
-					<input type="submit" value="${ru_button}" />
-				</form>
-	
-				<form action="Controller" method="post">
-					<input type="hidden" name="command" value="localization" />	
-					<input type="hidden" name="local" value="en" />	
-					<input type="submit" value="${en_button}" />
-				</form>
-			</div>			
-		</div>	
-	</div>
-
-	<!-- nav -->
-	<nav class="menu">
-		<div class="section-inner">
-			<ul>
-				<li><a href="Controller?command=go_to_main_page"><c:out value="${mainPage}" /></a></li>
-				<li><a href="Controller?command=go_to_courses_page"><c:out value="${courses}" /></a></li>
-				<li><a href="Controller?command=go_to_about_page"><c:out value="${about}" /></a></li>
-				<li><a href="#"></a></li>
-				<li><a href="#"></a></li>
-		
-			</ul>
-		</div>
-	</nav><!--/nav-->
-</header><!--/header-->
-
 <body>
-	<form action="Controller" method="post">
-		<input type="hidden" name="command" value="localization" />	
-		<input type="hidden" name="local" value="ru" />	
-		<input type="submit" value="${ru_button}" /><br />
-	</form>
-	
-	<form action="Controller" method="post">
-		<input type="hidden" name="command" value="localization" />	
-		<input type="hidden" name="local" value="en" />	
-		<input type="submit" value="${en_button}" /><br />
-	</form>
 	
 	<div class="container">
 	<div class="form-data">
 	<form action="Controller" method="post">
 		<input type="hidden" name="command" value="registration" />
+		
+		<c:if test="${requestScope.exceptionMessage ne null}">
+			<c:out value="${requestScope.exceptionMessage}" />
+		</c:if>
 		
 		<div class="row">
       		<div class="col-25"><c:out value="${login}" /></div>
@@ -144,11 +86,4 @@
 	</div>
 </body>
 
-<!-- footer --->
-<div class="footer">
-	<div class="section-inner">
-		<p>Подвал сайта Footer</p>
-	</div>
-</div><!--/footer-->
-
-</html>
+<%@include file="footer.jsp"%>

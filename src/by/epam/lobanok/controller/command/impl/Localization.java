@@ -8,18 +8,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import by.epam.lobanok.controller.command.Command;
-import by.epam.lobanok.service.ServiceException;
+import by.epam.lobanok.service.exception.ServiceException;
 
 public class Localization implements Command{
 
+	private final String LOCAL = "local";
+	private final String LAST_COMMAND = "lastCommand";
+	private final String CONTROLLER_COMMAND = "Controller?command=";
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
 		HttpSession session = request.getSession(true);
-		session.setAttribute("local", request.getParameter("local"));
+		session.setAttribute(LOCAL, request.getParameter(LOCAL));
 		
-		String adress;
-		adress = (String) session.getAttribute("adress");
-		request.getRequestDispatcher(adress).forward(request, response);
+		String lastCommand; 
+		lastCommand = (String) session.getAttribute(LAST_COMMAND);
+		response.sendRedirect(CONTROLLER_COMMAND + lastCommand);
 	}
 
 }

@@ -1,56 +1,44 @@
 package by.epam.lobanok.dao.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import by.epam.lobanok.dao.DAOException;
 import by.epam.lobanok.dao.RegistrationDAO;
+import by.epam.lobanok.dao.exception.DAOException;
+import by.epam.lobanok.dao.pool.ConnectionPool;
 import by.epam.lobanok.entity.RegistrationData;
 
 public class RegistrationDAOImpl implements RegistrationDAO {
-	private final String FIND_ROLE_ID = "SELECT roles.id FROM roles WHERE roles.role=?";
+	
+	private final ConnectionPool pool = ConnectionPool.getInstance();
+	
+	private final String FIND_ROLE_ID = "SELECT roles.id FROM roles WHERE roles.role=?";	
 	private final String ADD_USER = "INSERT INTO users(login, password, name, surname, age, sex, email, roles_id) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-	private final String FIND_USER_BY_LOGIN ="SELECT users.name, users.login FROM users WHERE login=?";
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";	
+	private final String FIND_LOGIN ="SELECT users.login FROM users WHERE login=?";
+
 	
 	@Override
-	public boolean registration(RegistrationData regData)  throws DAOException{
-		System.out.println("DAO_REG");
-		
+	public boolean registration(RegistrationData regData)  throws DAOException{		
 		boolean registration;
-		registration = false;
-		
+		registration = false;		
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet result = null;
 		
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver"); ////////////////////////////////переделать
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/faculty?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC","root","12345"); 
+			con = pool.takeConnection();			
 			
-			ps = con.prepareStatement(FIND_USER_BY_LOGIN); //////////////////Константы брать откуда-то
-			ps.setString(1, regData.getLogin());
-			result = ps.executeQuery();
-						
-			if(result.next()) {
-				System.out.println("ЕСТЬ ПОЛЬЗОВАТЕЛЬ С ЛОГИНОМ +" + result.getString("login"));
-				return registration;
-			}			
-			
-			ps = con.prepareStatement(FIND_ROLE_ID); 
+			ps = con.prepareStatement(FIND_ROLE_ID); ///////не уверена что именно так нужно опеределять роль
 			ps.setString(1, regData.getRole());
-			result = ps.executeQuery();
-						
+			result = ps.executeQuery();	
 			if(!result.next()) {
-				return registration;
-			}			
-			
+				return false;///////////////////////////
+			}	
 			int role_id;
 			role_id = result.getInt("id");
-			System.out.println(role_id);/////////////////////////////////////////
 			
 			ps = con.prepareStatement(ADD_USER); 
 			ps.setString(1, regData.getLogin());
@@ -63,26 +51,37 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 			ps.setInt(8, role_id);
 			if(ps.executeUpdate() == 1) {
 				registration = true;
-			}
-			
-		}catch (SQLException | ClassNotFoundException e) {
+			}			
+		}catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            if (result != null) {
-                try {
-                    result.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
+        	pool.closeConnection(con, ps);
         }
+		
 		return registration;
+	}
+	
+	
+	public boolean findLogin(String login)  throws DAOException{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet result = null;
+		
+		try { 
+			con = pool.takeConnection();
+			ps = con.prepareStatement(FIND_LOGIN);			
+			ps.setString(1, login);
+			result = ps.executeQuery();
+			
+			if(result.next()) {
+               return true;
+			}
+			
+		}catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+        	pool.closeConnection(con, ps, result);
+        }
+		return false;
 	}
 }

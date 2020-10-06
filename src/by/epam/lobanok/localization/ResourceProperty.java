@@ -7,7 +7,7 @@ public class ResourceProperty {
 	private ResourceBundle bundle;
 	
 	public ResourceProperty(Locale locale) {
-		bundle = ResourceBundle.getBundle("resources.prop", locale);
+		bundle = ResourceBundle.getBundle("local", locale);
 	}
 	
 	public String getValue(String key) {

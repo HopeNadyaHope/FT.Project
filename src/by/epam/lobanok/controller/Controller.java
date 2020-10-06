@@ -1,59 +1,59 @@
 package by.epam.lobanok.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import by.epam.lobanok.entity.User;
+import by.epam.lobanok.controller.command.Command;
+import by.epam.lobanok.controller.command.CommandProvider;
+import by.epam.lobanok.service.exception.ServiceException;
 
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	private final String COMMAND = "command";
+	private final String LOCALIZATION = "localization";
+	private final String LAST_COMMAND = "lastCommand";
+	
+	private final CommandProvider commands = new CommandProvider();
+
     public Controller() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		process(request, response);
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+			process(request, response);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			//log
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		process(request, response);
-		// TODO Auto-generated method stub
-		//doGet(request, response);
+		try {
+			process(request, response);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			//log
+		}
 	}
 	
-	private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServiceException {
 		response.setContentType("text/html");
-		String login =request.getParameter("login");
-		String password = request.getParameter("password");
 		
-		User user = new User();
-		user.setName("Nadezhda");
-		user.setSurname("Lobanok");
+		String currentCommand; 
+		Command command;		  
+		currentCommand = request.getParameter(COMMAND);
 		
-		request.setAttribute("user", user);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
-		requestDispatcher.forward(request, response);
+		if(!currentCommand.equals(LOCALIZATION)) {
+			request.getSession(true).setAttribute(LAST_COMMAND, currentCommand);	
+		}
 		
-		
-		/*
-		 * response.setCharacterEncoding("cp1251"); PrintWriter out =
-		 * response.getWriter(); out.println("Логин: " + login); out.println("<br />");
-		 * out.println("Пароль: " + password);
-		 *//////////////получить и вывести пароль логин
-		
-		
-		 
-		 /////перейти на новую страницу
-		System.out.println("NADEZHDA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		command = commands.getCommand(currentCommand); 
+		command.execute(request, response);
 	}
-
 }

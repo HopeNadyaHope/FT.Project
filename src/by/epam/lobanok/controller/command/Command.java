@@ -6,7 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import by.epam.lobanok.service.ServiceException;
+import by.epam.lobanok.service.exception.ServiceException;
 
 public interface Command {
 	

@@ -8,16 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
-import by.epam.lobanok.service.ServiceException;
+import by.epam.lobanok.service.exception.ServiceException;
 
 public class GoToMainPage implements Command{
 
+	private final String MAIN_PAGE = "/main.jsp";
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		request.getSession(true).setAttribute("adress", "/main.jsp");
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(MAIN_PAGE);
 		requestDispatcher.forward(request, response);		
 	}
 }
