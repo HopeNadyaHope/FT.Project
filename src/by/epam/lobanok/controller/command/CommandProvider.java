@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.epam.lobanok.controller.command.impl.Entrance;
-import by.epam.lobanok.controller.command.impl.GoToAboutPage;
-import by.epam.lobanok.controller.command.impl.GoToCoursesPage;
-import by.epam.lobanok.controller.command.impl.GoToMainPage;
-import by.epam.lobanok.controller.command.impl.GoToRegistrationPage;
-import by.epam.lobanok.controller.command.impl.GoToUserCoursesPage;
-import by.epam.lobanok.controller.command.impl.GoToUserPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToAboutPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToCoursesPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToMainPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToRegistrationPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToUserCoursesPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToUserPage;
 import by.epam.lobanok.controller.command.impl.Localization;
 import by.epam.lobanok.controller.command.impl.Registration;
 

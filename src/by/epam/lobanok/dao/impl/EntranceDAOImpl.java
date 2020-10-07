@@ -13,7 +13,7 @@ import by.epam.lobanok.entity.EntranceData;
 import by.epam.lobanok.entity.User;
 
 public class EntranceDAOImpl implements EntranceDAO{
-	private final ConnectionPool pool = ConnectionPool.getInstance();
+	private static final ConnectionPool pool = ConnectionPool.getInstance();
 	
 	private final String NAME = "name";
 	private final String SURNAME = "surname";
@@ -44,18 +44,17 @@ public class EntranceDAOImpl implements EntranceDAO{
             ps.setString(2, password);
 			result = ps.executeQuery();
 			
-			if(result.next()) {
-                user = new User();                
-                user.setName(result.getString(NAME));
-                user.setSurname(result.getString(SURNAME));
-                user.setAge(result.getInt(AGE));
-                user.setSex(result.getString(SEX));
-                user.setRole(result.getString(ROLE));
-                user.setEmail(result.getString(EMAIL));
-			}
-			else {
+			if(!result.next()) {
 				throw new NoSuchUserDAOException();
-			}
+			}			
+			user = new User();                
+            user.setName(result.getString(NAME));
+            user.setSurname(result.getString(SURNAME));
+            user.setAge(result.getInt(AGE));
+            user.setSex(result.getString(SEX));
+            user.setRole(result.getString(ROLE));
+            user.setEmail(result.getString(EMAIL));
+            
 		}catch (SQLException e) {
             throw new DAOException(e);
         } finally {

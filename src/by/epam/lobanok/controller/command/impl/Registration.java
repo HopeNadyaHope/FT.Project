@@ -46,24 +46,23 @@ public class Registration implements Command {
 		regData.setRole(request.getParameter(ROLE));
 		
 		RegistrationService registrationService = ServiceFactory.getInstance().getRegistrationService();
-		if(Validator.getInstance().validateRegistrationData(regData)) {			
-			boolean registration;
-			try {				
-				registration = registrationService.registration(regData);
-				request.setAttribute(EXCEPTION_MESSAGE, null);
-				request.getRequestDispatcher(MAIN_PAGE).forward(request, response); 
-				
-			}catch(DublicateUserServiceException e) {
-				request.setAttribute(EXCEPTION_MESSAGE, DUBLICATE_LOGIN);
-				request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);
-			
-			}catch(ServiceException e) {	
-				request.setAttribute(SERVER_EXCEPTION, SERVER_EXCEPTION);
-				request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);
-			}
-		
-		}else {
+		if(!Validator.getInstance().validateRegistrationData(regData)) {			
 			request.setAttribute(SERVER_EXCEPTION, UNCORRECT_DATA);			
+			request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);		
+		}
+		
+		boolean registration;
+		try {				
+			registration = registrationService.registration(regData);
+			request.setAttribute(EXCEPTION_MESSAGE, null);
+			request.getRequestDispatcher(MAIN_PAGE).forward(request, response); 
+			
+		}catch(DublicateUserServiceException e) {
+			request.setAttribute(EXCEPTION_MESSAGE, DUBLICATE_LOGIN);
+			request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);
+		
+		}catch(ServiceException e) {	
+			request.setAttribute(SERVER_EXCEPTION, SERVER_EXCEPTION);
 			request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);
 		}
 	}	

@@ -13,7 +13,7 @@ import by.epam.lobanok.dao.pool.ConnectionPool;
 import by.epam.lobanok.entity.Course;
 
 public class CourseDAOImpl implements CourseDAO{	
-	private final ConnectionPool pool = ConnectionPool.getInstance();
+	private static final ConnectionPool pool = ConnectionPool.getInstance();
 	
 	private final String FIND_COURSES = "SELECT * FROM courses";	
 	private final String FIND_STUDENT_COURSES = "SELECT courses.courseName, courses.description " +

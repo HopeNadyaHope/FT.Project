@@ -8,6 +8,6 @@
 </head>
 <body>
  	<c:set var = "lastCommand" scope = "session" value = "go_to_main_page"/>
- 	<c:redirect url = "/main.jsp"/>	
+ 	<c:redirect url = "Controller?command=go_to_main_page"/>	
 </body>
 </html>

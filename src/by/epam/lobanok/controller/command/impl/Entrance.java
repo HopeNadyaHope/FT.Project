@@ -26,11 +26,13 @@ public class Entrance implements Command {
 	
 	private final String MAIN_PAGE = "/main.jsp";
 	private final String USER_PAGE = "/WEB-INF/jsp/userPage.jsp";
+	private final String LAST_COMMAND = "lastCommand";
+	private final String GO_TO_USER_PAGE = "go_to_user_page";
 	
 	private final String SERVER_EXCEPTION = "Ошибка сервера";
 	private final String NO_SUCH_USER = "Нет пользователя с таким логином и паролем";
 	private final String UNCORRECT_DATA = "Некорректные данные";
-	
+		
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException{	
@@ -38,28 +40,28 @@ public class Entrance implements Command {
 		entrData.setLogin(request.getParameter(LOGIN));
 		entrData.setPassword(request.getParameter(PASSWORD));
 		
-		if(Validator.getInstance().validateEntranceData(entrData)) {
-			EntranceService entranceService = ServiceFactory.getInstance().getEntranceService();
-			User user;
-			try {
-				user = entranceService.entrance(entrData);
-				
-				request.setAttribute(EXCEPTION_MESSAGE, null);
-				request.getSession(true).setAttribute(USER, user);
-				
-				request.getRequestDispatcher(USER_PAGE).forward(request, response);
-				
-			}catch(NoSuchUserServiceException e) {
-				request.setAttribute(EXCEPTION_MESSAGE, NO_SUCH_USER);
-				request.getRequestDispatcher(MAIN_PAGE).forward(request, response);
-				
-			}catch(ServiceException e) {
-				request.setAttribute(EXCEPTION_MESSAGE, SERVER_EXCEPTION);
-				request.getRequestDispatcher(MAIN_PAGE).forward(request, response);
-			}
-			
-		}else {			
+		if(!Validator.getInstance().validateEntranceData(entrData)) {
 			request.setAttribute(EXCEPTION_MESSAGE, UNCORRECT_DATA);			
+			request.getRequestDispatcher(MAIN_PAGE).forward(request, response);			
+		}
+		
+		EntranceService entranceService = ServiceFactory.getInstance().getEntranceService();
+		User user;
+		try {
+			user = entranceService.entrance(entrData);
+			
+			request.setAttribute(EXCEPTION_MESSAGE, null);
+			request.getSession(true).setAttribute(USER, user);
+			
+			request.getSession(true).setAttribute(LAST_COMMAND, GO_TO_USER_PAGE);				
+			request.getRequestDispatcher(USER_PAGE).forward(request, response);
+			
+		}catch(NoSuchUserServiceException e) {
+			request.setAttribute(EXCEPTION_MESSAGE, NO_SUCH_USER);
+			request.getRequestDispatcher(MAIN_PAGE).forward(request, response);
+			
+		}catch(ServiceException e) {
+			request.setAttribute(EXCEPTION_MESSAGE, SERVER_EXCEPTION);
 			request.getRequestDispatcher(MAIN_PAGE).forward(request, response);
 		}
 	}	

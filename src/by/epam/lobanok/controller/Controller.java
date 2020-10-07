@@ -53,6 +53,7 @@ public class Controller extends HttpServlet {
 			request.getSession(true).setAttribute(LAST_COMMAND, currentCommand);	
 		}
 		
+		System.out.println(currentCommand);
 		command = commands.getCommand(currentCommand); 
 		command.execute(request, response);
 	}

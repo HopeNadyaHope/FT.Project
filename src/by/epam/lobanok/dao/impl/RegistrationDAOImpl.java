@@ -12,7 +12,7 @@ import by.epam.lobanok.entity.RegistrationData;
 
 public class RegistrationDAOImpl implements RegistrationDAO {
 	
-	private final ConnectionPool pool = ConnectionPool.getInstance();
+	private static final ConnectionPool pool = ConnectionPool.getInstance();
 	
 	private final String FIND_ROLE_ID = "SELECT roles.id FROM roles WHERE roles.role=?";	
 	private final String ADD_USER = "INSERT INTO users(login, password, name, surname, age, sex, email, roles_id) "
@@ -57,7 +57,6 @@ public class RegistrationDAOImpl implements RegistrationDAO {
         } finally {
         	pool.closeConnection(con, ps);
         }
-		
 		return registration;
 	}
 	
