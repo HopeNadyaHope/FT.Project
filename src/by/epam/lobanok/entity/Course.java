@@ -7,10 +7,19 @@ public class Course implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	private int id;
 	private String courseName;
 	private String description;
 	
 	public Course(){}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getCourseName() {
 		return courseName;
@@ -34,6 +43,7 @@ public class Course implements Serializable{
 		int result = 1;
 		result = prime * result + ((courseName == null) ? 0 : courseName.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + id;
 		return result;
 	}
 
@@ -56,11 +66,13 @@ public class Course implements Serializable{
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
+		if (id != other.id)
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Course [courseName=" + courseName + ", description=" + description + "]";
-	}
+		return "Course [id=" + id + ", courseName=" + courseName + ", description=" + description + "]";
+	}	
 }

@@ -13,7 +13,7 @@
 <title>Insert title here</title>
 
 <fmt:setLocale value="${sessionScope.local}" />
-<fmt:setBundle basename="localization.local" var="loc" />
+<fmt:setBundle basename="resources.localization.local" var="loc" />
 
 <fmt:message bundle="${loc}" key="local.locbutton.en" var="en_button" />
 <fmt:message bundle="${loc}" key="local.locbutton.ru" var="ru_button" />

@@ -38,11 +38,16 @@ import java.util.concurrent.Executor;
 		private int poolSize;
  
 		public ConnectionPool() {
-			this.driverName = "com.mysql.cj.jdbc.Driver"; 
-			this.url = "jdbc:mysql://127.0.0.1/faculty?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC"; 
-			this.user = "root";
-			this.password = "12345";
-			this.poolSize = 5;
+			DBResourceManager dbResourceManager = DBResourceManager.getInstance();
+			this.driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
+			this.url = dbResourceManager.getValue(DBParameter.DB_URL);
+			this.user = dbResourceManager.getValue(DBParameter.DB_USER);
+			this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
+			try {
+				this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POLL_SIZE));
+			} catch (NumberFormatException e) {
+				this.poolSize = 5;
+			}
 			
 			initPoolData();
 		}

@@ -8,6 +8,7 @@ import by.epam.lobanok.controller.command.impl.go_to.GoToAboutPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToCoursesPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToMainPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToRegistrationPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToRunningCoursesPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToUserCoursesPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToUserPage;
 import by.epam.lobanok.controller.command.impl.Localization;
@@ -26,6 +27,7 @@ public class CommandProvider {
 		commands.put(CommandName.GO_TO_MAIN_PAGE, new GoToMainPage());
 		commands.put(CommandName.GO_TO_ABOUT_PAGE, new GoToAboutPage());
 		commands.put(CommandName.GO_TO_COURSES_PAGE, new GoToCoursesPage());
+		commands.put(CommandName.GO_TO_RUNNING_COURSES_PAGE, new GoToRunningCoursesPage());
 		commands.put(CommandName.GO_TO_USER_PAGE, new GoToUserPage());
 		commands.put(CommandName.GO_TO_USER_COURSES_PAGE, new GoToUserCoursesPage());
 		

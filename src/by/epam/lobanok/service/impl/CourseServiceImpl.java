@@ -6,6 +6,7 @@ import by.epam.lobanok.dao.CourseDAO;
 import by.epam.lobanok.dao.DAOFactory;
 import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.entity.Course;
+import by.epam.lobanok.entity.RunningCourse;
 import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.CourseService;
 import by.epam.lobanok.service.exception.ServiceException;
@@ -38,7 +39,7 @@ public class CourseServiceImpl implements CourseService{
 		try {
 
 			if(user.getRole().equals("студент")) {
-				courses = courseDAO.findStudentCourses(name, surname);//мб комманд
+				courses = courseDAO.findStudentCourses(name, surname);
 			}
 			if(user.getRole().equals("преподаватель")) {
 				courses = courseDAO.findTeacherCourses(name, surname);			
@@ -48,6 +49,21 @@ public class CourseServiceImpl implements CourseService{
 			throw new ServiceException(e);
 		}
 		return courses;
+	}
+
+	
+	@Override
+	public List<RunningCourse> findRunningCourses(int courseID) throws ServiceException {
+		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 
+		
+		List<RunningCourse> runningCourses;
+		try {
+			runningCourses = courseDAO.findRunningCourses(courseID);
+		} catch (DAOException e) {
+			//log
+			throw new ServiceException(e);
+		}
+		return runningCourses;
 	}
 
 }

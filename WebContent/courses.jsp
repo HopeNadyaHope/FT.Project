@@ -5,24 +5,27 @@
 
 <fmt:message bundle="${loc}" key="local.courseName" var="courseName" />
 <fmt:message bundle="${loc}" key="local.courseDescription" var="courseDescription" />
+<fmt:message bundle="${loc}" key="local.go_to" var="go_to" />
+
 
 
 <body>
 	<c:out value="${courses}" />
 	
-	<table border = "1" width = "100%">
-         <tr>
-            <th><c:out value="${courseName}" /></th>
-           	<th><c:out value="${courseDescription}" /></th>
-         </tr>
-    
+	
 	<c:forEach items="${requestScope.courses}" var="course">  
-		<tr>
-			<td><c:out value="${course.courseName}" /></td>
-			<td><c:out value="${course.description}" /></td>
-  		</tr>  
+		<div class="container">
+		
+		<form action="Controller" method="post">
+			<input type="hidden" name="command" value="go_to_running_courses_page" />	
+			<input type="hidden" name="course_id" value="${course.id}" />	
+			<c:out value="${course.courseName}" /><br/>
+			<c:out value="${course.description}" /><br/>
+			<input type="submit" name="runningCourses" value="${go_to}" /> 
+		</form>	
+		
+		</div>
 	</c:forEach>
-	</table>
 </body>
 
 <%@include file="footer.jsp"%>
