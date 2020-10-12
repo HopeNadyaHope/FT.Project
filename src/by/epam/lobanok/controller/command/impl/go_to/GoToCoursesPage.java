@@ -25,8 +25,8 @@ public class GoToCoursesPage implements Command {
 		CourseService courseService = ServiceFactory.getInstance().getCourseService();
 		List<Course> courses;
 		courses = courseService.findCourses();		
-		
 		request.setAttribute(COURSES, courses);
+		
 		request.getRequestDispatcher(COURSES_PAGE).forward(request, response);		
 	}
 }

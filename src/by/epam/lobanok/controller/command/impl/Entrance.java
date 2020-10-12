@@ -18,6 +18,8 @@ import by.epam.lobanok.service.exception.ServiceException;
 
 public class Entrance implements Command {
 	
+	private final String LAST_COMMAND = "lastCommand";
+	
 	private final String LOGIN = "login";
 	private final String PASSWORD = "password";
 	
@@ -25,8 +27,7 @@ public class Entrance implements Command {
 	private final String EXCEPTION_MESSAGE = "exceptionMessage";
 	
 	private final String MAIN_PAGE = "/main.jsp";
-	private final String USER_PAGE = "/WEB-INF/jsp/userPage.jsp";
-	private final String LAST_COMMAND = "lastCommand";
+	private final String USER_PAGE = "/WEB-INF/jsp/userPage.jsp";	
 	private final String GO_TO_USER_PAGE = "go_to_user_page";
 	
 	private final String SERVER_EXCEPTION = "Ошибка сервера";

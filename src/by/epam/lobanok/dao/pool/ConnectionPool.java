@@ -22,8 +22,14 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue; 
 import java.util.concurrent.Executor;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+
 	public final class ConnectionPool {
-		private static final ConnectionPool instance = new ConnectionPool();		
+		private static final ConnectionPool instance = new ConnectionPool();
+		private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
+		
 		public static ConnectionPool getInstance() {
 			return instance;
 		}
@@ -64,8 +70,10 @@ import java.util.concurrent.Executor;
 					connectionQueue.add(pooledConnection);
 				} 
 			} catch (SQLException e) {
+				logger.info("SQLException in ConnectionPool");
 				throw new ConnectionPoolException("SQLException in ConnectionPool", e);
 			} catch (ClassNotFoundException e) {
+				logger.info( "Can't find database driver class");
 				throw new ConnectionPoolException( "Can't find database driver class", e);
 			}
 
@@ -80,7 +88,7 @@ import java.util.concurrent.Executor;
 				closeConnectionsQueue(givenAwayConQueue); 
 				closeConnectionsQueue(connectionQueue);
 			} catch (SQLException e) {
-				// logger.log(Level.ERROR, "Error closing the connection.", e);
+				 logger.info("Error closing the connection.", e);
 			}
 		}
 
@@ -90,6 +98,7 @@ import java.util.concurrent.Executor;
 				connection = connectionQueue.take(); 
 				givenAwayConQueue.add(connection);
 			} catch (InterruptedException e) {
+				logger.info("Error connecting to the data source.", e);
 				throw new ConnectionPoolException("Error connecting to the data source.", e);
 			}
 			return connection;
@@ -99,17 +108,17 @@ import java.util.concurrent.Executor;
 			try {
 				st.close();
 			} catch (SQLException e) {
-				// logger.log(Level.ERROR, "Statement isn't closed.");
+				logger.info("Statement isn't closed.");
 			}
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				// logger.log(Level.ERROR, "ResultSet isn't closed.");
+				logger.info("ResultSet isn't closed.");
 			}
 			try {			 
 				con.close();
 			} catch (SQLException e) {
-				// logger.log(Level.ERROR, "Connection isn't return to the pool.");
+				logger.info("Connection isn't return to the pool.");
 			}
 		}
 
@@ -117,12 +126,12 @@ import java.util.concurrent.Executor;
 			try {
 				st.close();			 
 			} catch (SQLException e) {
-				// logger.log(Level.ERROR, "Statement isn't closed.");
+				logger.info("Statement isn't closed.");
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				// logger.log(Level.ERROR, "Connection isn't return to the pool.");
+				logger.info("Connection isn't return to the pool.");
 			}
 		}
 
@@ -144,7 +153,7 @@ import java.util.concurrent.Executor;
 				this.connection.setAutoCommit(true);
 			}
 
-			public void reallyClose() throws SQLException { /////////////////////////////
+			public void reallyClose() throws SQLException { 
 				connection.close();
 			}
 
@@ -156,6 +165,7 @@ import java.util.concurrent.Executor;
 			@Override
 			public void close() throws SQLException {
 				if (connection.isClosed()) { 
+					logger.info("Error connecting to the data source.");
 					throw new SQLException("Attempting to close closed connection.");
 				}
 				
@@ -164,10 +174,12 @@ import java.util.concurrent.Executor;
 				}
 				
 				if (!givenAwayConQueue.remove(this)) {
+					logger.info("Error deleting connection from the given away connections pool.");
 					throw new SQLException("Error deleting connection from the given away connections pool.");
 				}
 
 				if (!connectionQueue.offer(this)) {
+					logger.info("Error allocating connection in the pool.");
 					throw new SQLException("Error allocating connection in the pool.");
 				}
 			}

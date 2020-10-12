@@ -3,6 +3,7 @@ package by.epam.lobanok.dao;
 import by.epam.lobanok.dao.impl.CourseDAOImpl;
 import by.epam.lobanok.dao.impl.EntranceDAOImpl;
 import by.epam.lobanok.dao.impl.RegistrationDAOImpl;
+import by.epam.lobanok.dao.impl.ResultDAOImpl;
 
 public final class DAOFactory {
 	
@@ -11,6 +12,7 @@ public final class DAOFactory {
 	private final EntranceDAO entranceDAO  = new EntranceDAOImpl();
 	private final RegistrationDAO registrationDAO = new RegistrationDAOImpl();
 	private final CourseDAO courseDAO = new CourseDAOImpl();
+	private final ResultDAO resultDAO = new ResultDAOImpl();
 	
 	private DAOFactory() {}	
 	
@@ -28,5 +30,9 @@ public final class DAOFactory {
 
 	public CourseDAO getCourseDAO() {
 		return courseDAO;
+	}
+	
+	public ResultDAO getResultDAO() {
+		return resultDAO;
 	}
 }

@@ -18,7 +18,7 @@
 		
 		<form action="Controller" method="post">
 			<input type="hidden" name="command" value="go_to_running_courses_page" />	
-			<input type="hidden" name="course_id" value="${course.id}" />	
+			<input type="hidden" name="courseID" value="${course.id}" />	
 			<c:out value="${course.courseName}" /><br/>
 			<c:out value="${course.description}" /><br/>
 			<input type="submit" name="runningCourses" value="${go_to}" /> 

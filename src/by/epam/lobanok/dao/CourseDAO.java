@@ -9,7 +9,11 @@ import by.epam.lobanok.entity.RunningCourse;
 public interface CourseDAO {
 	
 	List<Course> findCourses() throws DAOException;
-	List<Course> findStudentCourses(String name, String surname) throws DAOException;
-	List<Course> findTeacherCourses(String name, String surname) throws DAOException;
+	
 	List<RunningCourse> findRunningCourses(int courseID) throws DAOException;
+	
+	List<RunningCourse> findStudentCourses(int userID) throws DAOException;
+	List<RunningCourse> findTeacherCourses(int userID) throws DAOException;
+	
+	
 }

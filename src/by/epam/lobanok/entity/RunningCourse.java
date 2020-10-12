@@ -1,14 +1,19 @@
 package by.epam.lobanok.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RunningCourse {
+public class RunningCourse implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 	private User teacher;
 	private Course course;
 	private Date start;
 	private Date end;
 	private String passing;
+	
+	public RunningCourse() {}
 	
 	public int getId() {
 		return id;

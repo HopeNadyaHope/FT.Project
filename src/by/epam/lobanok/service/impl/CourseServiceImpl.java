@@ -13,6 +13,9 @@ import by.epam.lobanok.service.exception.ServiceException;
 
 public class CourseServiceImpl implements CourseService{
 
+	private static final String STUDENT = "студент";
+	private static final String TEACHER = "преподаватель";
+	
 	@Override
 	public List<Course> findCourses() throws ServiceException {
 		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 
@@ -21,36 +24,39 @@ public class CourseServiceImpl implements CourseService{
 		try {
 			courses = courseDAO.findCourses();
 		} catch (DAOException e) {
-			//log
 			throw new ServiceException(e);
 		}
 		return courses;
 	}
 	
-	public List<Course> findUserCourses(User user) throws ServiceException {//мб заменить на running-courses
-		String name;
-		String surname;
-		name = user.getName();
-		surname = user.getSurname();
-		
+	public List<RunningCourse> findUserCourses(User user) throws ServiceException {
 		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 		
-		List<Course> courses = null;
+		List<RunningCourse> runningCourses = null;
+		
+		int userID;
+		userID = user.getId();
 		
 		try {
-
-			if(user.getRole().equals("студент")) {
-				courses = courseDAO.findStudentCourses(name, surname);
+			switch(user.getRole()) {
+			case STUDENT:
+				runningCourses = courseDAO.findStudentCourses(userID);
+				break;
+			case TEACHER:
+				runningCourses  = courseDAO.findTeacherCourses(userID);	
+				break;
 			}
-			if(user.getRole().equals("преподаватель")) {
-				courses = courseDAO.findTeacherCourses(name, surname);			
+			
+			/*if(user.getRole().equals(STUDENT)) {
+				runningCourses = courseDAO.findStudentCourses(userID);
 			}
+			if(user.getRole().equals(TEACHER)) {
+			//	runningCourses  = courseDAO.findTeacherCourses(userID);			
+			}*/
 		} catch (DAOException e) {
-			//log
 			throw new ServiceException(e);
 		}
-		return courses;
+		return runningCourses;
 	}
-
 	
 	@Override
 	public List<RunningCourse> findRunningCourses(int courseID) throws ServiceException {
@@ -60,7 +66,6 @@ public class CourseServiceImpl implements CourseService{
 		try {
 			runningCourses = courseDAO.findRunningCourses(courseID);
 		} catch (DAOException e) {
-			//log
 			throw new ServiceException(e);
 		}
 		return runningCourses;

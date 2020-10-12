@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import by.epam.lobanok.dao.RegistrationDAO;
 import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.dao.pool.ConnectionPool;
@@ -13,6 +16,7 @@ import by.epam.lobanok.entity.RegistrationData;
 public class RegistrationDAOImpl implements RegistrationDAO {
 	
 	private static final ConnectionPool pool = ConnectionPool.getInstance();
+	private static final Logger logger = LogManager.getLogger(RegistrationDAO.class);
 	
 	private final String FIND_ROLE_ID = "SELECT roles.id FROM roles WHERE roles.role=?";	
 	private final String ADD_USER = "INSERT INTO users(login, password, name, surname, age, sex, email, roles_id) "
@@ -53,6 +57,7 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 				registration = true;
 			}			
 		}catch (SQLException e) {
+			logger.info("DAOException");
             throw new DAOException(e);
         } finally {
         	pool.closeConnection(con, ps);
@@ -77,6 +82,7 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 			}
 			
 		}catch (SQLException e) {
+			logger.info("DAOException");
             throw new DAOException(e);
         } finally {
         	pool.closeConnection(con, ps, result);

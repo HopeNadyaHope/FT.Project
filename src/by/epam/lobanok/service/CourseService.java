@@ -10,6 +10,7 @@ import by.epam.lobanok.service.exception.ServiceException;
 public interface CourseService {
 	
 	List<Course> findCourses() throws ServiceException;
-	List<Course> findUserCourses(User user) throws ServiceException;
+	
+	List<RunningCourse> findUserCourses(User user) throws ServiceException;
 	List<RunningCourse> findRunningCourses(int courseID) throws ServiceException;
 }
