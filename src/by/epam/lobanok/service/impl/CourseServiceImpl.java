@@ -15,7 +15,8 @@ public class CourseServiceImpl implements CourseService{
 
 	private static final String STUDENT = "студент";
 	private static final String TEACHER = "преподаватель";
-	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<Course> findCourses() throws ServiceException {
 		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 
@@ -43,15 +44,11 @@ public class CourseServiceImpl implements CourseService{
 				break;
 			case TEACHER:
 				runningCourses  = courseDAO.findTeacherCourses(userID);	
+				for(RunningCourse runningCourse: runningCourses) {
+					runningCourse.setTeacher(user);
+				}
 				break;
 			}
-			
-			/*if(user.getRole().equals(STUDENT)) {
-				runningCourses = courseDAO.findStudentCourses(userID);
-			}
-			if(user.getRole().equals(TEACHER)) {
-			//	runningCourses  = courseDAO.findTeacherCourses(userID);			
-			}*/
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
@@ -71,4 +68,16 @@ public class CourseServiceImpl implements CourseService{
 		return runningCourses;
 	}
 
+	@Override
+	public RunningCourse findRunningCourse(int runningCourseID) throws ServiceException {
+		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 
+		
+		RunningCourse runningCourse;
+		try {
+			runningCourse = courseDAO.findRunningCourse(runningCourseID);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		return runningCourse;
+	}
 }

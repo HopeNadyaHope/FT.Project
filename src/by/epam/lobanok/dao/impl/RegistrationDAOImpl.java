@@ -14,16 +14,16 @@ import by.epam.lobanok.dao.pool.ConnectionPool;
 import by.epam.lobanok.entity.RegistrationData;
 
 public class RegistrationDAOImpl implements RegistrationDAO {
-	
 	private static final ConnectionPool pool = ConnectionPool.getInstance();
 	private static final Logger logger = LogManager.getLogger(RegistrationDAO.class);
-	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	private final String FIND_ROLE_ID = "SELECT roles.id FROM roles WHERE roles.role=?";	
 	private final String ADD_USER = "INSERT INTO users(login, password, name, surname, age, sex, email, roles_id) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";	
 	private final String FIND_LOGIN ="SELECT users.login FROM users WHERE login=?";
 
-	
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public boolean registration(RegistrationData regData)  throws DAOException{		
 		boolean registration;
@@ -35,11 +35,11 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 		try {
 			con = pool.takeConnection();			
 			
-			ps = con.prepareStatement(FIND_ROLE_ID); ///////не уверена что именно так нужно опеределять роль
+			ps = con.prepareStatement(FIND_ROLE_ID); 
 			ps.setString(1, regData.getRole());
 			result = ps.executeQuery();	
 			if(!result.next()) {
-				return false;///////////////////////////
+				return false;
 			}	
 			int role_id;
 			role_id = result.getInt("id");

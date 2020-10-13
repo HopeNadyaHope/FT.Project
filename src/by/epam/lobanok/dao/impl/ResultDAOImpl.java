@@ -50,7 +50,6 @@ public class ResultDAOImpl implements ResultDAO{
 			while(resultSet.next()) {
                 result = new Result();
                 //result.setRating(Integer.parseInt(resultSet.getString(RATING))); исправить на INT
-                System.out.println(resultSet.getString(REVIEW));
                 result.setReview(resultSet.getString(REVIEW));
 			}
 			

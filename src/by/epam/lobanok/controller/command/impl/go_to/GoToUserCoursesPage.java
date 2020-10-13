@@ -18,9 +18,11 @@ public class GoToUserCoursesPage implements Command{
 
 	private static final String USER = "user";
 	private static final String RUNNING_COURSES = "runningCourses";
-	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	private static final String USER_COURSES_PAGE = "WEB-INF/jsp/userCoursesPage.jsp";
 
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
@@ -29,7 +31,7 @@ public class GoToUserCoursesPage implements Command{
 		List<RunningCourse> runningCourses;
 		runningCourses = courseService.findUserCourses((User)request.getSession().getAttribute(USER));		
 		request.setAttribute(RUNNING_COURSES, runningCourses);
-		//мб класть в сессиию?(User)request.getSession().getAttribute(USER));
+
 		request.getRequestDispatcher(USER_COURSES_PAGE).forward(request, response);			
 	}
 }

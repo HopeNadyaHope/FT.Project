@@ -18,7 +18,8 @@ import by.epam.lobanok.entity.User;
 public class EntranceDAOImpl implements EntranceDAO{
 	private static final ConnectionPool pool = ConnectionPool.getInstance();
 	private static final Logger logger = LogManager.getLogger(EntranceDAO.class);
-	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	private final String ID = "id";
 	private final String NAME = "name";
 	private final String SURNAME = "surname";
@@ -27,10 +28,11 @@ public class EntranceDAOImpl implements EntranceDAO{
 	private final String EMAIL = "email";
 	private final String ROLE = "role";	
 	
-	
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	private final String FIND_USER ="SELECT users.id, users.name, users.surname, users.age, users.sex, users.email, roles.role "
 			+ "FROM users JOIN roles on roles.id=users.roles_id " + "WHERE login=? AND password=?";
 
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public User entrance(EntranceData entrData) throws DAOException {
 		String login = entrData.getLogin();

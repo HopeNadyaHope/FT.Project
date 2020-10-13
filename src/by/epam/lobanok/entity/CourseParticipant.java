@@ -1,9 +1,12 @@
 package by.epam.lobanok.entity;
 
-public class CourseParticipant {///////////rename to StudentCourse?
+import java.io.Serializable;
+
+public class CourseParticipant implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 	private User student;
-	private RunningCourse course;
 	private Result result;
 	
 	public CourseParticipant() {}
@@ -24,14 +27,6 @@ public class CourseParticipant {///////////rename to StudentCourse?
 		this.student = student;
 	}
 
-	public RunningCourse getCourse() {
-		return course;
-	}
-
-	public void setCourse(RunningCourse course) {
-		this.course = course;
-	}
-
 	public Result getResult() {
 		return result;
 	}
@@ -44,7 +39,6 @@ public class CourseParticipant {///////////rename to StudentCourse?
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((course == null) ? 0 : course.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((this.result == null) ? 0 : this.result.hashCode());
 		result = prime * result + ((student == null) ? 0 : student.hashCode());
@@ -60,11 +54,6 @@ public class CourseParticipant {///////////rename to StudentCourse?
 		if (getClass() != obj.getClass())
 			return false;
 		CourseParticipant other = (CourseParticipant) obj;
-		if (course == null) {
-			if (other.course != null)
-				return false;
-		} else if (!course.equals(other.course))
-			return false;
 		if (id != other.id)
 			return false;
 		if (result == null) {
@@ -82,7 +71,6 @@ public class CourseParticipant {///////////rename to StudentCourse?
 
 	@Override
 	public String toString() {
-		return "CourseParticipant [id=" + id + ", student=" + student + ", course=" + course + ", result=" + result
-				+ "]";
+		return "CourseParticipant [id=" + id + ", student=" + student + ", result=" + result + "]";
 	}	
 }

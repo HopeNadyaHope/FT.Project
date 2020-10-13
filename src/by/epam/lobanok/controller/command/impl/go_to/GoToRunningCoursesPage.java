@@ -17,9 +17,11 @@ public class GoToRunningCoursesPage implements Command{
 
 	private static final String COURSE_ID = "courseID";
 	private static final String RUNNING_COURSES = "runningCourses";
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	private static final String RUNNING_COURSES_PAGE = "/runningCourses.jsp";
 	
-	
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {

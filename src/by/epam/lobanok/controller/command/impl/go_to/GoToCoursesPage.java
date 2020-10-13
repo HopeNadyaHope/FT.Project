@@ -17,7 +17,8 @@ public class GoToCoursesPage implements Command {
 
 	private final String COURSES = "courses";
 	private final String COURSES_PAGE = "/courses.jsp";
-	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {

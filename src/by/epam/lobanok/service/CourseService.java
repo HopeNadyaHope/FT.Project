@@ -13,4 +13,6 @@ public interface CourseService {
 	
 	List<RunningCourse> findUserCourses(User user) throws ServiceException;
 	List<RunningCourse> findRunningCourses(int courseID) throws ServiceException;
+	
+	RunningCourse findRunningCourse(int runningCourseID) throws ServiceException;
 }

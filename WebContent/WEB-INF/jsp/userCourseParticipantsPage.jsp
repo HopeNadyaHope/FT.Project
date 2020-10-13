@@ -5,7 +5,7 @@
 
 <fmt:message bundle="${loc}" key="local.courseName" var="courseName" />
 <fmt:message bundle="${loc}" key="local.courseDescription" var="courseDescription" />
-<fmt:message bundle="${loc}" key="local.teacher" var="teacher" />
+<fmt:message bundle="${loc}" key="local.student" var="student" />
 <fmt:message bundle="${loc}" key="local.passing" var="passing" />
 
 <fmt:message bundle="${loc}" key="local.rating" var="rating" />
@@ -18,28 +18,31 @@
 	<c:out value="${runningCourse.course.description}" /></br>
 	<c:out value="${runningCourse.teacher.name} ${runningCourse.teacher.surname}" /></br>
 	<c:out value="${runningCourse.passing}" /></br>
-
+	
+	
 	<table border = "1" width = "100%">
          <tr>
-             <th><c:out value="${rating}" /></th>
-           	<th><c:out value="${review}" /></th>
+           	<th><c:out value="${student}" /></th>
+           	<th><c:out value="${rating}" />
+           	<th><c:out value="${review}" />
+           	<th>result </th>
          </tr>
-       
-    
-	<jsp:useBean id="courseResult" class="by.epam.lobanok.entity.Result" scope="request" />
-	<c:if test="${courseResult eq null}">
-	 	<td><c:out value="учите" /></td>
-	 	<td><c:out value="разбирайтесь" /></td>
-	</c:if>
-	
-	<c:if test="${courseResult ne null}">
-		<tr>
-			<td><c:out value="${courseResult.rating}" /></td>
-			<td><c:out value="${courseResult.review}" /></td>
-  		</tr> 
-  	</c:if> 
-  	</table> 
 
+	<c:forEach items="${requestScope.courseParticipants}" var="courseParticipants">  
+		<tr>
+			<td><c:out value="${courseParticipants.student.name} ${courseParticipants.student.surname}" /></td>
+			<c:if test="${courseParticipants.result eq null }">
+				<td>Выставить оценку</td>
+				<td>Выставить ревью</td>
+			</c:if>
+			<c:if test="${courseParticipants.result ne null }">
+				<td><c:out value="${courseParticipants.result.rating}" /></td>
+				<td><c:out value="${courseParticipants.result.review}" /></td>
+			</c:if>
+			
+  		</tr>  
+	</c:forEach>
+	</table>
 </body>
 
 <%@include file="../../footer.jsp"%>

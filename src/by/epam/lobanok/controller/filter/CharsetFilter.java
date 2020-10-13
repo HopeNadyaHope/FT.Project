@@ -20,13 +20,11 @@ public class CharsetFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		request.setCharacterEncoding(encoding);
 		response.setCharacterEncoding(encoding);
-		//log
 		chain.doFilter(request, response);
 	}
 
 
 	public void init(FilterConfig fConfig) throws ServletException {
 		encoding = fConfig.getInitParameter(CHARACTER_ENCODING);
-		//log
 	}
 }

@@ -14,12 +14,15 @@ import by.epam.lobanok.service.exception.ServiceException;
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	private final CommandProvider commands = new CommandProvider();
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	private final String COMMAND = "command";
 	private final String LOCALIZATION = "localization";
 	private final String LAST_COMMAND = "lastCommand";
-	
-	private final CommandProvider commands = new CommandProvider();
 
+	/////////////////////////////////////////////////////////////////////////////////////////////
     public Controller() {
         super();
     }

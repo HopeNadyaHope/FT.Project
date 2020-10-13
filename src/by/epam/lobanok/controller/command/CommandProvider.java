@@ -5,6 +5,7 @@ import java.util.Map;
 
 import by.epam.lobanok.controller.command.impl.Entrance;
 import by.epam.lobanok.controller.command.impl.go_to.GoToAboutPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToCourseParticipantsPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToCoursesPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToMainPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToRegistrationPage;
@@ -33,6 +34,7 @@ public class CommandProvider {
 		commands.put(CommandName.GO_TO_USER_PAGE, new GoToUserPage());
 		commands.put(CommandName.GO_TO_USER_COURSES_PAGE, new GoToUserCoursesPage());
 		commands.put(CommandName.GO_TO_USER_COURSE_RESULT_PAGE, new GoToUserCourseResultPage());
+		commands.put(CommandName.GO_TO_USER_COURSE_PARTICIPANTS_PAGE, new GoToCourseParticipantsPage());
 		
 	}
 	

@@ -5,8 +5,12 @@ import by.epam.lobanok.entity.RegistrationData;
 
 public class Validator {
 	private static final Validator instance = new Validator();
-	private final String EMAIL_REGEX = "^[.a-z0-9_-]+@[a-z0-9-]+\\.[a-zA-Z]{2,6}$";
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	private static final String EMAIL_REGEX = "^[.a-z0-9_-]+@[a-z0-9-]+\\.[a-zA-Z]{2,6}$";
 	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	private Validator() {}
 	
 	public static Validator getInstance() {

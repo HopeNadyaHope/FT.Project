@@ -15,7 +15,8 @@ public class Localization implements Command{
 	private final String LOCAL = "local";
 	private final String LAST_COMMAND = "lastCommand";
 	private final String CONTROLLER_COMMAND = "Controller?command=";
-	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {
 		HttpSession session = request.getSession(true);

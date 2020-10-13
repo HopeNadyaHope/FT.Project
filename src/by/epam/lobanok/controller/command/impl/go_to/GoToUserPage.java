@@ -12,7 +12,8 @@ import by.epam.lobanok.service.exception.ServiceException;
 public class GoToUserPage implements Command{
 	
 	private final String USER_PAGE = "/WEB-INF/jsp/userPage.jsp";
-	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {

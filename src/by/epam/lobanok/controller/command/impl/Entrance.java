@@ -20,21 +20,23 @@ public class Entrance implements Command {
 	
 	private final String LAST_COMMAND = "lastCommand";
 	
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	private final String LOGIN = "login";
-	private final String PASSWORD = "password";
-	
+	private final String PASSWORD = "password";	
 	private final String USER = "user";	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	private final String EXCEPTION_MESSAGE = "exceptionMessage";
-	
-	private final String MAIN_PAGE = "/main.jsp";
-	private final String USER_PAGE = "/WEB-INF/jsp/userPage.jsp";	
-	private final String GO_TO_USER_PAGE = "go_to_user_page";
-	
 	private final String SERVER_EXCEPTION = "Ошибка сервера";
 	private final String NO_SUCH_USER = "Нет пользователя с таким логином и паролем";
 	private final String UNCORRECT_DATA = "Некорректные данные";
-		
 	
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	private final String MAIN_PAGE = "/main.jsp";
+	private final String USER_PAGE = "/WEB-INF/jsp/userPage.jsp";	
+	private final String GO_TO_USER_PAGE = "go_to_user_page";
+		
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException{	
 		EntranceData entrData = new EntranceData();

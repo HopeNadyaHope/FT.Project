@@ -13,7 +13,8 @@ import by.epam.lobanok.service.exception.ServiceException;
 public class GoToMainPage implements Command{
 
 	private final String MAIN_PAGE = "/main.jsp";
-	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {

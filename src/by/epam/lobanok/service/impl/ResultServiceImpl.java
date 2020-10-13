@@ -4,7 +4,6 @@ import by.epam.lobanok.dao.DAOFactory;
 import by.epam.lobanok.dao.ResultDAO;
 import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.entity.Result;
-import by.epam.lobanok.entity.RunningCourse;
 import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.ResultService;
 import by.epam.lobanok.service.exception.ServiceException;

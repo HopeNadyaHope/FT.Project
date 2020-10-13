@@ -23,16 +23,18 @@ public class Registration implements Command {
 	private final String SEX = "sex";
 	private final String EMAIL = "email";
 	private final String ROLE = "role";	
-	
-	private final String MAIN_PAGE = "/main.jsp";
-	private final String REGISTRATION_PAGE = "/registration.jsp";
-	
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	private final String EXCEPTION_MESSAGE = "exceptionMessage";
 	private final String SERVER_EXCEPTION = "Ошибка сервера";
 	private final String DUBLICATE_LOGIN = "Пользователь с таким логином существует";
 	private final String UNCORRECT_DATA = "Некорректные данные";
 	
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	private final String MAIN_PAGE = "/main.jsp";
+	private final String REGISTRATION_PAGE = "/registration.jsp";	
 
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {	
 		RegistrationData regData = new RegistrationData();		
