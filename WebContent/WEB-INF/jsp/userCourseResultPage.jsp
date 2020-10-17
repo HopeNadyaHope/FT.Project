@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@include file="../../header.jsp"%>
+<%@include file="../../jsp/pageElement/header.jsp"%>
 
 <fmt:message bundle="${loc}" key="local.courseName" var="courseName" />
 <fmt:message bundle="${loc}" key="local.courseDescription" var="courseDescription" />
@@ -19,7 +19,7 @@
 	<c:out value="${runningCourse.teacher.name} ${runningCourse.teacher.surname}" /></br>
 	<c:out value="${runningCourse.passing}" /></br>
 
-	<table border = "1" width = "100%">
+	<table border = "1" width = "80%" align="center">
          <tr>
              <th><c:out value="${rating}" /></th>
            	<th><c:out value="${review}" /></th>
@@ -42,4 +42,4 @@
 
 </body>
 
-<%@include file="../../footer.jsp"%>
+<%@include file="../../jsp/pageElement/footer.jsp"%>

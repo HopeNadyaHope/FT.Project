@@ -19,7 +19,7 @@ public class GoToRunningCoursesPage implements Command{
 	private static final String RUNNING_COURSES = "runningCourses";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private static final String RUNNING_COURSES_PAGE = "/runningCourses.jsp";
+	private static final String RUNNING_COURSES_PAGE = "jsp/runningCourses.jsp";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override

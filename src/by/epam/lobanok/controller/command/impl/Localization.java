@@ -14,7 +14,6 @@ public class Localization implements Command{
 
 	private final String LOCAL = "local";
 	private final String LAST_COMMAND = "lastCommand";
-	private final String CONTROLLER_COMMAND = "Controller?command=";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
@@ -24,7 +23,7 @@ public class Localization implements Command{
 		
 		String lastCommand; 
 		lastCommand = (String) session.getAttribute(LAST_COMMAND);
-		response.sendRedirect(CONTROLLER_COMMAND + lastCommand);
+		response.sendRedirect(lastCommand);
 	}
 
 }

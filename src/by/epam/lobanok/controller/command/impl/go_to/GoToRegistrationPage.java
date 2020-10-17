@@ -11,7 +11,7 @@ import by.epam.lobanok.service.exception.ServiceException;
 
 public class GoToRegistrationPage implements Command{
 
-	private final String REGISTRATION_PAGE = "/registration.jsp";
+	private final String REGISTRATION_PAGE = "jsp/registration.jsp";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override

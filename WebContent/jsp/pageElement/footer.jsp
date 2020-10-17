@@ -5,7 +5,8 @@
 <footer>
 <div class="footer">
 	<div class="section-inner">
-		<p>Footer</p>
+		<p>Республика Беларусь, г.Минск</p>
+		<p>Октябрьская, 10</p>
 	</div>
 </div><!--/footer-->
 </footer>

@@ -12,7 +12,7 @@ import by.epam.lobanok.service.exception.ServiceException;
 
 public class GoToAboutPage implements Command{
 
-	private final String ABOUT_PAGE = "/about.jsp";
+	private final String ABOUT_PAGE = "jsp/about.jsp";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override

@@ -31,8 +31,8 @@ public class Registration implements Command {
 	private final String UNCORRECT_DATA = "Некорректные данные";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final String MAIN_PAGE = "/main.jsp";
-	private final String REGISTRATION_PAGE = "/registration.jsp";	
+	private final String MAIN_PAGE = "jsp/main.jsp";
+	private final String REGISTRATION_PAGE = "jsp/registration.jsp";	
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override

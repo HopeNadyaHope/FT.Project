@@ -23,4 +23,16 @@ public class CourseParticipantServiceImpl implements CourseParticipantService {
 		}
 		return courseParticipants;
 	}
+
+	@Override
+	public boolean addCourseParticipant(int studentID, int runningCourseID) throws ServiceException {
+		CourseParticipantDAO courseParticipantDAO = DAOFactory.getInstance().getCourseParticipantDAO();
+		boolean follow;
+		try {
+			follow = courseParticipantDAO.addCourseParticipant(studentID,runningCourseID);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		return follow;
+	}
 }

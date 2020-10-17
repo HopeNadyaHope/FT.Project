@@ -20,7 +20,7 @@ public class ResultDAOImpl implements ResultDAO{
 	private static final Logger logger = LogManager.getLogger(CourseDAO.class);
 	
 	/////////////////////////////////////////////////////////////////////////////////////
-	private static final String FIND_RESULT ="SELECT results.review "+
+	private static final String FIND_RESULT ="SELECT results.rating, results.review "+
 							"FROM course_participants "+
 							"JOIN users ON users.id=course_participants.users_id "+ 
 							"LEFT OUTER JOIN results on course_participants.results_id = results.id " +
@@ -49,7 +49,9 @@ public class ResultDAOImpl implements ResultDAO{
 			
 			while(resultSet.next()) {
                 result = new Result();
-                //result.setRating(Integer.parseInt(resultSet.getString(RATING))); исправить на INT
+                if(resultSet.getString(RATING) != null) {
+                	result.setRating(Integer.parseInt(resultSet.getString(RATING)));
+                }
                 result.setReview(resultSet.getString(REVIEW));
 			}
 			

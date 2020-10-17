@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@include file="header.jsp"%>
+<%@include file="pageElement/header.jsp"%>
 
 <fmt:message bundle="${loc}" key="local.courseName" var="courseName" />
 <fmt:message bundle="${loc}" key="local.courseDescription" var="courseDescription" />
@@ -11,21 +11,18 @@
 
 <body>
 	<c:out value="${courses}" />
-	
-	
+		
 	<c:forEach items="${requestScope.courses}" var="course">  
 		<div class="container">
 		
-		<form action="Controller" method="post">
-			<input type="hidden" name="command" value="go_to_running_courses_page" />	
-			<input type="hidden" name="courseID" value="${course.id}" />	
+		<form action="Controller" method="get">	
 			<c:out value="${course.courseName}" /><br/>
-			<c:out value="${course.description}" /><br/>
-			<input type="submit" name="runningCourses" value="${go_to}" /> 
+			<c:out value="${course.description}" /><br/>			
+			<a href="Controller?command=go_to_running_courses_page&courseID=${course.id}"><c:out value="${go_to}" /></a>			
 		</form>	
 		
 		</div>
 	</c:forEach>
 </body>
 
-<%@include file="footer.jsp"%>
+<%@include file="pageElement/footer.jsp"%>

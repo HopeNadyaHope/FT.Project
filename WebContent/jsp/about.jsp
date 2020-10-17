@@ -4,10 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 
-<%@include file="header.jsp"%>
+<%@include file="pageElement/header.jsp"%>
 
 <body>
 	<c:out value="${about}" />
 </body>
 
-<%@include file="footer.jsp"%>
+<%@include file="pageElement/footer.jsp"%>

@@ -15,12 +15,14 @@ public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final CommandProvider commands = new CommandProvider();
+	private static final CommandProvider commands = new CommandProvider();
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final String COMMAND = "command";
-	private final String LOCALIZATION = "localization";
-	private final String LAST_COMMAND = "lastCommand";
+	private static final String CONTROLLER = "Controller";
+	
+	private static final String COMMAND = "command";
+	private static final String LOCALIZATION = "localization";
+	private static final String LAST_COMMAND = "lastCommand";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
     public Controller() {
@@ -50,10 +52,10 @@ public class Controller extends HttpServlet {
 		
 		String currentCommand; 
 		Command command;		  
-		currentCommand = request.getParameter(COMMAND);
+		currentCommand = request.getParameter(COMMAND);	
 		
 		if(!currentCommand.equals(LOCALIZATION)) {
-			request.getSession(true).setAttribute(LAST_COMMAND, currentCommand);	
+		  request.getSession(true).setAttribute(LAST_COMMAND, CONTROLLER + "?" + request.getQueryString()); //mb do get
 		}
 		
 		command = commands.getCommand(currentCommand); 

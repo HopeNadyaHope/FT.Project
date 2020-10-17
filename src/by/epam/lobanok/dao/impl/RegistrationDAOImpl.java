@@ -18,10 +18,10 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 	private static final Logger logger = LogManager.getLogger(RegistrationDAO.class);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final String FIND_ROLE_ID = "SELECT roles.id FROM roles WHERE roles.role=?";	
-	private final String ADD_USER = "INSERT INTO users(login, password, name, surname, age, sex, email, roles_id) "
+	private static final String FIND_ROLE_ID = "SELECT roles.id FROM roles WHERE roles.role=?";	
+	private static final String ADD_USER = "INSERT INTO users(login, password, name, surname, age, sex, email, roles_id) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";	
-	private final String FIND_LOGIN ="SELECT users.login FROM users WHERE login=?";
+	private static final String FIND_LOGIN ="SELECT users.login FROM users WHERE login=?";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override

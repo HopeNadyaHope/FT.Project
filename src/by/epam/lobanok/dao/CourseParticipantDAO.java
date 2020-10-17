@@ -8,5 +8,8 @@ import by.epam.lobanok.entity.CourseParticipant;
 public interface CourseParticipantDAO {
 	
 	List<CourseParticipant> findCourseParticipants(int runningCourseID) throws DAOException;
+	
+	boolean addCourseParticipant(int studentID, int runningCourseID) throws DAOException;
+	
 
 }

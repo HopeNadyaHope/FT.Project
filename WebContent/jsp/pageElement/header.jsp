@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Education</title>
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/form-style.css">
 
@@ -17,6 +18,8 @@
 
 <fmt:message bundle="${loc}" key="local.locbutton.en" var="en_button" />
 <fmt:message bundle="${loc}" key="local.locbutton.ru" var="ru_button" />
+
+<fmt:message bundle="${loc}" key="local.exit" var="exit" />
 
 <fmt:message bundle="${loc}" key="local.mainPage" var="mainPage" />
 <fmt:message bundle="${loc}" key="local.about" var="about" />
@@ -40,6 +43,11 @@
 					<input type="hidden" name="command" value="localization" />	
 					<input type="hidden" name="local" value="en" />	
 					<input type="submit" value="${en_button}" />
+				</form>
+				
+				<form action="Controller" method="post">
+					<input type="hidden" name="command" value="exit" />
+					<input type="submit" value="${exit}" />
 				</form>
 			</div>			
 		</div>	

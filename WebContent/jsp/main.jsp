@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%@include file="header.jsp"%>
+<%@include file="pageElement/header.jsp"%>
 
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css">    
 
@@ -16,8 +16,9 @@
 	<div class="container">
 		<form action="Controller" method="post">
 		
-		<c:if test="${requestScope.exceptionMessage ne null}">
-			<c:out value="${requestScope.exceptionMessage}" />
+		<c:if test="${not empty requestScope.exceptionMessage}">
+			<h1><c:out value="${requestScope.exceptionMessage}" /></h1>
+			<c:out value="hello" />
 		</c:if>
 		
 			<input type="hidden" name="command" value="entrance" />
@@ -45,4 +46,4 @@
 
 </body>
 
-<%@include file="footer.jsp"%>
+<%@include file="pageElement/footer.jsp"%>

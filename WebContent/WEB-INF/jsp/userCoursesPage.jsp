@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@include file="../../header.jsp"%>
+<%@include file="../../jsp/pageElement/header.jsp"%>
 
 <fmt:message bundle="${loc}" key="local.courseName" var="courseName" />
 <fmt:message bundle="${loc}" key="local.courseDescription" var="courseDescription" />
@@ -12,7 +12,7 @@
 
 
 <body>
-	<table border = "1" width = "100%">
+	<table border = "1" width = "80%" align="center">
          <tr>
             <th><c:out value="${courseName}" /></th>
            	<th><c:out value="${courseDescription}" /></th>
@@ -31,7 +31,7 @@
 			<td>
 				
 				<c:if test="${user.role eq 'студент'}">	 
-				<form action="Controller" method="post">
+				<form action="Controller" method="get">
 					<input type="hidden" name="command" value="go_to_user_course_result_page" />	
 					<input type="hidden" name="runningCourseID" value="${runningCourse.id}" />					
 					<input type="submit" name="runningCourses" value="${go_to}" /> 
@@ -39,7 +39,7 @@
 				</c:if>
 				
 				<c:if test="${user.role eq 'преподаватель'}">	 
-				<form action="Controller" method="post">
+				<form action="Controller" method="get">
 					<input type="hidden" name="command" value="go_to_user_course_participants_page" />	
 					<input type="hidden" name="runningCourseID" value="${runningCourse.id}" />
 					<input type="submit" name="runningCourses" value="${go_to}" /> 
@@ -53,4 +53,4 @@
 	</table>
 </body>
 
-<%@include file="../../footer.jsp"%>
+<%@include file="../../jsp/pageElement/footer.jsp"%>

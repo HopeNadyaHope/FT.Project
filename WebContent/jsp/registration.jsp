@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%@include file="header.jsp"%>
+<%@include file="pageElement/header.jsp"%>
 
 <fmt:message bundle="${loc}" key="local.login" var="login" />
 <fmt:message bundle="${loc}" key="local.password" var="password" />
@@ -86,4 +86,4 @@
 	</div>
 </body>
 
-<%@include file="footer.jsp"%>
+<%@include file="pageElement/footer.jsp"%>

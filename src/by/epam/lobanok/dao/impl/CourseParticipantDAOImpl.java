@@ -29,7 +29,13 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 			"FROM course_participants "+
 			"JOIN users ON course_participants.users_id = users.id "+
 			"LEFT OUTER JOIN results on course_participants.results_id = results.id "+
-			"WHERE course_participants.running_courses_id = ?";
+			"WHERE course_participants.running_courses_id = ? " +
+			"ORDER BY users.name";
+	
+	private static final String IS_COURSE_PARTICIPANT = "SELECT * FROM course_participants " + 
+			"WHERE course_participants.users_id=? AND course_participants.running_courses_id=?";
+	
+	private static final String ADD_COURSE_PARTICIPANT = "INSERT INTO course_participants(users_id, running_courses_id) VALUES(?,?)";
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	private static final String ID = "id";
@@ -67,7 +73,9 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 				  courseParticipant.setStudent(student);
 				 
                 Result result = new Result();
-                //result.setRating(Integer.parseInt(resultSet.getString(RATING)));
+                if(resultSet.getString(RATING) != null) {
+                	result.setRating(Integer.parseInt(resultSet.getString(RATING)));
+                }
                 result.setReview(resultSet.getString(REVIEW));
                 courseParticipant.setResult(result);
 
@@ -83,4 +91,51 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
         return courseParticipants;
 	}
 
+	@Override
+	public boolean addCourseParticipant(int studentID, int runningCourseID) throws DAOException {
+		if(isCourseParticipant(studentID,runningCourseID)) {
+			return false;
+		}
+		
+		Connection con = null;
+		PreparedStatement ps = null;		
+		try {
+			con = pool.takeConnection();
+			ps = con.prepareStatement(ADD_COURSE_PARTICIPANT);
+			ps.setInt(1, studentID);
+			ps.setInt(2, runningCourseID);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			logger.info("DAOException");
+            throw new DAOException(e);
+        } finally {
+        	pool.closeConnection(con, ps);
+        }
+		return true;		
+	}
+
+	private boolean isCourseParticipant(int studentID, int runningCourseID) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		
+		try {
+			con = pool.takeConnection();
+			ps = con.prepareStatement(IS_COURSE_PARTICIPANT);
+			ps.setInt(1, studentID);
+			ps.setInt(2, runningCourseID);
+			resultSet = ps.executeQuery();
+			
+			if(resultSet.next()) {
+				return true;
+			}
+			
+		}catch (SQLException e) {
+			logger.info("DAOException");
+            throw new DAOException(e);
+        } finally {
+        	pool.closeConnection(con, ps);
+        }
+        return false;
+	}
 }

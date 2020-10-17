@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
@@ -62,6 +63,9 @@ public class CourseDAOImpl implements CourseDAO{
 	private static final String COURSE_NAME = "courseName";
 	private static final String DESCRIPTION = "description";
 	private static final String PASSING = "passing";
+	private static final String START = "start";
+	private static final String END = "end";	
+	
 	private static final String NAME = "name";
 	private static final String SURNAME = "surname";
 	
@@ -115,9 +119,9 @@ public class CourseDAOImpl implements CourseDAO{
 			
 			while(resultSet.next()) {
                 runningCourse = new RunningCourse();
-                runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));
-                //set start
-                //set end
+                runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));                
+                runningCourse.setStart(new Date(resultSet.getDate(START).getTime()));
+                runningCourse.setEnd(new Date(resultSet.getDate(END).getTime()));
                 runningCourse.setPassing(resultSet.getString(PASSING));
                 
                 User teacher = new User();
@@ -270,6 +274,4 @@ public class CourseDAOImpl implements CourseDAO{
         }	
         return runningCourses;
 	}
-
-
 }

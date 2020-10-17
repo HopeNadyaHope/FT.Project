@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%@include file="../../header.jsp"%>
+<%@include file="../../jsp/pageElement/header.jsp"%>
 
 <fmt:message bundle="${loc}" key="local.name" var="name" />
 <fmt:message bundle="${loc}" key="local.surname" var="surname" />
@@ -19,10 +19,10 @@
 	<jsp:useBean id="user" class="by.epam.lobanok.entity.User" scope="session" />
 	
 	<div class="photo">
-		<c:if test="${user.sex eq 'female'}">	
+		<c:if test="${user.sex eq 'жен'}">	
            <img src="images/userPhoto/female.jpg">   
     	</c:if>    	
-    	<c:if test="${user.sex eq 'male'}">	
+    	<c:if test="${user.sex eq 'муж'}">	
            <img src="images/userPhoto/men.jpg">   
     	</c:if>
     </div>
@@ -36,4 +36,4 @@
 	<c:out value="${email} : " />	<c:out value="${user.email}" /><br />
 </body>
 
-<%@include file="../../footer.jsp"%>
+<%@include file="../../jsp/pageElement/footer.jsp"%>

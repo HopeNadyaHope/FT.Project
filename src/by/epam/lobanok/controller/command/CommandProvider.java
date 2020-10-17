@@ -3,7 +3,9 @@ package by.epam.lobanok.controller.command;
 import java.util.HashMap;
 import java.util.Map;
 
+import by.epam.lobanok.controller.command.impl.AddCourseParticipant;
 import by.epam.lobanok.controller.command.impl.Entrance;
+import by.epam.lobanok.controller.command.impl.Exit;
 import by.epam.lobanok.controller.command.impl.go_to.GoToAboutPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToCourseParticipantsPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToCoursesPage;
@@ -22,8 +24,11 @@ public class CommandProvider {
 	public CommandProvider(){
 		commands.put(CommandName.ENTRANCE, new Entrance());
 		commands.put(CommandName.REGISTRATION, new Registration());
+		commands.put(CommandName.EXIT, new Exit());
 		
 		commands.put(CommandName.LOCALIZATION, new Localization());
+		
+		commands.put(CommandName.ADD_COURSE_PARTICIPANT, new AddCourseParticipant());
 		
 		commands.put(CommandName.GO_TO_REGISTRATION_PAGE, new GoToRegistrationPage());		
 		commands.put(CommandName.GO_TO_MAIN_PAGE, new GoToMainPage());

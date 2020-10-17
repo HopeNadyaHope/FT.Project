@@ -16,7 +16,7 @@ import by.epam.lobanok.service.exception.ServiceException;
 public class GoToCoursesPage implements Command {
 
 	private final String COURSES = "courses";
-	private final String COURSES_PAGE = "/courses.jsp";
+	private final String COURSES_PAGE = "jsp/courses.jsp";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override

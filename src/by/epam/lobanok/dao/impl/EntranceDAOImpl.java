@@ -20,13 +20,13 @@ public class EntranceDAOImpl implements EntranceDAO{
 	private static final Logger logger = LogManager.getLogger(EntranceDAO.class);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final String ID = "id";
-	private final String NAME = "name";
-	private final String SURNAME = "surname";
-	private final String AGE = "age";
-	private final String SEX = "sex";
-	private final String EMAIL = "email";
-	private final String ROLE = "role";	
+	private static final String ID = "id";
+	private static final String NAME = "name";
+	private static final String SURNAME = "surname";
+	private static final String AGE = "age";
+	private static final String SEX = "sex";
+	private static final String EMAIL = "email";
+	private static final String ROLE = "role";	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	private final String FIND_USER ="SELECT users.id, users.name, users.surname, users.age, users.sex, users.email, roles.role "
