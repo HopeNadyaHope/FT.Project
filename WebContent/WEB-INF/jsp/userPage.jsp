@@ -9,8 +9,10 @@
 <fmt:message bundle="${loc}" key="local.surname" var="surname" />
 <fmt:message bundle="${loc}" key="local.age" var="age" />
 <fmt:message bundle="${loc}" key="local.sex" var="sex" />
-<fmt:message bundle="${loc}" key="local.position" var="position" />
+<fmt:message bundle="${loc}" key="local.role" var="role" />
 <fmt:message bundle="${loc}" key="local.email" var="email" />
+
+<fmt:message bundle="${loc}" key="local.edit" var="edit" />
 
 <fmt:message bundle="${loc}" key="local.welcome" var="welcome" />
 
@@ -32,8 +34,10 @@
 	<c:out value="${surname} :" /><c:out value="${user.surname}" /><br />
 	<c:out value="${age} :" /><c:out value="${user.age}" /><br />
 	<c:out value="${sex} :" /><c:out value="${user.sex}" /><br />
-	<c:out value="${position} : " /><c:out value="${user.role}" /><br />
+	<c:out value="${role} : " /><c:out value="${user.role}" /><br />
 	<c:out value="${email} : " />	<c:out value="${user.email}" /><br />
+	
+	<a href="Controller?command=go_to_edit_profile"><c:out value="${edit}" /></a>	
 </body>
 
 <%@include file="../../jsp/pageElement/footer.jsp"%>

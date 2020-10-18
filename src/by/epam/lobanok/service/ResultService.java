@@ -6,5 +6,6 @@ import by.epam.lobanok.service.exception.ServiceException;
 
 public interface ResultService {
 	
-	Result getCourseResult(User student, int runningCourseID) throws ServiceException;//или User user
+	Result getCourseResult(User student, int runningCourseID) throws ServiceException;
+	void addResult(int CoursePartisipantID, int rating, String review) throws ServiceException;
 }

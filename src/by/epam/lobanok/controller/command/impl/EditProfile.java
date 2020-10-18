@@ -1,4 +1,4 @@
-package by.epam.lobanok.controller.command.impl.go_to;
+package by.epam.lobanok.controller.command.impl;
 
 import java.io.IOException;
 
@@ -9,15 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import by.epam.lobanok.controller.command.Command;
 import by.epam.lobanok.service.exception.ServiceException;
 
-public class GoToRegistrationPage implements Command{
+public class EditProfile implements Command {
 
-	private final String REGISTRATION_PAGE = "jsp/registration.jsp";
-
-	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		
-		request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);		
+		// TODO Auto-generated method stub
+
 	}
+
 }

@@ -1,46 +1,46 @@
 package by.epam.lobanok.controller.command.impl.go_to;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
-import by.epam.lobanok.entity.CourseParticipant;
+import by.epam.lobanok.entity.Result;
 import by.epam.lobanok.entity.RunningCourse;
-import by.epam.lobanok.service.CourseParticipantService;
+import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.CourseService;
+import by.epam.lobanok.service.ResultService;
 import by.epam.lobanok.service.ServiceFactory;
 import by.epam.lobanok.service.exception.ServiceException;
 
-public class GoToCourseParticipantsPage implements Command{
+public class GoToStudentCourseResultPage implements Command{
 	private static final String RUNNING_COURSE = "runningCourse";
 	private static final String RUNNING_COURSE_ID = "runningCourseID";
-	private static final String COURSE_PARTICIPANTS = "courseParticipants";
+	private static final String USER = "user";
+	private static final String COURSE_RESULT = "courseResult";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private static final String USER_COURSES_PARTICIPANTS_PAGE = "WEB-INF/jsp/userCourseParticipantsPage.jsp";
+	private static final String USER_COURSES_RESULT_PAGE = "WEB-INF/jsp/studentCourseResultPage.jsp";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
+		User student = (User)request.getSession().getAttribute(USER);
 		int runningCourseID = Integer.parseInt(request.getParameter(RUNNING_COURSE_ID));
 		
-		CourseParticipantService courseParticepantService = ServiceFactory.getInstance().getCourseParticipantService();
-		List<CourseParticipant> courseParticipants;
-		courseParticipants = courseParticepantService.findCoursePartucepant(runningCourseID);
-		request.setAttribute(COURSE_PARTICIPANTS, courseParticipants);
-		
-		
+		ResultService resultService = ServiceFactory.getInstance().getResultService();		
+		Result result;
+		result = resultService.getCourseResult(student, runningCourseID);	
+		request.setAttribute(COURSE_RESULT, result);
+
 		CourseService courseService = ServiceFactory.getInstance().getCourseService();
 		RunningCourse runningCourse;
 		runningCourse = courseService.findRunningCourse(runningCourseID);
 		request.setAttribute(RUNNING_COURSE, runningCourse);
 		
-		request.getRequestDispatcher(USER_COURSES_PARTICIPANTS_PAGE).forward(request, response);			
+		request.getRequestDispatcher(USER_COURSES_RESULT_PAGE).forward(request, response);			
 	}
-
 }

@@ -32,7 +32,7 @@
 				
 				<c:if test="${user.role eq 'студент'}">	 
 				<form action="Controller" method="get">
-					<input type="hidden" name="command" value="go_to_user_course_result_page" />	
+					<input type="hidden" name="command" value="go_to_student_course_result_page" />	
 					<input type="hidden" name="runningCourseID" value="${runningCourse.id}" />					
 					<input type="submit" name="runningCourses" value="${go_to}" /> 
 				</form>	
@@ -40,7 +40,7 @@
 				
 				<c:if test="${user.role eq 'преподаватель'}">	 
 				<form action="Controller" method="get">
-					<input type="hidden" name="command" value="go_to_user_course_participants_page" />	
+					<input type="hidden" name="command" value="go_to_teacher_course_participants_page" />	
 					<input type="hidden" name="runningCourseID" value="${runningCourse.id}" />
 					<input type="submit" name="runningCourses" value="${go_to}" /> 
 				</form>	

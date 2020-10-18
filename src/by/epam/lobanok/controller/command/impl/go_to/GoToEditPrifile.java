@@ -9,15 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import by.epam.lobanok.controller.command.Command;
 import by.epam.lobanok.service.exception.ServiceException;
 
-public class GoToRegistrationPage implements Command{
-
-	private final String REGISTRATION_PAGE = "jsp/registration.jsp";
+public class GoToEditPrifile implements Command {
+	private static final String USER_EDIT_PROFILE_PAGE = "WEB-INF/jsp/userEditProfilePage.jsp";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		
-		request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);		
+		request.getRequestDispatcher(USER_EDIT_PROFILE_PAGE).forward(request, response);			
 	}
 }

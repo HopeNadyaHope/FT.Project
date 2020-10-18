@@ -5,6 +5,7 @@ import by.epam.lobanok.dao.EntranceDAO;
 import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.dao.exception.NoSuchUserDAOException;
 import by.epam.lobanok.entity.EntranceData;
+import by.epam.lobanok.entity.RegistrationData;
 import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.EntranceService;
 import by.epam.lobanok.service.exception.NoSuchUserServiceException;
@@ -24,5 +25,11 @@ public class EntranceServiceImpl implements EntranceService{
 				throw new ServiceException(e);
 			} 
 		return user;
+	}
+
+	@Override
+	public User editPrifile(RegistrationData editData) throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -18,7 +18,7 @@ public class AddCourseParticipant implements Command{
 	private static final String USER = "user";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private static final String USER_COURSES_RESULT_PAGE = "Controller?command=go_to_user_course_result_page&runningCourseID=";
+	private static final String STUDENT_COURSES_RESULT_PAGE = "Controller?command=go_to_teacher_course_participants_page&runningCourseID=";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
@@ -32,6 +32,6 @@ public class AddCourseParticipant implements Command{
 		}else {
 			System.out.println("уже есть на курсе");
 		}
-		response.sendRedirect(USER_COURSES_RESULT_PAGE + runningCourseID);
+		response.sendRedirect(STUDENT_COURSES_RESULT_PAGE + runningCourseID);
 	}
 }

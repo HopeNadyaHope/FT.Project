@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,10 +102,11 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 		PreparedStatement ps = null;		
 		try {
 			con = pool.takeConnection();
-			ps = con.prepareStatement(ADD_COURSE_PARTICIPANT);
+			ps = con.prepareStatement(ADD_COURSE_PARTICIPANT, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, studentID);
 			ps.setInt(2, runningCourseID);
 			ps.executeUpdate();
+			
 		}catch (SQLException e) {
 			logger.info("DAOException");
             throw new DAOException(e);

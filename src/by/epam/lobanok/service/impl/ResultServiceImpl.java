@@ -25,4 +25,14 @@ public class ResultServiceImpl implements ResultService{
 		}
 		return result;
 	}
+
+	@Override
+	public void addResult(int сoursePartisipantID, int rating, String review) throws ServiceException {
+		ResultDAO resultDAO = DAOFactory.getInstance().getResultDAO(); 
+		try {
+			resultDAO.addResult(сoursePartisipantID, rating, review);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}
 }

@@ -7,12 +7,15 @@ import by.epam.lobanok.controller.command.impl.AddCourseParticipant;
 import by.epam.lobanok.controller.command.impl.Entrance;
 import by.epam.lobanok.controller.command.impl.Exit;
 import by.epam.lobanok.controller.command.impl.go_to.GoToAboutPage;
-import by.epam.lobanok.controller.command.impl.go_to.GoToCourseParticipantsPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToTeacherCourseParticipantsPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToCoursesPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToEditPrifile;
 import by.epam.lobanok.controller.command.impl.go_to.GoToMainPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToRegistrationPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToRunningCoursesPage;
-import by.epam.lobanok.controller.command.impl.go_to.GoToUserCourseResultPage;
+import by.epam.lobanok.controller.command.impl.go_to.GoToStudentCourseResultPage;
+import by.epam.lobanok.controller.command.impl.AddCourseResult;
+import by.epam.lobanok.controller.command.impl.EditProfile;
 import by.epam.lobanok.controller.command.impl.go_to.GoToUserCoursesPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToUserPage;
 import by.epam.lobanok.controller.command.impl.Localization;
@@ -24,11 +27,10 @@ public class CommandProvider {
 	public CommandProvider(){
 		commands.put(CommandName.ENTRANCE, new Entrance());
 		commands.put(CommandName.REGISTRATION, new Registration());
+		commands.put(CommandName.EDIT_PROFILE, new EditProfile());
 		commands.put(CommandName.EXIT, new Exit());
 		
-		commands.put(CommandName.LOCALIZATION, new Localization());
-		
-		commands.put(CommandName.ADD_COURSE_PARTICIPANT, new AddCourseParticipant());
+		commands.put(CommandName.LOCALIZATION, new Localization());		
 		
 		commands.put(CommandName.GO_TO_REGISTRATION_PAGE, new GoToRegistrationPage());		
 		commands.put(CommandName.GO_TO_MAIN_PAGE, new GoToMainPage());
@@ -37,9 +39,14 @@ public class CommandProvider {
 		commands.put(CommandName.GO_TO_RUNNING_COURSES_PAGE, new GoToRunningCoursesPage());
 		
 		commands.put(CommandName.GO_TO_USER_PAGE, new GoToUserPage());
+		commands.put(CommandName.GO_TO_EDIT_PROFILE, new GoToEditPrifile());
 		commands.put(CommandName.GO_TO_USER_COURSES_PAGE, new GoToUserCoursesPage());
-		commands.put(CommandName.GO_TO_USER_COURSE_RESULT_PAGE, new GoToUserCourseResultPage());
-		commands.put(CommandName.GO_TO_USER_COURSE_PARTICIPANTS_PAGE, new GoToCourseParticipantsPage());
+		
+		commands.put(CommandName.GO_TO_STUDENT_COURSE_RESULT_PAGE, new GoToStudentCourseResultPage());
+		commands.put(CommandName.ADD_COURSE_PARTICIPANT, new AddCourseParticipant());
+		
+		commands.put(CommandName.GO_TO_TEACHER_COURSE_PARTICIPANTS_PAGE, new GoToTeacherCourseParticipantsPage());
+		commands.put(CommandName.ADD_COURSE_RESULT, new AddCourseResult());
 		
 	}
 	

@@ -12,6 +12,7 @@ import by.epam.lobanok.dao.EntranceDAO;
 import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.dao.exception.NoSuchUserDAOException;
 import by.epam.lobanok.dao.pool.ConnectionPool;
+import by.epam.lobanok.entity.EditData;
 import by.epam.lobanok.entity.EntranceData;
 import by.epam.lobanok.entity.User;
 
@@ -29,8 +30,10 @@ public class EntranceDAOImpl implements EntranceDAO{
 	private static final String ROLE = "role";	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final String FIND_USER ="SELECT users.id, users.name, users.surname, users.age, users.sex, users.email, roles.role "
+	private static final String FIND_USER ="SELECT users.id, users.name, users.surname, users.age, users.sex, users.email, roles.role "
 			+ "FROM users JOIN roles on roles.id=users.roles_id " + "WHERE login=? AND password=?";
+	
+	private static final String EDIT_PROFILE = "";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
@@ -66,11 +69,31 @@ public class EntranceDAOImpl implements EntranceDAO{
             user.setEmail(resultSet.getString(EMAIL));
             
 		}catch (SQLException e) {
-			logger.info("DAOException in SQL");
+			logger.info("DAOException in SQL (entrance)");
             throw new DAOException(e);
         } finally {
         	pool.closeConnection(con, ps);
         }
         return user;
+	}
+
+	@Override
+	public void editProfile(EditData editData) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;		
+		try {
+			con = pool.takeConnection();
+			ps = con.prepareStatement(EDIT_PROFILE); 
+			
+			ps.setString(1, editData.getName());
+            ps.setString(2, editData.getSurname());
+            ps.setString(3, editData.getEmail());
+            ps.executeUpdate();
+		}catch (SQLException e) {
+			logger.info("DAOException in SQL (edit profile)");
+            throw new DAOException(e);
+        } finally {
+        	pool.closeConnection(con, ps);
+        }
 	}
 }

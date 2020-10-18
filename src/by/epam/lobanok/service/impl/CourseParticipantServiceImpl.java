@@ -12,7 +12,7 @@ import by.epam.lobanok.service.exception.ServiceException;
 public class CourseParticipantServiceImpl implements CourseParticipantService {
 
 	@Override
-	public List<CourseParticipant> findCoursePartucepant(int runningCourseID) throws ServiceException {
+	public List<CourseParticipant> findCoursePartucepants(int runningCourseID) throws ServiceException {
 		CourseParticipantDAO courseParticipantDAO = DAOFactory.getInstance().getCourseParticipantDAO(); 
 		
 		List<CourseParticipant> courseParticipants;

@@ -30,7 +30,7 @@ public class Entrance implements Command {
 	private final String UNCORRECT_DATA = "Некорректные данные";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final String MAIN_PAGE = "jsp/main.jsp";
+	//private final String MAIN_PAGE = "jsp/main.jsp";
 	//private final String USER_PAGE = "/WEB-INF/jsp/userPage.jsp";	
 	private final String GO_TO_USER_PAGE = "Controller?command=go_to_user_page";
 	private final String GO_TO_MAIN_PAGE = "Controller?command=go_to_main_page";
@@ -44,8 +44,7 @@ public class Entrance implements Command {
 		entrData.setLogin(request.getParameter(LOGIN));
 		entrData.setPassword(request.getParameter(PASSWORD));
 		
-		if(!Validator.getInstance().validateEntranceData(entrData)) {	
-			//response.sendRedirect(GO_TO_MAIN_PAGE + EXCEPTION_MESSAGE + UNCORRECT_DATA);
+		if(!Validator.getInstance().validateEntranceData(entrData)) {
 			page = GO_TO_MAIN_PAGE + EXCEPTION_MESSAGE_ATTRIBUTE + UNCORRECT_DATA;
 		}
 		
@@ -53,17 +52,12 @@ public class Entrance implements Command {
 		User user;
 		try {
 			user = entranceService.entrance(entrData);
-			
-			//request.setAttribute(EXCEPTION_MESSAGE, null);
-			//request.getSession(true).setAttribute(USER, user);
-			page = GO_TO_USER_PAGE;
-			//response.sendRedirect(GO_TO_USER_PAGE);		
-		}catch(NoSuchUserServiceException e) {
-			//response.sendRedirect(GO_TO_MAIN_PAGE + EXCEPTION_MESSAGE + NO_SUCH_USER);	
+			request.getSession(true).setAttribute(USER, user);
+			page = GO_TO_USER_PAGE;		
+		}catch(NoSuchUserServiceException e) {	
 			page = GO_TO_MAIN_PAGE + EXCEPTION_MESSAGE_ATTRIBUTE + NO_SUCH_USER;
 			
 		}catch(ServiceException e) {
-			//response.sendRedirect(GO_TO_MAIN_PAGE + EXCEPTION_MESSAGE + SERVER_EXCEPTION);
 			page = GO_TO_MAIN_PAGE + EXCEPTION_MESSAGE_ATTRIBUTE + SERVER_EXCEPTION;
 		}
 		response.sendRedirect(page);
