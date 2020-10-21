@@ -18,6 +18,8 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 	private static final Logger logger = LogManager.getLogger(RegistrationDAO.class);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
+	private static final String ID = "id";
+	
 	private static final String FIND_ROLE_ID = "SELECT roles.id FROM roles WHERE roles.role=?";	
 	private static final String ADD_USER = "INSERT INTO users(login, password, name, surname, age, sex, email, roles_id) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";	
@@ -25,9 +27,7 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
-	public boolean registration(RegistrationData regData)  throws DAOException{		
-		boolean registration;
-		registration = false;		
+	public void registration(RegistrationData regData)  throws DAOException{				
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet result = null;
@@ -38,11 +38,10 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 			ps = con.prepareStatement(FIND_ROLE_ID); 
 			ps.setString(1, regData.getRole());
 			result = ps.executeQuery();	
-			if(!result.next()) {
-				return false;
-			}	
+			result.next();
+			
 			int role_id;
-			role_id = result.getInt("id");
+			role_id = result.getInt(ID);
 			
 			ps = con.prepareStatement(ADD_USER); 
 			ps.setString(1, regData.getLogin());
@@ -53,16 +52,15 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 			ps.setString(6, regData.getSex());
 			ps.setString(7, regData.getEmail());
 			ps.setInt(8, role_id);
-			if(ps.executeUpdate() == 1) {
-				registration = true;
-			}			
+			
+			ps.executeUpdate();
 		}catch (SQLException e) {
 			logger.info("DAOException");
             throw new DAOException(e);
         } finally {
         	pool.closeConnection(con, ps);
         }
-		return registration;
+		return;
 	}
 	
 	

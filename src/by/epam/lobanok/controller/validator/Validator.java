@@ -21,7 +21,7 @@ public class Validator {
 		int age = regData.getAge();
 		String email = regData.getEmail();
 		
-		if((regData.getLogin().length() < 3) || (regData.getPassword().length() < 5)
+		if((regData.getLogin().trim().length() < 3) || (regData.getPassword().length() < 5)
 				||(regData.getName() == null) || (regData.getSurname() == null)
 				||(regData.getSex() == null) || (regData.getRole() == null)
 				||(age < 14) || (age >  100) || (email == null)) {

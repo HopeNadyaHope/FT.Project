@@ -13,13 +13,15 @@
 <fmt:message bundle="${loc}" key="local.registration" var="registration" />
 
 <body>
+<c:if test="${sessionScope.user eq null}">
 	<div class="container">
 		<form action="Controller" method="post">
 		
-		<c:if test="${not empty requestScope.exceptionMessage}">
-			<h1><c:out value="${requestScope.exceptionMessage}" /></h1>
+		<c:if test="${not empty exceptionMessage}">
+			<h1><c:out value="${exceptionMessage}" /></h1>
 			<c:out value="hello" />
 		</c:if>
+		
 		
 			<input type="hidden" name="command" value="entrance" />
 			<h1><c:out value="${login}" /></h1>
@@ -34,8 +36,10 @@
 			<div class="button"><input type="submit" name="entrance" value="${entrance}" />	</div>
 		</form>
 
+
 		<a href="Controller?command=go_to_registration_page"><c:out value="${registration}" /></a>
 	</div>
+</c:if>
 	
 	<div class="services-photo">
 		<a href=""><img src="images/coursesPhoto/course.jpg"></a>  

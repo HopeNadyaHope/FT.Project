@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
@@ -15,8 +16,10 @@ import by.epam.lobanok.dao.CourseDAO;
 import by.epam.lobanok.dao.CourseParticipantDAO;
 import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.dao.pool.ConnectionPool;
+import by.epam.lobanok.entity.Course;
 import by.epam.lobanok.entity.CourseParticipant;
 import by.epam.lobanok.entity.Result;
+import by.epam.lobanok.entity.RunningCourse;
 import by.epam.lobanok.entity.User;
 
 public class CourseParticipantDAOImpl implements CourseParticipantDAO{
@@ -38,14 +41,23 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 	
 	private static final String ADD_COURSE_PARTICIPANT = "INSERT INTO course_participants(users_id, running_courses_id) VALUES(?,?)";
 
+	private static final String FIND_COURSES_PARTICIPANT_RESULTS =" ";
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 	private static final String ID = "id";
 	private static final String USER_ID = "userID";
 	private static final String NAME = "name";
 	private static final String SURNAME = "surname";
+	
 	private static final String RATING = "rating";
 	private static final String REVIEW = "review";	
 	
+	private static final String COURSE_NAME = "courseName";
+	private static final String DESCRIPTION = "description";
+	private static final String PASSING = "passing";
+	private static final String START = "start";
+	private static final String END = "end";	
+
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<CourseParticipant> findCourseParticipants(int runningCourseID) throws DAOException {
@@ -139,5 +151,56 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
         	pool.closeConnection(con, ps);
         }
         return false;
+	}
+
+	@Override
+	public List<CourseParticipant> findCoursesParticipantResults(int studentID) throws DAOException {
+		List<CourseParticipant> coursesParticipantResults = new ArrayList<CourseParticipant>();
+		CourseParticipant courseParticipantResult;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		
+		try {
+			con = pool.takeConnection();
+			ps = con.prepareStatement(FIND_COURSES_PARTICIPANT_RESULTS);
+			ps.setInt(1, studentID);
+			resultSet = ps.executeQuery();
+			
+			while(resultSet.next()) {
+                courseParticipantResult = new CourseParticipant();
+				RunningCourse runningCourse = new RunningCourse();                
+                runningCourse.setStart(new Date(resultSet.getDate(START).getTime()));
+                runningCourse.setEnd(new Date(resultSet.getDate(END).getTime()));
+                runningCourse.setPassing(resultSet.getString(PASSING));
+                
+                User teacher = new User();
+                teacher.setName(resultSet.getString(NAME));
+                teacher.setSurname(resultSet.getString(SURNAME));
+                runningCourse.setTeacher(teacher);
+                
+                Course course = new Course();
+                course.setCourseName(resultSet.getString(COURSE_NAME));
+                course.setDescription(resultSet.getString(DESCRIPTION));
+                runningCourse.setCourse(course);                
+				 
+                Result result = new Result();
+                if(resultSet.getString(RATING) != null) {
+                	result.setRating(Integer.parseInt(resultSet.getString(RATING)));
+                }
+                result.setReview(resultSet.getString(REVIEW));
+                courseParticipantResult.setResult(result);
+
+                coursesParticipantResults.add(courseParticipantResult);
+			}
+			
+		}catch (SQLException e) {
+			logger.info("DAOException");
+            throw new DAOException(e);
+        } finally {
+        	pool.closeConnection(con, ps);
+        }
+        return coursesParticipantResults;
 	}
 }

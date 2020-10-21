@@ -6,17 +6,11 @@ import by.epam.lobanok.dao.CourseDAO;
 import by.epam.lobanok.dao.DAOFactory;
 import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.entity.Course;
-import by.epam.lobanok.entity.RunningCourse;
-import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.CourseService;
 import by.epam.lobanok.service.exception.ServiceException;
 
 public class CourseServiceImpl implements CourseService{
 
-	private static final String STUDENT = "студент";
-	private static final String TEACHER = "преподаватель";
-
-	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<Course> findCourses() throws ServiceException {
 		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 
@@ -30,54 +24,28 @@ public class CourseServiceImpl implements CourseService{
 		return courses;
 	}
 	
-	public List<RunningCourse> findUserCourses(User user) throws ServiceException {
-		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 		
-		List<RunningCourse> runningCourses = null;
-		
-		int userID;
-		userID = user.getId();
-		
-		try {
-			switch(user.getRole()) {
-			case STUDENT:
-				runningCourses = courseDAO.findStudentCourses(userID);
-				break;
-			case TEACHER:
-				runningCourses  = courseDAO.findTeacherCourses(userID);	
-				for(RunningCourse runningCourse: runningCourses) {
-					runningCourse.setTeacher(user);
-				}
-				break;
-			}
-		} catch (DAOException e) {
-			throw new ServiceException(e);
-		}
-		return runningCourses;
-	}
 	
 	@Override
-	public List<RunningCourse> findRunningCourses(int courseID) throws ServiceException {
-		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 
-		
-		List<RunningCourse> runningCourses;
+	public Course findCourse(int courseID) throws ServiceException {
+		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 		
+		Course course = null;	
 		try {
-			runningCourses = courseDAO.findRunningCourses(courseID);
+			course = courseDAO.findCourse(courseID);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
-		return runningCourses;
+		return course;
 	}
 
 	@Override
-	public RunningCourse findRunningCourse(int runningCourseID) throws ServiceException {
+	public void editCourse(Course editedCourse) {
 		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 
-		
-		RunningCourse runningCourse;
-		try {
-			runningCourse = courseDAO.findRunningCourse(runningCourseID);
-		} catch (DAOException e) {
-			throw new ServiceException(e);
-		}
-		return runningCourse;
+		courseDAO.editCourse(editedCourse);		
+	}
+
+	@Override
+	public void addCourse(Course course) {
+		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 
+		courseDAO.addCourse(course);		
 	}
 }

@@ -15,24 +15,24 @@ import by.epam.lobanok.service.exception.DublicateUserServiceException;
 import by.epam.lobanok.service.exception.ServiceException;
 
 public class Registration implements Command {
-	private final String LOGIN = "login";
-	private final String PASSWORD = "password";
-	private final String NAME = "name";
-	private final String SURNAME = "surname";
-	private final String AGE = "age";
-	private final String SEX = "sex";
-	private final String EMAIL = "email";
-	private final String ROLE = "role";	
+	private static final String LOGIN = "login";
+	private static final String PASSWORD = "password";
+	private static final String NAME = "name";
+	private static final String SURNAME = "surname";
+	private static final String AGE = "age";
+	private static final String SEX = "sex";
+	private static final String EMAIL = "email";
+	private static final String ROLE = "role";	
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final String EXCEPTION_MESSAGE = "exceptionMessage";
-	private final String SERVER_EXCEPTION = "Ошибка сервера";
-	private final String DUBLICATE_LOGIN = "Пользователь с таким логином существует";
-	private final String UNCORRECT_DATA = "Некорректные данные";
+	private static final String EXCEPTION_MESSAGE = "exceptionMessage";
+	private static final String SERVER_EXCEPTION = "Ошибка сервера";
+	private static final String DUBLICATE_LOGIN = "Пользователь с таким логином существует";
+	private static final String UNCORRECT_DATA = "Некорректные данные";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final String MAIN_PAGE = "jsp/main.jsp";
-	private final String REGISTRATION_PAGE = "jsp/registration.jsp";	
+	private static final String MAIN_PAGE = "jsp/main.jsp";
+	private static final String REGISTRATION_PAGE = "jsp/registration.jsp";	
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
@@ -47,15 +47,14 @@ public class Registration implements Command {
 		regData.setEmail(request.getParameter(EMAIL));
 		regData.setRole(request.getParameter(ROLE));
 		
-		RegistrationService registrationService = ServiceFactory.getInstance().getRegistrationService();
 		if(!Validator.getInstance().validateRegistrationData(regData)) {			
 			request.setAttribute(SERVER_EXCEPTION, UNCORRECT_DATA);			
 			request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);		
 		}
-		
-		boolean registration;
+
+		RegistrationService registrationService = ServiceFactory.getInstance().getRegistrationService();
 		try {				
-			registration = registrationService.registration(regData);
+			registrationService.registration(regData);
 			request.setAttribute(EXCEPTION_MESSAGE, null);
 			request.getRequestDispatcher(MAIN_PAGE).forward(request, response); 
 			

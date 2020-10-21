@@ -1,11 +1,12 @@
 package by.epam.lobanok.service.impl;
 
+import java.util.List;
+
 import by.epam.lobanok.dao.DAOFactory;
 import by.epam.lobanok.dao.EntranceDAO;
 import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.dao.exception.NoSuchUserDAOException;
 import by.epam.lobanok.entity.EntranceData;
-import by.epam.lobanok.entity.RegistrationData;
 import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.EntranceService;
 import by.epam.lobanok.service.exception.NoSuchUserServiceException;
@@ -28,8 +29,24 @@ public class EntranceServiceImpl implements EntranceService{
 	}
 
 	@Override
-	public User editPrifile(RegistrationData editData) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+	public void editProfile(User editedUser) throws ServiceException {
+		EntranceDAO entranceDAO = DAOFactory.getInstance().getEntranceDAO(); 
+		try { 
+			entranceDAO.editProfile(editedUser); 
+		} catch (DAOException e) {
+			throw new ServiceException(e); 
+		}
+	}
+
+	@Override
+	public List<User> findAllTeachers() throws ServiceException {
+		List<User> teachers = null;
+		EntranceDAO entranceDAO = DAOFactory.getInstance().getEntranceDAO(); 
+		try {
+			teachers = entranceDAO.findTeachers();
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		return teachers;
 	}
 }

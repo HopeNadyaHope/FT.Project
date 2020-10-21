@@ -11,7 +11,7 @@ import by.epam.lobanok.service.exception.ServiceException;
 public class RegistrationServiceImpl implements RegistrationService {
 
 	@Override
-	public boolean registration(RegistrationData regData) throws ServiceException {
+	public void registration(RegistrationData regData) throws ServiceException {
 		RegistrationDAO registrationDAO = DAOFactory.getInstance().getRegistrationDAO(); 
 		
 		boolean dublicateLogin;
@@ -24,12 +24,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 			throw new DublicateUserServiceException();
 		}
 		
-		boolean registration;
 		try { 
-			registration = registrationDAO.registration(regData); 
+			registrationDAO.registration(regData); 
 		} catch (DAOException e) {
 			throw new ServiceException(e); 
 		}
-		return registration;
 	}
 }

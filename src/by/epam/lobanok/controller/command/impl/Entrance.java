@@ -29,9 +29,7 @@ public class Entrance implements Command {
 	private final String NO_SUCH_USER = "Нет пользователя с таким логином и паролем";
 	private final String UNCORRECT_DATA = "Некорректные данные";
 	
-	/////////////////////////////////////////////////////////////////////////////////////////////
-	//private final String MAIN_PAGE = "jsp/main.jsp";
-	//private final String USER_PAGE = "/WEB-INF/jsp/userPage.jsp";	
+	/////////////////////////////////////////////////////////////////////////////////////////////	
 	private final String GO_TO_USER_PAGE = "Controller?command=go_to_user_page";
 	private final String GO_TO_MAIN_PAGE = "Controller?command=go_to_main_page";
 		

@@ -7,17 +7,24 @@
 <fmt:message bundle="${loc}" key="local.courseDescription" var="courseDescription" />
 <fmt:message bundle="${loc}" key="local.teacher" var="teacher" />
 <fmt:message bundle="${loc}" key="local.passing" var="passing" />
+<fmt:message bundle="${loc}" key="local.start" var="start" />
+<fmt:message bundle="${loc}" key="local.end" var="end" />
 <fmt:message bundle="${loc}" key="local.follow" var="follow" />
+<fmt:message bundle="${loc}" key="local.addCourse" var="addCourse" />
 
 
 <body>
-	<table border = "1" width = "100%">
+	<c:if test="${user.role eq 'администратор'}">	
+		<a href="Controller?command=go_to_add_running_course_page&courseID=${courseID}"><c:out value="${addCourse}" /></a>
+	</c:if>	
+
+	<table border = "1" width = "80%" align="center">
          <tr>
             <th><c:out value="${courseName}" /></th>
            	<th><c:out value="${courseDescription}" /></th>
            	<th><c:out value="${teacher}" />
-           	<th><c:out value="начало" />
-           	<th><c:out value="конец" />
+           	<th><c:out value="${start}" />
+           	<th><c:out value="${end}" />
            	<th><c:out value="${passing}" />
            	<c:if test="${sessionScope.user.role eq 'студент'}">
            		<th><c:out value="${follow}" /></th>           	

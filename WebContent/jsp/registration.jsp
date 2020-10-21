@@ -17,7 +17,7 @@
 
 <fmt:message bundle="${loc}" key="local.email" var="email" />
 
-<fmt:message bundle="${loc}" key="local.position" var="position" />
+<fmt:message bundle="${loc}" key="local.role" var="role" />
 <fmt:message bundle="${loc}" key="local.student" var="student" />
 <fmt:message bundle="${loc}" key="local.teacher" var="teacher" />
 
@@ -73,7 +73,7 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-25"><c:out value="${position}" /></div>
+			<div class="col-25"><c:out value="${role}" /></div>
 			<input type="radio" name="role" value="студент"><c:out value="${student}" />
 			<input type="radio" name="role" value="преподаватель"><c:out value="${teacher}" />			
 		</div>

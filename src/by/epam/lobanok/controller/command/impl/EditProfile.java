@@ -7,15 +7,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
+import by.epam.lobanok.entity.User;
+import by.epam.lobanok.service.EntranceService;
+import by.epam.lobanok.service.ServiceFactory;
 import by.epam.lobanok.service.exception.ServiceException;
 
 public class EditProfile implements Command {
+	private static final String USER = "user";
+	private static final String NAME = "name";
+	private static final String SURNAME = "surname";
+	private static final String AGE = "age";
+	private static final String SEX = "sex";
+	private static final String EMAIL = "email";
+	private static final String ROLE = "role";
 
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	private static final String GO_TO_USER_PAGE = "Controller?command=go_to_user_page";
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		// TODO Auto-generated method stub
-
+		
+		User user = (User)request.getSession().getAttribute(USER);
+		int userID;
+		userID = user.getId();
+		
+		User editedUser = new User();
+		//Validator
+		editedUser.setId(userID);
+		editedUser.setName(request.getParameter(NAME));
+		editedUser.setSurname(request.getParameter(SURNAME));
+		editedUser.setAge(Integer.parseInt(request.getParameter(AGE)));
+		editedUser.setSex(request.getParameter(SEX));
+		editedUser.setEmail(request.getParameter(EMAIL));
+		editedUser.setRole(request.getParameter(ROLE));
+		
+		
+		EntranceService entranceService = ServiceFactory.getInstance().getEntranceService();
+		entranceService.editProfile(editedUser);
+		
+		request.getSession(true).setAttribute(USER, editedUser);
+		response.sendRedirect(GO_TO_USER_PAGE);
 	}
-
 }

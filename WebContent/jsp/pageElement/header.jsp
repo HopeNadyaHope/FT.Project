@@ -45,10 +45,12 @@
 					<input type="submit" value="${en_button}" />
 				</form>
 				
+				<c:if test="${sessionScope.user ne null}">
 				<form action="Controller" method="post">
 					<input type="hidden" name="command" value="exit" />
 					<input type="submit" value="${exit}" />
 				</form>
+				</c:if>
 			</div>			
 		</div>	
 	</div>

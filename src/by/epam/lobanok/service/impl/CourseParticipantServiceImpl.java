@@ -35,4 +35,17 @@ public class CourseParticipantServiceImpl implements CourseParticipantService {
 		}
 		return follow;
 	}
+
+	@Override
+	public List<CourseParticipant> getCoursesParticipantResults(int studentID) throws ServiceException {
+		CourseParticipantDAO courseParticipantDAO = DAOFactory.getInstance().getCourseParticipantDAO(); 
+		
+		List<CourseParticipant> coursesParticipantResults;
+		try {
+			coursesParticipantResults = courseParticipantDAO.findCoursesParticipantResults(studentID);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		return coursesParticipantResults;
+	}
 }

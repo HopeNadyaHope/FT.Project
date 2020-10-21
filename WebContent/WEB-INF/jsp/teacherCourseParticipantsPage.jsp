@@ -26,7 +26,7 @@
            	<th><c:out value="${student}" /></th>
            	<th><c:out value="${rating}" />
            	<th><c:out value="${review}" />
-           	<th><c:out value="оценить" />
+           	<th><c:out value="${rate}" />
          </tr>
 
 	<c:forEach items="${requestScope.courseParticipants}" var="courseParticipants">  

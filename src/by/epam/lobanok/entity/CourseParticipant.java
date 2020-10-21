@@ -7,6 +7,7 @@ public class CourseParticipant implements Serializable{
 	
 	private int id;
 	private User student;
+	private RunningCourse runningCourse;
 	private Result result;
 	
 	public CourseParticipant() {}
@@ -27,6 +28,14 @@ public class CourseParticipant implements Serializable{
 		this.student = student;
 	}
 
+	public RunningCourse getRunningCourse() {
+		return runningCourse;
+	}
+
+	public void setRunningCourse(RunningCourse runningCourse) {
+		this.runningCourse = runningCourse;
+	}
+
 	public Result getResult() {
 		return result;
 	}
@@ -41,6 +50,7 @@ public class CourseParticipant implements Serializable{
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result + ((this.result == null) ? 0 : this.result.hashCode());
+		result = prime * result + ((runningCourse == null) ? 0 : runningCourse.hashCode());
 		result = prime * result + ((student == null) ? 0 : student.hashCode());
 		return result;
 	}
@@ -61,6 +71,11 @@ public class CourseParticipant implements Serializable{
 				return false;
 		} else if (!result.equals(other.result))
 			return false;
+		if (runningCourse == null) {
+			if (other.runningCourse != null)
+				return false;
+		} else if (!runningCourse.equals(other.runningCourse))
+			return false;
 		if (student == null) {
 			if (other.student != null)
 				return false;
@@ -71,6 +86,7 @@ public class CourseParticipant implements Serializable{
 
 	@Override
 	public String toString() {
-		return "CourseParticipant [id=" + id + ", student=" + student + ", result=" + result + "]";
+		return "CourseParticipant [id=" + id + ", student=" + student + ", runningCourse=" + runningCourse + ", result="
+				+ result + "]";
 	}	
 }

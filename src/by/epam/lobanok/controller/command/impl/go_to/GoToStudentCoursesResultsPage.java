@@ -8,30 +8,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
-import by.epam.lobanok.entity.RunningCourse;
+import by.epam.lobanok.entity.CourseParticipant;
 import by.epam.lobanok.entity.User;
-import by.epam.lobanok.service.RunningCourseService;
+import by.epam.lobanok.service.CourseParticipantService;
 import by.epam.lobanok.service.ServiceFactory;
 import by.epam.lobanok.service.exception.ServiceException;
 
-public class GoToUserCoursesPage implements Command{
-
+public class GoToStudentCoursesResultsPage implements Command {
 	private static final String USER = "user";
-	private static final String RUNNING_COURSES = "runningCourses";
+	private static final String COURSE_RESULT = "courseResult";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private static final String USER_COURSES_PAGE = "WEB-INF/jsp/userCoursesPage.jsp";
+	private static final String USER_COURSES_RESULT_PAGE = "WEB-INF/jsp/studentCourseResultPage.jsp";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		RunningCourseService runningcourseService = ServiceFactory.getInstance().getRunningCourseService();
+		User student = (User)request.getSession().getAttribute(USER);
+		int studentID;
+		studentID = student.getId();
 		
-		List<RunningCourse> runningCourses;
-		runningCourses = runningcourseService.findUserCourses((User)request.getSession().getAttribute(USER));		
-		request.setAttribute(RUNNING_COURSES, runningCourses);
+		CourseParticipantService courseParticipantService = ServiceFactory.getInstance().getCourseParticipantService();
+		List<CourseParticipant> results;
+		results = courseParticipantService.getCoursesParticipantResults(studentID);
+		
+		
 
-		request.getRequestDispatcher(USER_COURSES_PAGE).forward(request, response);			
 	}
+
 }

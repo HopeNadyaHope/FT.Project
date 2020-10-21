@@ -10,8 +10,8 @@ import by.epam.lobanok.controller.command.Command;
 import by.epam.lobanok.entity.Result;
 import by.epam.lobanok.entity.RunningCourse;
 import by.epam.lobanok.entity.User;
-import by.epam.lobanok.service.CourseService;
 import by.epam.lobanok.service.ResultService;
+import by.epam.lobanok.service.RunningCourseService;
 import by.epam.lobanok.service.ServiceFactory;
 import by.epam.lobanok.service.exception.ServiceException;
 
@@ -36,9 +36,9 @@ public class GoToStudentCourseResultPage implements Command{
 		result = resultService.getCourseResult(student, runningCourseID);	
 		request.setAttribute(COURSE_RESULT, result);
 
-		CourseService courseService = ServiceFactory.getInstance().getCourseService();
+		RunningCourseService runningcourseService = ServiceFactory.getInstance().getRunningCourseService();
 		RunningCourse runningCourse;
-		runningCourse = courseService.findRunningCourse(runningCourseID);
+		runningCourse = runningcourseService.findRunningCourse(runningCourseID);
 		request.setAttribute(RUNNING_COURSE, runningCourse);
 		
 		request.getRequestDispatcher(USER_COURSES_RESULT_PAGE).forward(request, response);			

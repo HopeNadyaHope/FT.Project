@@ -33,12 +33,12 @@
 		
 		<div class="row">
 			<div class="col-25"><c:out value="${age}" /></div>
-			<div class="col-75"><c:out value="${user.age}"/></div>	
+			<div class="col-75"><input type="number" name="age" value="${user.age}" readonly/></div>	
 		</div>
 		
 		<div class="row">
 			<div class="col-25"><c:out value="${sex}" /></div>
-			<div class="col-75"><c:out value="${user.age}"/></div>		
+			<div class="col-75"><input type="text" name="sex" value="${user.sex}" readonly/></div>		
 		</div>
 		
 		<div class="row">
@@ -49,7 +49,7 @@
 		
 		<div class="row">
 			<div class="col-25"><c:out value="${role}" /></div>
-			<c:out value="${user.role}" />	
+			<div class="col-75"><input type="text" name="role" value="${user.role}" readonly/></div>	
 		</div>
 			
 		<div class="row">

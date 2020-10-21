@@ -20,14 +20,14 @@
 	<c:out value="${welcome}" /><br />	
 	<jsp:useBean id="user" class="by.epam.lobanok.entity.User" scope="session" />
 	
-	<div class="photo">
+	<div class="container">
 		<c:if test="${user.sex eq 'жен'}">	
            <img src="images/userPhoto/female.jpg">   
     	</c:if>    	
     	<c:if test="${user.sex eq 'муж'}">	
            <img src="images/userPhoto/men.jpg">   
     	</c:if>
-    </div>
+
     
 	<br />	
 	<c:out value="${name} : " /><c:out value="${user.name}" /><br />
@@ -37,7 +37,8 @@
 	<c:out value="${role} : " /><c:out value="${user.role}" /><br />
 	<c:out value="${email} : " />	<c:out value="${user.email}" /><br />
 	
-	<a href="Controller?command=go_to_edit_profile"><c:out value="${edit}" /></a>	
+	<a href="Controller?command=go_to_edit_profile"><c:out value="${edit}" /></a>
+</div>
 </body>
 
 <%@include file="../../jsp/pageElement/footer.jsp"%>
