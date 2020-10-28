@@ -11,4 +11,5 @@ public interface RunningCourseDAO {
 	List<RunningCourse> findTeacherCourses(int userID) throws DAOException;	
 	RunningCourse findRunningCourse(int runningCourseID) throws DAOException;
 	void addRunningCourse(RunningCourse runningCourse) throws DAOException;
+	void editRunningCourse(RunningCourse editedRunningCourse) throws DAOException;
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="../WEB-INF/tld/MyTagDescriptor.tld" prefix="tag"%>
 
 <%@include file="pageElement/header.jsp"%>
 
@@ -48,6 +49,7 @@
 		<a href=""><img src="images/coursesPhoto/course.jpg"></a>      
 	</div>	
 
+	<tag:MyTag/>
 </body>
 
 <%@include file="pageElement/footer.jsp"%>

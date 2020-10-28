@@ -9,8 +9,10 @@
 <fmt:message bundle="${loc}" key="local.passing" var="passing" />
 <fmt:message bundle="${loc}" key="local.start" var="start" />
 <fmt:message bundle="${loc}" key="local.end" var="end" />
+
 <fmt:message bundle="${loc}" key="local.follow" var="follow" />
 <fmt:message bundle="${loc}" key="local.addCourse" var="addCourse" />
+<fmt:message bundle="${loc}" key="local.edit" var="edit" />
 
 
 <body>
@@ -29,6 +31,7 @@
            	<c:if test="${sessionScope.user.role eq 'студент'}">
            		<th><c:out value="${follow}" /></th>           	
            	</c:if>
+           	
          </tr>
     
 	<c:forEach items="${requestScope.runningCourses}" var="runningCourse">  
@@ -39,15 +42,22 @@
 			<td><c:out value="${runningCourse.start}" /></td>
 			<td><c:out value="${runningCourse.end}" /></td>
 			<td><c:out value="${runningCourse.passing}" /></td>
+			
 			<c:if test="${sessionScope.user.role eq 'студент'}">
-           	<td>
-           		<form action="Controller" method="post">
-					<input type="hidden" name="command" value="add_course_participant" />	
-					<input type="hidden" name="runningCourseID" value="${runningCourse.id}" />	
-					<input type="submit" name="runningCourses" value="${follow}" /> 
-				</form>	 
-			</td>        	
+	           	<td>
+	           		<form action="Controller" method="post">
+						<input type="hidden" name="command" value="add_course_participant" />	
+						<input type="hidden" name="runningCourseID" value="${runningCourse.id}" />	
+						<input type="submit" name="runningCourses" value="${follow}" /> 
+					</form>	 
+				</td>        	
            	</c:if>
+           	
+           	<c:if test="${user.role eq 'администратор'}">
+           		<td>	
+					<a href="Controller?command=go_to_edit_running_course_page&runningCourseID=${runningCourse.id}"><c:out value="${edit}" /></a>
+				</td>
+			</c:if>	
   		</tr>  
 	</c:forEach>
 	</table>

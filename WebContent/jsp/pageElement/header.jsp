@@ -26,6 +26,7 @@
 <fmt:message bundle="${loc}" key="local.courses" var="courses" />
 <fmt:message bundle="${loc}" key="local.myPage" var="myPage" />
 <fmt:message bundle="${loc}" key="local.myCourses" var="myCourses" />
+<fmt:message bundle="${loc}" key="local.myResults" var="myResults" />
 </head>
 
 <header>
@@ -66,6 +67,9 @@
 				<c:if test="${sessionScope.user ne null}">
 					<li><a href="Controller?command=go_to_user_page"><c:out value="${myPage}" /></a></li>
 					<li><a href="Controller?command=go_to_user_courses_page"><c:out value="${myCourses}" /></a></li>
+					<c:if test="${user.role eq 'студент'}">	
+						<li><a href="Controller?command=go_to_student_courses_results_page"><c:out value="${myResults}" /></a></li>
+					</c:if>	
 				</c:if>
 			</ul>
 		</div>

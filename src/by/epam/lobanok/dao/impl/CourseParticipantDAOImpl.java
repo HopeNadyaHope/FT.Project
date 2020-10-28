@@ -41,13 +41,25 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 	
 	private static final String ADD_COURSE_PARTICIPANT = "INSERT INTO course_participants(users_id, running_courses_id) VALUES(?,?)";
 
-	private static final String FIND_COURSES_PARTICIPANT_RESULTS =" ";
+	private static final String FIND_COURSES_PARTICIPANT_RESULTS ="SELECT running_courses.id, running_courses.start, running_courses.end, running_courses.passing, " + 
+			"courses.id AS courseID, courses.courseName, courses.description, " + 
+			"users.id AS teacherID, users.name, users.surname, " + 
+			"results.rating, results.review " + 
+			"FROM course_participants " + 
+			"LEFT OUTER JOIN results ON course_participants.results_id = results.id " + 
+			"JOIN running_courses ON course_participants.running_courses_id = running_courses.id " + 
+			"JOIN courses ON running_courses.courses_id = courses.id " + 
+			"JOIN users ON running_courses.users_id = users.id " + 
+			"WHERE course_participants.id IN" + 
+			"(SELECT course_participants.id FROM course_participants WHERE course_participants.users_id=?)";
 	
 	/////////////////////////////////////////////////////////////////////////////////////
 	private static final String ID = "id";
 	private static final String USER_ID = "userID";
 	private static final String NAME = "name";
 	private static final String SURNAME = "surname";
+	private static final String COURSE_ID = "courseID";
+	private static final String TEACHER_ID = "teacherID";
 	
 	private static final String RATING = "rating";
 	private static final String REVIEW = "review";	
@@ -169,22 +181,31 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 			resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {
-                courseParticipantResult = new CourseParticipant();
-				RunningCourse runningCourse = new RunningCourse();                
+                courseParticipantResult = new CourseParticipant(); 
+                User student = new User();
+                student.setId(studentID);
+                courseParticipantResult.setStudent(student);
+                
+				RunningCourse runningCourse = new RunningCourse();
+				runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));
                 runningCourse.setStart(new Date(resultSet.getDate(START).getTime()));
                 runningCourse.setEnd(new Date(resultSet.getDate(END).getTime()));
                 runningCourse.setPassing(resultSet.getString(PASSING));
                 
+                Course course = new Course();
+                course.setId(Integer.parseInt(resultSet.getString(COURSE_ID)));
+                course.setCourseName(resultSet.getString(COURSE_NAME));
+                course.setDescription(resultSet.getString(DESCRIPTION));
+                runningCourse.setCourse(course);      
+                
                 User teacher = new User();
+                teacher.setId(Integer.parseInt(resultSet.getString(TEACHER_ID)));
                 teacher.setName(resultSet.getString(NAME));
                 teacher.setSurname(resultSet.getString(SURNAME));
                 runningCourse.setTeacher(teacher);
                 
-                Course course = new Course();
-                course.setCourseName(resultSet.getString(COURSE_NAME));
-                course.setDescription(resultSet.getString(DESCRIPTION));
-                runningCourse.setCourse(course);                
-				 
+                courseParticipantResult.setRunningCourse(runningCourse);
+                
                 Result result = new Result();
                 if(resultSet.getString(RATING) != null) {
                 	result.setRating(Integer.parseInt(resultSet.getString(RATING)));

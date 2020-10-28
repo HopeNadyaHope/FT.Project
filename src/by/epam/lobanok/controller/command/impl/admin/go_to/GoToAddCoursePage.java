@@ -1,4 +1,4 @@
-package by.epam.lobanok.controller.command.impl.admin;
+package by.epam.lobanok.controller.command.impl.admin.go_to;
 
 import java.io.IOException;
 

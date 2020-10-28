@@ -31,8 +31,8 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			"JOIN users ON running_courses.users_id = users.id " + 
 			"WHERE courses_id = ?";	
 	
-	private static final String FIND_RUNNING_COURSE = "SELECT  running_courses.id, running_courses.start, running_courses.end, running_courses.passing, "+
-			"courses.courseName, courses.description, users.name, users.surname "+
+	private static final String FIND_RUNNING_COURSE = "SELECT running_courses.id as runningCourseID, running_courses.start, running_courses.end, running_courses.passing, "+
+			" courses.id as courseID, courses.courseName, courses.description, users.id as userID, users.name, users.surname "+
 			"FROM running_courses "+
 			"JOIN courses ON running_courses.courses_id = courses.id "+
 			"JOIN users ON running_courses.users_id = users.id  "+
@@ -58,8 +58,12 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 	
 	
 	private static final String ADD_RUNNING_COURSE = "INSERT INTO running_courses(courses_id,users_id,start,end,passing) VALUES(?,?,?,?,?)";
+	private static final String EDIT_RUNNING_COURSE = "UPDATE running_courses SET users_id=?,start=?,end=?,passing=? WHERE running_courses.id=?";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
+	private static final String RUNNING_COURSE_ID = "runningCourseID";
+	private static final String COURSE_ID = "courseID";
+	private static final String USER_ID = "userID";
 	private static final String ID = "id";
 	private static final String COURSE_NAME = "courseName";
 	private static final String DESCRIPTION = "description";
@@ -132,17 +136,19 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			
 			while(resultSet.next()) {
                 runningCourse = new RunningCourse();
-                runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));
+                runningCourse.setId(Integer.parseInt(resultSet.getString(RUNNING_COURSE_ID)));
                 runningCourse.setStart(new Date(resultSet.getDate(START).getTime()));
                 runningCourse.setEnd(new Date(resultSet.getDate(END).getTime()));
                 runningCourse.setPassing(resultSet.getString(PASSING));
                 
                 User teacher = new User();
+                teacher.setId(resultSet.getInt(USER_ID));
                 teacher.setName(resultSet.getString(NAME));
                 teacher.setSurname(resultSet.getString(SURNAME));
                 runningCourse.setTeacher(teacher);
                 
                 Course course = new Course();
+                course.setId(resultSet.getInt(COURSE_ID));
                 course.setCourseName(resultSet.getString(COURSE_NAME));
                 course.setDescription(resultSet.getString(DESCRIPTION));
                 runningCourse.setCourse(course);
@@ -256,7 +262,33 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			ps.setInt(2, runningCourse.getTeacher().getId());
 			ps.setString(3, "2020-10-01");////////////////////////////////////////////////////////
 			ps.setString(4, "2020-12-01");////////////////////////////////////////////////////////
-			ps.setString(5, runningCourse.getPassing());			
+			ps.setString(5, runningCourse.getPassing());	
+			
+			ps.executeUpdate();
+			
+		}catch (SQLException e) {
+			logger.info("DAOException in SQL (add running course)");
+        } finally {
+        	pool.closeConnection(con, ps);
+        }
+	}
+
+
+	@Override
+	public void editRunningCourse(RunningCourse editedRunningCourse) throws DAOException {
+		System.out.println(editedRunningCourse);//////////////////////////////////////////////////////
+		Connection con = null;
+		PreparedStatement ps = null;		
+		try {
+			con = pool.takeConnection();
+			ps = con.prepareStatement(EDIT_RUNNING_COURSE); 
+
+			ps.setInt(1, editedRunningCourse.getTeacher().getId());
+			ps.setString(2, "2020-09-01");////////////////////////////////////////////////////////
+			ps.setString(3, "2020-12-01");////////////////////////////////////////////////////////
+			ps.setString(4, editedRunningCourse.getPassing());		
+			ps.setInt(5, editedRunningCourse.getId());
+			
 			ps.executeUpdate();
 			
 		}catch (SQLException e) {

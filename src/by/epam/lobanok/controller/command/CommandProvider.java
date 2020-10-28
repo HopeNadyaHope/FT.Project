@@ -24,9 +24,11 @@ import by.epam.lobanok.controller.command.impl.Registration;
 import by.epam.lobanok.controller.command.impl.admin.AddCourse;
 import by.epam.lobanok.controller.command.impl.admin.AddRunningCourse;
 import by.epam.lobanok.controller.command.impl.admin.EditCourse;
-import by.epam.lobanok.controller.command.impl.admin.GoToAddCoursePage;
-import by.epam.lobanok.controller.command.impl.admin.GoToAddRunningCoursePage;
-import by.epam.lobanok.controller.command.impl.admin.GoToEditCoursePage;
+import by.epam.lobanok.controller.command.impl.admin.EditRunningCourse;
+import by.epam.lobanok.controller.command.impl.admin.go_to.GoToAddCoursePage;
+import by.epam.lobanok.controller.command.impl.admin.go_to.GoToAddRunningCoursePage;
+import by.epam.lobanok.controller.command.impl.admin.go_to.GoToEditCoursePage;
+import by.epam.lobanok.controller.command.impl.admin.go_to.GoToEditRunningCoursePage;
 
 public class CommandProvider {
 	private Map<CommandName, Command> commands = new HashMap<CommandName, Command>();
@@ -64,6 +66,8 @@ public class CommandProvider {
 		commands.put(CommandName.ADD_RUNNING_COURSE, new AddRunningCourse());
 		commands.put(CommandName.GO_TO_ADD_RUNNING_COURSE_PAGE, new GoToAddRunningCoursePage());
 		
+		commands.put(CommandName.EDIT_RUNNING_COURSE, new EditRunningCourse());
+		commands.put(CommandName.GO_TO_EDIT_RUNNING_COURSE_PAGE, new GoToEditRunningCoursePage());		
 	}
 	
 	public Command getCommand(String commandValue) {

@@ -78,4 +78,15 @@ public class RunningCourseServiceImpl implements RunningCourseService {
 			throw new ServiceException(e);
 		}
 	}
+
+
+	@Override
+	public void editRunningCourse(RunningCourse editedRunningCourse) throws ServiceException {
+		RunningCourseDAO runningCourseDAO = DAOFactory.getInstance().getRunningCourseDAO(); 
+		try {
+			runningCourseDAO.editRunningCourse(editedRunningCourse);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}
 }

@@ -4,13 +4,18 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
+import javax.servlet.jsp.tagext.TagSupport;
 
-public class MyTag extends SimpleTagSupport{
-	
-	public void doStartTag() throws JspException, IOException {
-       JspWriter writer = getJspContext().getOut();
-       writer.println("Республика Беларусь, г.Минск");
-       writer.println("Октябрьская 10");
-    }
+public class MyTag extends TagSupport{
+	private static final long serialVersionUID = 1L;
+
+	public int doStartTag() throws JspException {
+       JspWriter writer = pageContext.getOut();
+       try { 
+    	  writer.println("Все права защищены");
+       } catch (IOException e) {
+    	   throw new JspException(e);
+       }
+       return SKIP_BODY;
+	}
 } 

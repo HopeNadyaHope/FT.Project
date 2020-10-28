@@ -7,14 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
-import by.epam.lobanok.entity.Course;
 import by.epam.lobanok.entity.RunningCourse;
 import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.RunningCourseService;
 import by.epam.lobanok.service.ServiceFactory;
 import by.epam.lobanok.service.exception.ServiceException;
 
-public class AddRunningCourse implements Command{
+public class EditRunningCourse implements Command {
+	private static final String RUNNING_COURSE_ID = "runningCourseID";
 	private static final String COURSE_ID = "courseID";
 	private static final String TEACHER_ID = "teacherID";
 	private static final String START = "start";
@@ -31,26 +31,26 @@ public class AddRunningCourse implements Command{
 		
 		//Validator
 		
-		RunningCourse runningCourse = new RunningCourse();
-		
-		Course course = new Course();	
-		int courseID;
-		courseID = Integer.parseInt(request.getParameter(COURSE_ID));
-		course.setId(courseID);
-		runningCourse.setCourse(course);
+		RunningCourse editedRunningCourse = new RunningCourse();
+		int runningCourseID;
+		runningCourseID = Integer.parseInt(request.getParameter(RUNNING_COURSE_ID));
+		editedRunningCourse.setId(runningCourseID);
 		
 		User teacher = new User();
 		teacher.setId(Integer.parseInt(request.getParameter(TEACHER_ID)));
-		runningCourse.setTeacher(teacher);
+		editedRunningCourse.setTeacher(teacher);
 		
 		//add start
 		//add end
 		
-		runningCourse.setPassing(request.getParameter(PASSING));
+		editedRunningCourse.setPassing(request.getParameter(PASSING));
 		
 		RunningCourseService runningCourseService = ServiceFactory.getInstance().getRunningCourseService();
-		runningCourseService.addRunningCourse(runningCourse);
+		runningCourseService.editRunningCourse(editedRunningCourse);
 		
+		int courseID;
+		courseID = Integer.parseInt(request.getParameter(COURSE_ID));
 		response.sendRedirect(GO_TO_RUNNING_COURSES_PAGE + courseID);
 	}
+
 }

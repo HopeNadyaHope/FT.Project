@@ -11,4 +11,5 @@ public interface RunningCourseService {
 	List<RunningCourse> findRunningCourses(int courseID) throws ServiceException;	
 	RunningCourse findRunningCourse(int runningCourseID) throws ServiceException;
 	void addRunningCourse(RunningCourse runningCourse) throws ServiceException;
+	void editRunningCourse(RunningCourse editedRunningCourse) throws ServiceException;
 }

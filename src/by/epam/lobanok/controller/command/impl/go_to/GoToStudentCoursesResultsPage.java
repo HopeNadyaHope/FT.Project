@@ -16,10 +16,10 @@ import by.epam.lobanok.service.exception.ServiceException;
 
 public class GoToStudentCoursesResultsPage implements Command {
 	private static final String USER = "user";
-	private static final String COURSE_RESULT = "courseResult";
+	private static final String RESULTS = "results";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private static final String USER_COURSES_RESULT_PAGE = "WEB-INF/jsp/studentCourseResultPage.jsp";
+	private static final String STUDENT_RESULTS_PAGE = "WEB-INF/jsp/studentResultsPage.jsp";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
@@ -32,9 +32,8 @@ public class GoToStudentCoursesResultsPage implements Command {
 		CourseParticipantService courseParticipantService = ServiceFactory.getInstance().getCourseParticipantService();
 		List<CourseParticipant> results;
 		results = courseParticipantService.getCoursesParticipantResults(studentID);
+		request.setAttribute(RESULTS, results);
 		
-		
-
+		request.getRequestDispatcher(STUDENT_RESULTS_PAGE).forward(request, response);	
 	}
-
 }
