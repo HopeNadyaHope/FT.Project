@@ -48,4 +48,14 @@ public class CourseParticipantServiceImpl implements CourseParticipantService {
 		}
 		return coursesParticipantResults;
 	}
+
+	@Override
+	public void deleteCourseParticipant(int studentID, int runningCourseID) throws ServiceException {
+		CourseParticipantDAO courseParticipantDAO = DAOFactory.getInstance().getCourseParticipantDAO();
+		try {
+			courseParticipantDAO.deleteCourseParticipant(studentID,runningCourseID);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}
 }

@@ -8,38 +8,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
-import by.epam.lobanok.entity.RunningCourse;
 import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.EntranceService;
-import by.epam.lobanok.service.RunningCourseService;
 import by.epam.lobanok.service.ServiceFactory;
 import by.epam.lobanok.service.exception.ServiceException;
 
-public class GoToEditRunningCoursePage implements Command{
+public class GoToAllTeachersPage implements Command{
 	private static final String TEACHERS = "teachers";
-	private static final String RUNNING_COURSE_ID = "runningCourseID";
-	private static final String RUNNING_COURSE = "runningCourse";
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private static final String EDIT_RUNNING_COURSES_PAGE = "WEB-INF/jsp/admin/editRunningCoursePage.jsp";
+	private static final String ALL_TEACHERS_PAGE = "WEB-INF/jsp/admin/allTeachersPage.jsp";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		
-		int runningCourseID;
-		runningCourseID = Integer.parseInt(request.getParameter(RUNNING_COURSE_ID));
-		RunningCourseService runningCourseService = ServiceFactory.getInstance().getRunningCourseService();
-		RunningCourse runningCourse;
-		runningCourse = runningCourseService.findRunningCourse(runningCourseID);
-		request.setAttribute(RUNNING_COURSE, runningCourse);	
-		
 		EntranceService userService = ServiceFactory.getInstance().getEntranceService();
 		List<User> teachers;
 		teachers = userService.findAllTeachers();		
 		request.setAttribute(TEACHERS, teachers);
 		
-		request.getRequestDispatcher(EDIT_RUNNING_COURSES_PAGE).forward(request, response);		
+		request.getRequestDispatcher(ALL_TEACHERS_PAGE).forward(request, response);		
 	}
 }

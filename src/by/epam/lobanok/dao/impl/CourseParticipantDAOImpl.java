@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
@@ -39,8 +38,6 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 	private static final String IS_COURSE_PARTICIPANT = "SELECT * FROM course_participants " + 
 			"WHERE course_participants.users_id=? AND course_participants.running_courses_id=?";
 	
-	private static final String ADD_COURSE_PARTICIPANT = "INSERT INTO course_participants(users_id, running_courses_id) VALUES(?,?)";
-
 	private static final String FIND_COURSES_PARTICIPANT_RESULTS ="SELECT running_courses.id, running_courses.start, running_courses.end, running_courses.passing, " + 
 			"courses.id AS courseID, courses.courseName, courses.description, " + 
 			"users.id AS teacherID, users.name, users.surname, " + 
@@ -52,6 +49,13 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 			"JOIN users ON running_courses.users_id = users.id " + 
 			"WHERE course_participants.id IN" + 
 			"(SELECT course_participants.id FROM course_participants WHERE course_participants.users_id=?)";
+	
+	private static final String ADD_COURSE_PARTICIPANT = "INSERT INTO course_participants(users_id, running_courses_id) VALUES(?,?)";
+
+	private static final String DELETE_COURSE_PARTICIPANT = "DELETE course_participants, results " + 
+			"FROM course_participants " + 
+			"JOIN results ON course_participants.results_id = results.id " + 
+			"WHERE course_participants.users_id = ? AND course_participants.running_courses_id = ?";
 	
 	/////////////////////////////////////////////////////////////////////////////////////
 	private static final String ID = "id";
@@ -117,6 +121,66 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 	}
 
 	@Override
+	public List<CourseParticipant> findCoursesParticipantResults(int studentID) throws DAOException {
+		List<CourseParticipant> coursesParticipantResults = new ArrayList<CourseParticipant>();
+		CourseParticipant courseParticipantResult;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		
+		try {
+			con = pool.takeConnection();
+			ps = con.prepareStatement(FIND_COURSES_PARTICIPANT_RESULTS);
+			ps.setInt(1, studentID);
+			resultSet = ps.executeQuery();
+			
+			while(resultSet.next()) {
+                courseParticipantResult = new CourseParticipant(); 
+                User student = new User();
+                student.setId(studentID);
+                courseParticipantResult.setStudent(student);
+                
+				RunningCourse runningCourse = new RunningCourse();
+				runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));
+                runningCourse.setStart(resultSet.getDate(START).toLocalDate());
+                runningCourse.setEnd(resultSet.getDate(END).toLocalDate());
+                runningCourse.setPassing(resultSet.getString(PASSING));
+                
+                Course course = new Course();
+                course.setId(Integer.parseInt(resultSet.getString(COURSE_ID)));
+                course.setCourseName(resultSet.getString(COURSE_NAME));
+                course.setDescription(resultSet.getString(DESCRIPTION));
+                runningCourse.setCourse(course);      
+                
+                User teacher = new User();
+                teacher.setId(Integer.parseInt(resultSet.getString(TEACHER_ID)));
+                teacher.setName(resultSet.getString(NAME));
+                teacher.setSurname(resultSet.getString(SURNAME));
+                runningCourse.setTeacher(teacher);
+                
+                courseParticipantResult.setRunningCourse(runningCourse);
+                
+                Result result = new Result();
+                if(resultSet.getString(RATING) != null) {
+                	result.setRating(Integer.parseInt(resultSet.getString(RATING)));
+                }
+                result.setReview(resultSet.getString(REVIEW));
+                courseParticipantResult.setResult(result);
+
+                coursesParticipantResults.add(courseParticipantResult);
+			}
+			
+		}catch (SQLException e) {
+			logger.info("DAOException");
+            throw new DAOException(e);
+        } finally {
+        	pool.closeConnection(con, ps);
+        }
+        return coursesParticipantResults;
+	}
+	
+	@Override
 	public boolean addCourseParticipant(int studentID, int runningCourseID) throws DAOException {
 		if(isCourseParticipant(studentID,runningCourseID)) {
 			return false;
@@ -165,56 +229,16 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
         return false;
 	}
 
-	@Override
-	public List<CourseParticipant> findCoursesParticipantResults(int studentID) throws DAOException {
-		List<CourseParticipant> coursesParticipantResults = new ArrayList<CourseParticipant>();
-		CourseParticipant courseParticipantResult;
-		
+	
+	public void deleteCourseParticipant(int studentID, int runningCourseID) throws DAOException{
 		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
-		
+		PreparedStatement ps = null;		
 		try {
 			con = pool.takeConnection();
-			ps = con.prepareStatement(FIND_COURSES_PARTICIPANT_RESULTS);
+			ps = con.prepareStatement(DELETE_COURSE_PARTICIPANT);
 			ps.setInt(1, studentID);
-			resultSet = ps.executeQuery();
-			
-			while(resultSet.next()) {
-                courseParticipantResult = new CourseParticipant(); 
-                User student = new User();
-                student.setId(studentID);
-                courseParticipantResult.setStudent(student);
-                
-				RunningCourse runningCourse = new RunningCourse();
-				runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));
-                runningCourse.setStart(new Date(resultSet.getDate(START).getTime()));
-                runningCourse.setEnd(new Date(resultSet.getDate(END).getTime()));
-                runningCourse.setPassing(resultSet.getString(PASSING));
-                
-                Course course = new Course();
-                course.setId(Integer.parseInt(resultSet.getString(COURSE_ID)));
-                course.setCourseName(resultSet.getString(COURSE_NAME));
-                course.setDescription(resultSet.getString(DESCRIPTION));
-                runningCourse.setCourse(course);      
-                
-                User teacher = new User();
-                teacher.setId(Integer.parseInt(resultSet.getString(TEACHER_ID)));
-                teacher.setName(resultSet.getString(NAME));
-                teacher.setSurname(resultSet.getString(SURNAME));
-                runningCourse.setTeacher(teacher);
-                
-                courseParticipantResult.setRunningCourse(runningCourse);
-                
-                Result result = new Result();
-                if(resultSet.getString(RATING) != null) {
-                	result.setRating(Integer.parseInt(resultSet.getString(RATING)));
-                }
-                result.setReview(resultSet.getString(REVIEW));
-                courseParticipantResult.setResult(result);
-
-                coursesParticipantResults.add(courseParticipantResult);
-			}
+			ps.setInt(2, runningCourseID);
+			ps.executeUpdate();
 			
 		}catch (SQLException e) {
 			logger.info("DAOException");
@@ -222,6 +246,6 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
         } finally {
         	pool.closeConnection(con, ps);
         }
-        return coursesParticipantResults;
 	}
+	
 }

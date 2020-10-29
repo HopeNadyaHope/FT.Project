@@ -1,7 +1,7 @@
 package by.epam.lobanok.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class RunningCourse implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -9,8 +9,8 @@ public class RunningCourse implements Serializable{
 	private int id;
 	private User teacher;
 	private Course course;
-	private Date start;
-	private Date end;
+	private LocalDate start;
+	private LocalDate end;
 	private String passing;
 	
 	public RunningCourse() {}
@@ -33,16 +33,16 @@ public class RunningCourse implements Serializable{
 	public void setCourse(Course course) {
 		this.course = course;
 	}
-	public Date getStart() {
+	public LocalDate getStart() {
 		return start;
 	}
-	public void setStart(Date start) {
+	public void setStart(LocalDate start) {
 		this.start = start;
 	}
-	public Date getEnd() {
+	public LocalDate getEnd() {
 		return end;
 	}
-	public void setEnd(Date end) {
+	public void setEnd(LocalDate end) {
 		this.end = end;
 	}
 	public String getPassing() {

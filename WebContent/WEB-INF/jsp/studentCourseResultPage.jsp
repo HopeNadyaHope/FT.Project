@@ -11,6 +11,8 @@
 <fmt:message bundle="${loc}" key="local.rating" var="rating" />
 <fmt:message bundle="${loc}" key="local.review" var="review" />
 
+<fmt:message bundle="${loc}" key="local.unfollow" var="unfollow" />
+
 <body>
 
 <jsp:useBean id="runningCourse" class="by.epam.lobanok.entity.RunningCourse" scope="request" />
@@ -28,8 +30,8 @@
     
 	<jsp:useBean id="courseResult" class="by.epam.lobanok.entity.Result" scope="request" />
 	<c:if test="${courseResult eq null}">
-	 	<td><c:out value="учите" /></td>
-	 	<td><c:out value="разбирайтесь" /></td>
+	 	<td></td>
+	 	<td></td>
 	</c:if>
 	
 	<c:if test="${courseResult ne null}">
@@ -39,6 +41,13 @@
   		</tr> 
   	</c:if> 
   	</table> 
+  	
+  	<c:out value="${runningCourse.id}" />
+  	<form action="Controller" method="post">
+		<input type="hidden" name="command" value="delete_course_participant" />	
+		<input type="hidden" name="runningCourseID" value="${runningCourse.id}" />	
+		<input type="submit" name="runningCourses" value="${unfollow}" /> 
+	</form>
 
 </body>
 

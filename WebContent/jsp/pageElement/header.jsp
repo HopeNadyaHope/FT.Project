@@ -27,6 +27,10 @@
 <fmt:message bundle="${loc}" key="local.myPage" var="myPage" />
 <fmt:message bundle="${loc}" key="local.myCourses" var="myCourses" />
 <fmt:message bundle="${loc}" key="local.myResults" var="myResults" />
+
+<fmt:message bundle="${loc}" key="local.teachers" var="teachers" />
+<fmt:message bundle="${loc}" key="local.students" var="students" />
+
 </head>
 
 <header>
@@ -65,10 +69,19 @@
 				<li><a href="Controller?command=go_to_about_page"><c:out value="${about}" /></a></li>
 				
 				<c:if test="${sessionScope.user ne null}">
-					<li><a href="Controller?command=go_to_user_page"><c:out value="${myPage}" /></a></li>
-					<li><a href="Controller?command=go_to_user_courses_page"><c:out value="${myCourses}" /></a></li>
+					<c:if test="${user.role eq 'преподаватель'}">	
+						<li><a href="Controller?command=go_to_user_page"><c:out value="${myPage}" /></a></li>
+						<li><a href="Controller?command=go_to_user_courses_page"><c:out value="${myCourses}" /></a></li>
+					</c:if>
+					
 					<c:if test="${user.role eq 'студент'}">	
+						<li><a href="Controller?command=go_to_user_page"><c:out value="${myPage}" /></a></li>
+						<li><a href="Controller?command=go_to_user_courses_page"><c:out value="${myCourses}" /></a></li>
 						<li><a href="Controller?command=go_to_student_courses_results_page"><c:out value="${myResults}" /></a></li>
+					</c:if>	
+					<c:if test="${user.role eq 'администратор'}">	
+						<li><a href="Controller?command=go_to_all_teachers_page"><c:out value="${teachers}" /></a></li>
+						<li><a href="Controller?command=go_to_all_students_page"><c:out value="${students}" /></a></li>
 					</c:if>	
 				</c:if>
 			</ul>

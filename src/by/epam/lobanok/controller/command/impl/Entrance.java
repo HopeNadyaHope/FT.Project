@@ -25,9 +25,9 @@ public class Entrance implements Command {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	private final String EXCEPTION_MESSAGE_ATTRIBUTE = "&exceptionMessage=";
-	private final String SERVER_EXCEPTION = "Ошибка сервера";
-	private final String NO_SUCH_USER = "Нет пользователя с таким логином и паролем";
-	private final String UNCORRECT_DATA = "Некорректные данные";
+	private final String SERVER_EXCEPTION = "serverException";
+	private final String NO_SUCH_USER = "noSuchUser";
+	private final String UNCORRECT_DATA = "uncorrectData";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////	
 	private final String GO_TO_USER_PAGE = "Controller?command=go_to_user_page";

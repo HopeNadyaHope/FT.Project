@@ -10,4 +10,5 @@ public interface EntranceService {
 	User entrance(EntranceData entrData) throws ServiceException;
 	void editProfile(User editedUser) throws ServiceException;
 	List<User> findAllTeachers() throws ServiceException;
+	List<User> findAllStudents() throws ServiceException;
 }

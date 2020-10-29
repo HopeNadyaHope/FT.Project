@@ -12,13 +12,13 @@ import by.epam.lobanok.service.CourseParticipantService;
 import by.epam.lobanok.service.ServiceFactory;
 import by.epam.lobanok.service.exception.ServiceException;
 
-public class AddCourseParticipant implements Command{
+public class DeleteCourseParticipant implements Command{
 	
 	private static final String RUNNING_COURSE_ID = "runningCourseID";
 	private static final String USER = "user";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private static final String GO_TO_STUDENT_COURSES_RESULT_PAGE = "Controller?command=go_to_teacher_course_participants_page&runningCourseID=";
+	private static final String GO_TO_STUDENT_COURSES_PAGE = "Controller?command=go_to_teacher_course_participants_page&runningCourseID=";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
@@ -27,11 +27,7 @@ public class AddCourseParticipant implements Command{
 		int runningCourseID = Integer.parseInt(request.getParameter(RUNNING_COURSE_ID));
 		
 		CourseParticipantService courseParticepantService = ServiceFactory.getInstance().getCourseParticipantService();
-		if(courseParticepantService.addCourseParticipant(student.getId(), runningCourseID)) {
-			System.out.println("Добавлены на курс");//////////////////////////////////////////////////////////
-		}else {
-			System.out.println("уже есть на курсе");
-		}
-		response.sendRedirect(GO_TO_STUDENT_COURSES_RESULT_PAGE + runningCourseID);
+		courseParticepantService.deleteCourseParticipant(student.getId(), runningCourseID);
+		response.sendRedirect(GO_TO_STUDENT_COURSES_PAGE);
 	}
 }

@@ -36,8 +36,11 @@ public class EntranceDAOImpl implements EntranceDAO{
 	
 	private static final String EDIT_PROFILE = "UPDATE users SET name=?,surname=?,age=?,sex=?,email=? WHERE id=?";
 	
-	private static final String FIND_TEACHERS = "SELECT id,name,surname FROM users WHERE users.roles_id=" +
-												"(SELECT id FROM roles WHERE role='преподаватель')";
+	private static final String FIND_TEACHERS = "SELECT id,name,surname,age,sex,email FROM users WHERE users.roles_id=" +
+												"(SELECT id FROM roles WHERE role='преподаватель') ORDER BY surname,name";
+	
+	private static final String FIND_STUDENTS = "SELECT id,name,surname,age,sex,email FROM users WHERE users.roles_id=" +
+			"(SELECT id FROM roles WHERE role='студент') ORDER BY surname,name";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
@@ -123,6 +126,9 @@ public class EntranceDAOImpl implements EntranceDAO{
                 teacher.setId(Integer.parseInt(resultSet.getString(ID)));
 				teacher.setName(resultSet.getString(NAME));
 				teacher.setSurname(resultSet.getString(SURNAME));
+				teacher.setAge(resultSet.getInt(AGE));
+				teacher.setSex(resultSet.getString(SEX));
+				teacher.setEmail(resultSet.getString(EMAIL));
 				
                 teachers.add(teacher);
 			}
@@ -134,5 +140,40 @@ public class EntranceDAOImpl implements EntranceDAO{
         	pool.closeConnection(con, ps);
         }
 		return teachers;
+	}
+
+	@Override
+	public List<User> findStudents() throws DAOException {
+		List<User> students = new ArrayList<User>();
+		User student;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		
+		try {
+			con = pool.takeConnection();
+			ps = con.prepareStatement(FIND_STUDENTS);
+			resultSet = ps.executeQuery();
+			
+			while(resultSet.next()) {
+				student = new User();
+				student.setId(Integer.parseInt(resultSet.getString(ID)));
+				student.setName(resultSet.getString(NAME));
+				student.setSurname(resultSet.getString(SURNAME));
+				student.setAge(resultSet.getInt(AGE));
+				student.setSex(resultSet.getString(SEX));
+				student.setEmail(resultSet.getString(EMAIL));
+				
+				students.add(student);
+			}
+			
+		}catch (SQLException e) {
+			logger.info("DAOException");
+            throw new DAOException(e);
+        } finally {
+        	pool.closeConnection(con, ps);
+        }
+		return students;
 	}
 }

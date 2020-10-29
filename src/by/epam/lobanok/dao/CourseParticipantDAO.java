@@ -10,4 +10,5 @@ public interface CourseParticipantDAO {
 	List<CourseParticipant> findCourseParticipants(int runningCourseID) throws DAOException;	
 	boolean addCourseParticipant(int studentID, int runningCourseID) throws DAOException;
 	List<CourseParticipant> findCoursesParticipantResults(int studentID) throws DAOException;
+	void deleteCourseParticipant(int studentID, int runningCourseID) throws DAOException;
 }

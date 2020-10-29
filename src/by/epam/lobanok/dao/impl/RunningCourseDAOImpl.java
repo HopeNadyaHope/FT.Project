@@ -1,11 +1,11 @@
 package by.epam.lobanok.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
@@ -93,8 +93,8 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			while(resultSet.next()) {
                 runningCourse = new RunningCourse();
                 runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));                
-                runningCourse.setStart(new Date(resultSet.getDate(START).getTime()));
-                runningCourse.setEnd(new Date(resultSet.getDate(END).getTime()));
+                runningCourse.setStart(resultSet.getDate(START).toLocalDate());
+                runningCourse.setEnd(resultSet.getDate(END).toLocalDate());
                 runningCourse.setPassing(resultSet.getString(PASSING));
                 
                 User teacher = new User();
@@ -137,8 +137,8 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			while(resultSet.next()) {
                 runningCourse = new RunningCourse();
                 runningCourse.setId(Integer.parseInt(resultSet.getString(RUNNING_COURSE_ID)));
-                runningCourse.setStart(new Date(resultSet.getDate(START).getTime()));
-                runningCourse.setEnd(new Date(resultSet.getDate(END).getTime()));
+                runningCourse.setStart(resultSet.getDate(START).toLocalDate());
+                runningCourse.setEnd(resultSet.getDate(END).toLocalDate());
                 runningCourse.setPassing(resultSet.getString(PASSING));
                 
                 User teacher = new User();
@@ -182,8 +182,8 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 				runningCourse = new RunningCourse();
 				
 				runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));
-	            runningCourse.setStart(new Date(resultSet.getDate(START).getTime()));
-	            runningCourse.setEnd(new Date(resultSet.getDate(END).getTime()));
+	            runningCourse.setStart(resultSet.getDate(START).toLocalDate());
+	            runningCourse.setEnd(resultSet.getDate(END).toLocalDate());
 				runningCourse.setPassing(resultSet.getString(PASSING));
 				
 				Course course = new Course();
@@ -228,8 +228,8 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 				runningCourse = new RunningCourse();
 				
 				runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));
-	            runningCourse.setStart(new Date(resultSet.getDate(START).getTime()));
-	            runningCourse.setEnd(new Date(resultSet.getDate(END).getTime()));
+	            runningCourse.setStart(resultSet.getDate(START).toLocalDate());
+	            runningCourse.setEnd(resultSet.getDate(END).toLocalDate());
 				runningCourse.setPassing(resultSet.getString(PASSING));
 				
 				Course course = new Course();
@@ -276,7 +276,6 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 
 	@Override
 	public void editRunningCourse(RunningCourse editedRunningCourse) throws DAOException {
-		System.out.println(editedRunningCourse);//////////////////////////////////////////////////////
 		Connection con = null;
 		PreparedStatement ps = null;		
 		try {
@@ -284,8 +283,8 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			ps = con.prepareStatement(EDIT_RUNNING_COURSE); 
 
 			ps.setInt(1, editedRunningCourse.getTeacher().getId());
-			ps.setString(2, "2020-09-01");////////////////////////////////////////////////////////
-			ps.setString(3, "2020-12-01");////////////////////////////////////////////////////////
+			ps.setDate(2, Date.valueOf(editedRunningCourse.getStart()));////////////////////////////////////////////////////////
+			ps.setDate(3, Date.valueOf(editedRunningCourse.getEnd()));////////////////////////////////////////////////////////
 			ps.setString(4, editedRunningCourse.getPassing());		
 			ps.setInt(5, editedRunningCourse.getId());
 			

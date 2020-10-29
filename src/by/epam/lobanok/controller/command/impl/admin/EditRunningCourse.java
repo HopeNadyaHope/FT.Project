@@ -1,6 +1,7 @@
 package by.epam.lobanok.controller.command.impl.admin;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +41,10 @@ public class EditRunningCourse implements Command {
 		teacher.setId(Integer.parseInt(request.getParameter(TEACHER_ID)));
 		editedRunningCourse.setTeacher(teacher);
 		
-		//add start
-		//add end
+		LocalDate start = LocalDate.parse(request.getParameter(START));
+		editedRunningCourse.setStart(start);		
+		LocalDate end = LocalDate.parse(request.getParameter(END));
+		editedRunningCourse.setEnd(end);
 		
 		editedRunningCourse.setPassing(request.getParameter(PASSING));
 		

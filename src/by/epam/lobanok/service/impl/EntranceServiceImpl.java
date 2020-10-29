@@ -49,4 +49,16 @@ public class EntranceServiceImpl implements EntranceService{
 		}
 		return teachers;
 	}
+
+	@Override
+	public List<User> findAllStudents() throws ServiceException {
+		List<User> students = null;
+		EntranceDAO entranceDAO = DAOFactory.getInstance().getEntranceDAO(); 
+		try {
+			students = entranceDAO.findStudents();
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		return students;
+	}
 }

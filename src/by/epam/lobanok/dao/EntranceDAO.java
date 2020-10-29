@@ -11,4 +11,5 @@ public interface EntranceDAO {
 	User entrance(EntranceData entrData) throws DAOException;
 	void editProfile(User editedUser) throws DAOException;
 	List<User> findTeachers() throws DAOException;
+	List<User> findStudents() throws DAOException;
 }

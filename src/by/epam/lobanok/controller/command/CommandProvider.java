@@ -16,6 +16,7 @@ import by.epam.lobanok.controller.command.impl.go_to.GoToRunningCoursesPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToStudentCourseResultPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToStudentCoursesResultsPage;
 import by.epam.lobanok.controller.command.impl.AddCourseResult;
+import by.epam.lobanok.controller.command.impl.DeleteCourseParticipant;
 import by.epam.lobanok.controller.command.impl.EditProfile;
 import by.epam.lobanok.controller.command.impl.go_to.GoToUserCoursesPage;
 import by.epam.lobanok.controller.command.impl.go_to.GoToUserPage;
@@ -27,6 +28,8 @@ import by.epam.lobanok.controller.command.impl.admin.EditCourse;
 import by.epam.lobanok.controller.command.impl.admin.EditRunningCourse;
 import by.epam.lobanok.controller.command.impl.admin.go_to.GoToAddCoursePage;
 import by.epam.lobanok.controller.command.impl.admin.go_to.GoToAddRunningCoursePage;
+import by.epam.lobanok.controller.command.impl.admin.go_to.GoToAllStudentsPage;
+import by.epam.lobanok.controller.command.impl.admin.go_to.GoToAllTeachersPage;
 import by.epam.lobanok.controller.command.impl.admin.go_to.GoToEditCoursePage;
 import by.epam.lobanok.controller.command.impl.admin.go_to.GoToEditRunningCoursePage;
 
@@ -54,9 +57,13 @@ public class CommandProvider {
 		commands.put(CommandName.GO_TO_STUDENT_COURSE_RESULT_PAGE, new GoToStudentCourseResultPage());		
 		commands.put(CommandName.GO_TO_STUDENT_COURSES_RESULTS_PAGE, new GoToStudentCoursesResultsPage());
 		commands.put(CommandName.ADD_COURSE_PARTICIPANT, new AddCourseParticipant());
+		commands.put(CommandName.DELETE_COURSE_PARTICIPANT, new DeleteCourseParticipant());
 		
 		commands.put(CommandName.GO_TO_TEACHER_COURSE_PARTICIPANTS_PAGE, new GoToTeacherCourseParticipantsPage());
 		commands.put(CommandName.ADD_COURSE_RESULT, new AddCourseResult());
+		
+		commands.put(CommandName.GO_TO_ALL_STUDENTS_PAGE, new GoToAllStudentsPage());
+		commands.put(CommandName.GO_TO_ALL_TEACHERS_PAGE, new GoToAllTeachersPage());
 		
 		commands.put(CommandName.GO_TO_EDIT_COURSE_PAGE, new GoToEditCoursePage());
 		commands.put(CommandName.EDIT_COURSE, new EditCourse());
