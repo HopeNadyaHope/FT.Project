@@ -13,27 +13,42 @@
 <fmt:message bundle="${loc}" key="local.email" var="email" />
 
 <fmt:message bundle="${loc}" key="local.edit" var="edit" />
+<fmt:message bundle="${loc}" key="local.uploadPhoto" var="uploadPhoto" />
+
 
 <fmt:message bundle="${loc}" key="local.welcome" var="welcome" />
 
 <body>
 	<c:out value="${welcome}" /><br />	
 	<jsp:useBean id="user" class="by.epam.lobanok.entity.User" scope="session" />
-	
+
 	<div class="container">
+	
+	
 		<c:if test="${user.sex eq 'жен'}">	
-           <img src="images/userPhoto/female.jpg">   
-    	</c:if>    	
+			<img src="images/userPhoto/${user.id}.jpg" onerror="this.src='images/userPhoto/female.jpg'">   
+         <!-- <img src="images/userPhoto/female.jpg"> --> 
+		</c:if> 
+		   	
     	<c:if test="${user.sex eq 'муж'}">	
            <img src="images/userPhoto/men.jpg">   
     	</c:if>
 
     
 	<br />	
+	
+	<form action="Controller" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="command" value="upload_photo" />
+		<input type="file" name="file"  multiple accept = "image/*" />
+		<input type="submit" name="upload_photo" value="${uploadPhoto}" />
+	</form>
+	
+	
+	
 	<c:out value="${name} : " /><c:out value="${user.name}" /><br />
-	<c:out value="${surname} :" /><c:out value="${user.surname}" /><br />
-	<c:out value="${age} :" /><c:out value="${user.age}" /><br />
-	<c:out value="${sex} :" /><c:out value="${user.sex}" /><br />
+	<c:out value="${surname} : " /><c:out value="${user.surname}" /><br />
+	<c:out value="${age} : " /><c:out value="${user.age}" /><br />
+	<c:out value="${sex} : " /><c:out value="${user.sex}" /><br />
 	<c:out value="${role} : " /><c:out value="${user.role}" /><br />
 	<c:out value="${email} : " />	<c:out value="${user.email}" /><br />
 	

@@ -69,13 +69,12 @@
 				<li><a href="Controller?command=go_to_about_page"><c:out value="${about}" /></a></li>
 				
 				<c:if test="${sessionScope.user ne null}">
-					<c:if test="${user.role eq 'преподаватель'}">	
-						<li><a href="Controller?command=go_to_user_page"><c:out value="${myPage}" /></a></li>
+					<li><a href="Controller?command=go_to_user_page"><c:out value="${myPage}" /></a></li>
+					<c:if test="${user.role eq 'преподаватель'}">
 						<li><a href="Controller?command=go_to_user_courses_page"><c:out value="${myCourses}" /></a></li>
 					</c:if>
 					
 					<c:if test="${user.role eq 'студент'}">	
-						<li><a href="Controller?command=go_to_user_page"><c:out value="${myPage}" /></a></li>
 						<li><a href="Controller?command=go_to_user_courses_page"><c:out value="${myCourses}" /></a></li>
 						<li><a href="Controller?command=go_to_student_courses_results_page"><c:out value="${myResults}" /></a></li>
 					</c:if>	

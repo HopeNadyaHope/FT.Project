@@ -1,10 +1,12 @@
 package by.epam.lobanok.controller.command;
 
 public enum CommandName {
+	LOCALIZATION,
+	
 	ENTRANCE, 
 	REGISTRATION,
 	EDIT_PROFILE,
-	LOCALIZATION,
+	UPLOAD_PHOTO,	
 	EXIT,
 	
 	GO_TO_REGISTRATION_PAGE, 	

@@ -17,25 +17,24 @@ import by.epam.lobanok.service.exception.ServiceException;
 
 
 public class Entrance implements Command {
-	
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final String LOGIN = "login";
-	private final String PASSWORD = "password";	
-	private final String USER = "user";	
+	private static final  String LOGIN = "login";
+	private static final String PASSWORD = "password";	
+	private static final String USER = "user";	
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private final String EXCEPTION_MESSAGE_ATTRIBUTE = "&exceptionMessage=";
-	private final String SERVER_EXCEPTION = "serverException";
-	private final String NO_SUCH_USER = "noSuchUser";
-	private final String UNCORRECT_DATA = "uncorrectData";
+	private static final String EXCEPTION_MESSAGE_ATTRIBUTE = "&exceptionMessage=";
+	private static final String SERVER_EXCEPTION = "serverException";
+	private static final String NO_SUCH_USER = "noSuchUser";
+	private static final String UNCORRECT_DATA = "uncorrectData";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////	
-	private final String GO_TO_USER_PAGE = "Controller?command=go_to_user_page";
-	private final String GO_TO_MAIN_PAGE = "Controller?command=go_to_main_page";
+	private static final String GO_TO_USER_PAGE = "Controller?command=go_to_user_page";
+	private static final String GO_TO_MAIN_PAGE = "Controller?command=go_to_main_page";
 		
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException{	
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException{			
 		String page;
 		
 		EntranceData entrData = new EntranceData();
@@ -50,7 +49,7 @@ public class Entrance implements Command {
 		User user;
 		try {
 			user = entranceService.entrance(entrData);
-			request.getSession(true).setAttribute(USER, user);
+			request.getSession(true).setAttribute(USER, user);			
 			page = GO_TO_USER_PAGE;		
 		}catch(NoSuchUserServiceException e) {	
 			page = GO_TO_MAIN_PAGE + EXCEPTION_MESSAGE_ATTRIBUTE + NO_SUCH_USER;
