@@ -11,4 +11,5 @@ public interface EntranceService {
 	void editProfile(User editedUser) throws ServiceException;
 	List<User> findAllTeachers() throws ServiceException;
 	List<User> findAllStudents() throws ServiceException;
+	void updatePhotoURL(int userID, String photoURL) throws ServiceException;
 }

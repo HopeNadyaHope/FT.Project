@@ -42,7 +42,6 @@
   	</c:if> 
   	</table> 
   	
-  	<c:out value="${runningCourse.id}" />
   	<form action="Controller" method="post">
 		<input type="hidden" name="command" value="delete_course_participant" />	
 		<input type="hidden" name="runningCourseID" value="${runningCourse.id}" />	

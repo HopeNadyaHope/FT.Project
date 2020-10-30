@@ -13,13 +13,15 @@ import javax.servlet.http.Part;
 
 import by.epam.lobanok.controller.command.Command;
 import by.epam.lobanok.entity.User;
+import by.epam.lobanok.service.EntranceService;
+import by.epam.lobanok.service.ServiceFactory;
 import by.epam.lobanok.service.exception.ServiceException;
 
 public class UploadPhoto implements Command {
 
 	private static final String FILE = "file";
 	private static final String USER = "user";
-	private static final String USER_PHOTO_PATH = "D:\\Тренинг\\Лабы\\ПРОЕКТ\\WELCOME\\WebProj\\WebContent\\images\\userPhoto\\";
+	private static final String USER_PHOTO_PATH = "D:\\Тренинг\\Лабы\\ПРОЕКТ\\img\\userPhoto\\";
 	private static final String JPG = ".jpg";
 	
 	private static final String GO_TO_USER_PAGE = "Controller?command=go_to_user_page";
@@ -27,9 +29,7 @@ public class UploadPhoto implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		
-		System.out.println(request.getContextPath());
-		
+	
 		Part file;
 		InputStream inputStream = null;
 		OutputStream outStream = null;
@@ -40,32 +40,38 @@ public class UploadPhoto implements Command {
 
 			byte[] buffer = new byte[inputStream.available()];
 			inputStream.read(buffer);
+			inputStream.close();
 
 			User user = (User)request.getSession().getAttribute(USER);
 			int userID;
 			userID = user.getId();
 			
-			File targetFile = new File(USER_PHOTO_PATH + userID + JPG);
+			String photoURL;
+			photoURL = USER_PHOTO_PATH + userID + JPG;
+			
+			File photoFile = new File(photoURL);
 
-			if (!targetFile.exists()) {
-				targetFile.createNewFile();
+			if (!photoFile.exists()) {
+				photoFile.createNewFile();
 			}
 
-			outStream = new FileOutputStream(targetFile);
-			outStream.write(buffer);
-
+			outStream = new FileOutputStream(photoFile);
+			outStream.write(buffer);			
+			outStream.close();
+			
+			if(user.getPhotoURL() == null) {
+				EntranceService entranceService = ServiceFactory.getInstance().getEntranceService();
+				entranceService.updatePhotoURL(userID,photoURL);
+				
+				user.setPhotoURL(photoURL);
+				request.getSession().setAttribute(USER, user);
+			}
 		} catch (IOException e1) {
 			e1.printStackTrace();/////////////////////////////////////////////////////////////////////////
 		} catch (ServletException e1) {
 			e1.printStackTrace();/////////////////////////////////////////////////////////////////////////
 		}
-
-		try {
 			response.sendRedirect(GO_TO_USER_PAGE);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 }

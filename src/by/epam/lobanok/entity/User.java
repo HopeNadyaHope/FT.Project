@@ -12,6 +12,7 @@ public class User implements Serializable{
 	private int age;
 	private String email;
 	private String role;
+	private String photoURL;
 	
 	public User() {}
 
@@ -78,6 +79,13 @@ public class User implements Serializable{
 		this.role = role;
 	}
 
+	public String getPhotoURL() {
+		return photoURL;
+	}
+
+	public void setPhotoURL(String photoURL) {
+		this.photoURL = photoURL;
+	}
 
 	@Override
 	public int hashCode() {
@@ -87,6 +95,7 @@ public class User implements Serializable{
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((photoURL == null) ? 0 : photoURL.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
@@ -117,6 +126,11 @@ public class User implements Serializable{
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (photoURL == null) {
+			if (other.photoURL != null)
+				return false;
+		} else if (!photoURL.equals(other.photoURL))
+			return false;
 		if (role == null) {
 			if (other.role != null)
 				return false;
@@ -139,6 +153,6 @@ public class User implements Serializable{
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", sex=" + sex + ", age=" + age
-				+ ", email=" + email + ", role=" + role + "]";
+				+ ", email=" + email + ", role=" + role + ", photo_url=" + photoURL + "]";
 	}	
 }

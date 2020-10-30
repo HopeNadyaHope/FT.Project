@@ -25,13 +25,19 @@
 	<div class="container">
 	
 	
-		<c:if test="${user.sex eq 'жен'}">	
-			<img src="images/userPhoto/${user.id}.jpg" onerror="this.src='images/userPhoto/female.jpg'">   
-         <!-- <img src="images/userPhoto/female.jpg"> --> 
-		</c:if> 
-		   	
-    	<c:if test="${user.sex eq 'муж'}">	
-           <img src="images/userPhoto/men.jpg">   
+		
+		<c:if test="${user.photoURL ne null}">
+			<img src="${user.photoURL}"> 
+		</c:if>
+		<c:if test="${user.photoURL eq null}">		
+			<c:if test="${user.sex eq 'жен'}">	
+				<!--<img src="images/userPhoto/${user.id}.jpg" onerror="this.src='images/userPhoto/female.jpg'">  -->  
+	          <img src="images/userPhoto/female.jpg"> 
+			</c:if> 
+			   	
+	    	<c:if test="${user.sex eq 'муж'}">	
+	           <img src="images/userPhoto/men.jpg">   
+	    	</c:if>
     	</c:if>
 
     

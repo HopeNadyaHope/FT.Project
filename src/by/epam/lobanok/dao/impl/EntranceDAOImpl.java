@@ -29,9 +29,10 @@ public class EntranceDAOImpl implements EntranceDAO{
 	private static final String SEX = "sex";
 	private static final String EMAIL = "email";
 	private static final String ROLE = "role";	
+	private static final String PHOTO_URL = "photo_url";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private static final String FIND_USER ="SELECT users.id, users.name, users.surname, users.age, users.sex, users.email, roles.role "+
+	private static final String FIND_USER ="SELECT users.id, users.name, users.surname, users.age, users.sex, users.email, roles.role, users.photo_url "+
 											"FROM users JOIN roles on roles.id=users.roles_id " + "WHERE login=? AND password=?";
 	
 	private static final String EDIT_PROFILE = "UPDATE users SET name=?,surname=?,age=?,sex=?,email=? WHERE id=?";
@@ -41,6 +42,8 @@ public class EntranceDAOImpl implements EntranceDAO{
 	
 	private static final String FIND_STUDENTS = "SELECT id,name,surname,age,sex,email FROM users WHERE users.roles_id=" +
 			"(SELECT id FROM roles WHERE role='студент') ORDER BY surname,name";
+	
+	private static final String UPDATE_PHOTO_URL = "UPDATE users SET photo_url=? WHERE id=?";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
@@ -65,15 +68,16 @@ public class EntranceDAOImpl implements EntranceDAO{
 				logger.info("NoSuchUserDAOException");
 				throw new NoSuchUserDAOException();
 			}			
-			user = new User();  
 			
+			user = new User();			
 			user.setId(resultSet.getInt(ID));
             user.setName(resultSet.getString(NAME));
             user.setSurname(resultSet.getString(SURNAME));
             user.setAge(resultSet.getInt(AGE));
             user.setSex(resultSet.getString(SEX));
-            user.setRole(resultSet.getString(ROLE));
             user.setEmail(resultSet.getString(EMAIL));
+            user.setRole(resultSet.getString(ROLE));
+            user.setPhotoURL(resultSet.getString(PHOTO_URL));           
             
 		}catch (SQLException e) {
 			logger.info("DAOException in SQL (entrance)");
@@ -175,5 +179,24 @@ public class EntranceDAOImpl implements EntranceDAO{
         	pool.closeConnection(con, ps);
         }
 		return students;
+	}
+
+	@Override
+	public void updatePhotoURL(int userID, String photoURL) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;		
+		try {
+			con = pool.takeConnection();
+			ps = con.prepareStatement(UPDATE_PHOTO_URL); 
+			
+			ps.setString(1, photoURL);
+			ps.setInt(2, userID);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			logger.info("DAOException in SQL (update photo url)");
+            throw new DAOException(e);
+        } finally {
+        	pool.closeConnection(con, ps);
+        }
 	}
 }

@@ -61,4 +61,14 @@ public class EntranceServiceImpl implements EntranceService{
 		}
 		return students;
 	}
+
+	@Override
+	public void updatePhotoURL(int userID, String photoURL) throws ServiceException {
+		EntranceDAO entranceDAO = DAOFactory.getInstance().getEntranceDAO(); 
+		try { 
+			entranceDAO.updatePhotoURL(userID, photoURL); 
+		} catch (DAOException e) {
+			throw new ServiceException(e); 
+		}
+	}
 }

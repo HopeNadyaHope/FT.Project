@@ -18,7 +18,7 @@ public class AddCourseParticipant implements Command{
 	private static final String USER = "user";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private static final String GO_TO_STUDENT_COURSES_RESULT_PAGE = "Controller?command=go_to_teacher_course_participants_page&runningCourseID=";
+	private static final String GO_TO_STUDENT_COURSES_RESULT_PAGE = "Controller?command=go_to_student_course_result_page&runningCourseID=";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
