@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
-import by.epam.lobanok.controller.validator.Validator;
+import by.epam.lobanok.controller.validator.UserValidator;
 import by.epam.lobanok.entity.EntranceData;
 import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.EntranceService;
@@ -41,7 +41,7 @@ public class Entrance implements Command {
 		entrData.setLogin(request.getParameter(LOGIN));
 		entrData.setPassword(request.getParameter(PASSWORD));
 		
-		if(!Validator.getInstance().validateEntranceData(entrData)) {
+		if(!UserValidator.getInstance().validateEntranceData(entrData)) {
 			page = GO_TO_MAIN_PAGE + EXCEPTION_MESSAGE_ATTRIBUTE + UNCORRECT_DATA;
 		}
 		

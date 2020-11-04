@@ -28,10 +28,7 @@ public class EditRunningCourse implements Command {
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ServiceException {
-		
-		//Validator
-		
+			throws ServletException, IOException, ServiceException {		
 		RunningCourse editedRunningCourse = new RunningCourse();
 		int runningCourseID;
 		runningCourseID = Integer.parseInt(request.getParameter(RUNNING_COURSE_ID));

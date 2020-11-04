@@ -38,14 +38,22 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 	@Override
-	public void editCourse(Course editedCourse) {
+	public void editCourse(Course editedCourse) throws ServiceException {
 		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 
-		courseDAO.editCourse(editedCourse);		
+		try {
+			courseDAO.editCourse(editedCourse);	
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
 	}
 
 	@Override
-	public void addCourse(Course course) {
+	public void addCourse(Course course) throws ServiceException {
 		CourseDAO courseDAO = DAOFactory.getInstance().getCourseDAO(); 
-		courseDAO.addCourse(course);		
+		try {
+			courseDAO.addCourse(course);	
+		}catch (DAOException e) {
+			throw new ServiceException(e);
+		}
 	}
 }

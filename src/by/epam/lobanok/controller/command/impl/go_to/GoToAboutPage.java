@@ -18,7 +18,6 @@ public class GoToAboutPage implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(ABOUT_PAGE);
 		requestDispatcher.forward(request, response);		
 	}

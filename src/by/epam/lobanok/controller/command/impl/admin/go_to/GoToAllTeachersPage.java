@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
 import by.epam.lobanok.entity.User;
-import by.epam.lobanok.service.EntranceService;
 import by.epam.lobanok.service.ServiceFactory;
+import by.epam.lobanok.service.UserService;
 import by.epam.lobanok.service.exception.ServiceException;
 
 public class GoToAllTeachersPage implements Command{
@@ -23,7 +23,7 @@ public class GoToAllTeachersPage implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		EntranceService userService = ServiceFactory.getInstance().getEntranceService();
+		UserService userService = ServiceFactory.getInstance().getUserService();
 		List<User> teachers;
 		teachers = userService.findAllTeachers();		
 		request.setAttribute(TEACHERS, teachers);

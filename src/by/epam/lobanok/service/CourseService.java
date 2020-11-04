@@ -8,6 +8,6 @@ import by.epam.lobanok.service.exception.ServiceException;
 public interface CourseService {	
 	List<Course> findCourses() throws ServiceException;
 	Course findCourse(int courseID) throws ServiceException;
-	void editCourse(Course editedCourse);
-	void addCourse(Course course);
+	void editCourse(Course editedCourse) throws ServiceException;
+	void addCourse(Course course) throws ServiceException;
 }

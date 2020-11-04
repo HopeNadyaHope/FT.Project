@@ -11,7 +11,10 @@
 
 <body>
 	<c:out value="${courses}" />
-		
+	<c:if test="${user.role eq 'администратор'}">	
+		<a href="Controller?command=go_to_add_course_page"><c:out value="${addCourse}" /></a>
+	</c:if>	
+	
 	<c:forEach items="${requestScope.courses}" var="course">  
 		<div class="container">
 		
@@ -27,9 +30,6 @@
 		</div>
 	</c:forEach>
 	
-	<c:if test="${user.role eq 'администратор'}">	
-		<a href="Controller?command=go_to_add_course_page"><c:out value="${addCourse}" /></a>
-	</c:if>	
 	
 </body>
 

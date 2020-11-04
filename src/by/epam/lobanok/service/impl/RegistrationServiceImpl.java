@@ -16,7 +16,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		boolean dublicateLogin;
 		try {
-			dublicateLogin = registrationDAO.findLogin(regData.getLogin());
+			dublicateLogin = registrationDAO.checkLogin(regData.getLogin());
 		}catch(DAOException e) {
 			throw new ServiceException(e);
 		}		

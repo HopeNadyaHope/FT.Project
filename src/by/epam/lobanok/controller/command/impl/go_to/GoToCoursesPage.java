@@ -22,7 +22,6 @@ public class GoToCoursesPage implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		
 		CourseService courseService = ServiceFactory.getInstance().getCourseService();
 		List<Course> courses;
 		courses = courseService.findCourses();		

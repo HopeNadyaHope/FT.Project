@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import by.epam.lobanok.controller.command.Command;
 import by.epam.lobanok.entity.RunningCourse;
 import by.epam.lobanok.entity.User;
-import by.epam.lobanok.service.EntranceService;
 import by.epam.lobanok.service.RunningCourseService;
 import by.epam.lobanok.service.ServiceFactory;
+import by.epam.lobanok.service.UserService;
 import by.epam.lobanok.service.exception.ServiceException;
 
 public class GoToEditRunningCoursePage implements Command{
@@ -35,8 +35,7 @@ public class GoToEditRunningCoursePage implements Command{
 		runningCourse = runningCourseService.findRunningCourse(runningCourseID);
 		request.setAttribute(RUNNING_COURSE, runningCourse);	
 		
-		EntranceService userService = ServiceFactory.getInstance().getEntranceService();
-		List<User> teachers;
+		UserService userService = ServiceFactory.getInstance().getUserService();		List<User> teachers;
 		teachers = userService.findAllTeachers();		
 		request.setAttribute(TEACHERS, teachers);
 		

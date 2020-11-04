@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
+import by.epam.lobanok.controller.validator.CourseValidator;
 import by.epam.lobanok.entity.Course;
 import by.epam.lobanok.service.CourseService;
 import by.epam.lobanok.service.ServiceFactory;
@@ -19,6 +20,7 @@ public class EditCourse implements Command {
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	private static final String GO_TO_COURSES_PAGE = "Controller?command=go_to_courses_page";
+	private static final String GO_TO_EDIT_COURSE_PAGE = "Controller?command=go_to_edit_course_page&courseID=";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
@@ -28,14 +30,18 @@ public class EditCourse implements Command {
 		courseID = Integer.parseInt(request.getParameter(COURSE_ID));
 		
 		Course editedCourse = new Course();
-		//Validator
 		editedCourse.setId(courseID);
 		editedCourse.setCourseName(request.getParameter(COURSE_NAME));
 		editedCourse.setDescription(request.getParameter(COURSE_DESCRIPTION));		
 		
-		CourseService courseService = ServiceFactory.getInstance().getCourseService();
-		courseService.editCourse(editedCourse);
-		
-		response.sendRedirect(GO_TO_COURSES_PAGE);
+		String page;
+		if(CourseValidator.getInstance().validateCourse(editedCourse)) {
+			CourseService courseService = ServiceFactory.getInstance().getCourseService();
+			courseService.editCourse(editedCourse);
+			page = GO_TO_COURSES_PAGE;
+		}else {
+			page = GO_TO_EDIT_COURSE_PAGE + courseID;
+		}		
+		response.sendRedirect(page);
 	}
 }

@@ -13,19 +13,49 @@ import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.dao.pool.ConnectionPool;
 import by.epam.lobanok.entity.RegistrationData;
 
+/**
+ * Implementation  of RegistratinDAO 
+ *
+ * @author hope_nadya_hope
+ */
 public class RegistrationDAOImpl implements RegistrationDAO {
+	/**
+     * Instance of a connection pool
+     */
 	private static final ConnectionPool pool = ConnectionPool.getInstance();
+	
+	/**
+     * Logger for a RegistrationDAODAO.class
+     */
 	private static final Logger logger = LogManager.getLogger(RegistrationDAO.class);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	private static final String ID = "id";
-	
+	/**
+     * SQL statement to find all course participants for a given running course
+     */
 	private static final String FIND_ROLE_ID = "SELECT roles.id FROM roles WHERE roles.role=?";	
+	
+	/**
+     * SQL statement to add user
+     */
 	private static final String ADD_USER = "INSERT INTO users(login, password, name, surname, age, sex, email, roles_id) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";	
+	
+	/**
+     * SQL statement to find login in db
+     */
 	private static final String FIND_LOGIN ="SELECT users.login FROM users WHERE login=?";
-
+	
 	/////////////////////////////////////////////////////////////////////////////////////////////
+	private static final String ID = "id";
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+     * Registers user using RegistrationData SQL
+     *
+     * @param RegistrationData of a user
+     * @throws DAOException if an DAO error occurs
+     */
 	@Override
 	public void registration(RegistrationData regData)  throws DAOException{				
 		Connection con = null;
@@ -63,8 +93,14 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 		return;
 	}
 	
-	
-	public boolean findLogin(String login)  throws DAOException{
+	/**
+     * Checks if there is a login SQL
+     *
+     * @param login
+     * @return true if such login is in a system
+     * @throws DAOException if an DAO error occurs
+     */
+	public boolean checkLogin(String login)  throws DAOException{
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet result = null;

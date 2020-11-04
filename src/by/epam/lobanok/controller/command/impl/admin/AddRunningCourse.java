@@ -29,9 +29,6 @@ public class AddRunningCourse implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		
-		//Validator
-		
 		RunningCourse runningCourse = new RunningCourse();
 		
 		Course course = new Course();	
@@ -48,8 +45,6 @@ public class AddRunningCourse implements Command{
 		runningCourse.setStart(start);		
 		LocalDate end = LocalDate.parse(request.getParameter(END));
 		runningCourse.setEnd(end);
-		//add end
-		
 		runningCourse.setPassing(request.getParameter(PASSING));
 		
 		RunningCourseService runningCourseService = ServiceFactory.getInstance().getRunningCourseService();

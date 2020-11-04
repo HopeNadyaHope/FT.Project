@@ -17,7 +17,6 @@ public class GoToRegistrationPage implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		
 		request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);		
 	}
 }

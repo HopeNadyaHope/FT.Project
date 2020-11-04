@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
 import by.epam.lobanok.entity.User;
-import by.epam.lobanok.service.EntranceService;
 import by.epam.lobanok.service.ServiceFactory;
+import by.epam.lobanok.service.UserService;
 import by.epam.lobanok.service.exception.ServiceException;
 
 public class EditProfile implements Command {
@@ -44,8 +44,8 @@ public class EditProfile implements Command {
 		editedUser.setRole(request.getParameter(ROLE));
 		
 		
-		EntranceService entranceService = ServiceFactory.getInstance().getEntranceService();
-		entranceService.editProfile(editedUser);
+		UserService userService = ServiceFactory.getInstance().getUserService();
+		userService.editProfile(editedUser);
 		
 		request.getSession(true).setAttribute(USER, editedUser);
 		response.sendRedirect(GO_TO_USER_PAGE);

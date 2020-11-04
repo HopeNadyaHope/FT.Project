@@ -13,8 +13,8 @@ import javax.servlet.http.Part;
 
 import by.epam.lobanok.controller.command.Command;
 import by.epam.lobanok.entity.User;
-import by.epam.lobanok.service.EntranceService;
 import by.epam.lobanok.service.ServiceFactory;
+import by.epam.lobanok.service.UserService;
 import by.epam.lobanok.service.exception.ServiceException;
 
 public class UploadPhoto implements Command {
@@ -60,8 +60,8 @@ public class UploadPhoto implements Command {
 			outStream.close();
 			
 			if(user.getPhotoURL() == null) {
-				EntranceService entranceService = ServiceFactory.getInstance().getEntranceService();
-				entranceService.updatePhotoURL(userID,photoURL);
+				UserService userService = ServiceFactory.getInstance().getUserService();
+				userService.updatePhotoURL(userID,photoURL);
 				
 				user.setPhotoURL(photoURL);
 				request.getSession().setAttribute(USER, user);

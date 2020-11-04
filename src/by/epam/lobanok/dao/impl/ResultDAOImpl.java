@@ -9,25 +9,45 @@ import java.sql.Statement;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import by.epam.lobanok.dao.CourseDAO;
 import by.epam.lobanok.dao.ResultDAO;
 import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.dao.pool.ConnectionPool;
 import by.epam.lobanok.entity.Result;
 
+/**
+ * Implementation  of ResultDAO 
+ *
+ * @author hope_nadya_hope
+ */
 public class ResultDAOImpl implements ResultDAO{
-	
+	/**
+     * Instance of a connection pool
+     */
 	private static final ConnectionPool pool = ConnectionPool.getInstance();
-	private static final Logger logger = LogManager.getLogger(CourseDAO.class);
+	
+	/**
+     * Logger for a ResultDAO.class
+     */
+	private static final Logger logger = LogManager.getLogger(ResultDAO.class);
 	
 	/////////////////////////////////////////////////////////////////////////////////////
+	/**
+     * SQL statement to find the user's result of a running course
+     */
 	private static final String FIND_RESULT = "SELECT results.rating, results.review "+
 							"FROM course_participants "+
 							"JOIN users ON users.id=course_participants.users_id "+ 
 							"LEFT OUTER JOIN results on course_participants.results_id = results.id " +
 							"WHERE course_participants.users_id=? AND course_participants.running_courses_id =?";
 	
+	/**
+     * SQL statement to add result to all results
+     */
 	private static final String ADD_RESULT_TO_RESULTS = "INSERT INTO results(rating,review) VALUES(?,?)";
+	
+	/**
+     * SQL statement to add result to course participant
+     */
 	private static final String ADD_RESULT_TO_COURSE_PARTICIPANTS = "UPDATE course_participants SET results_id=? WHERE id=?";
 	
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +55,14 @@ public class ResultDAOImpl implements ResultDAO{
 	private static final String REVIEW = "review";
 	
 	/////////////////////////////////////////////////////////////////////////////////////
+	/**
+     * Gets the user's result for the running course SQL
+     *
+     * @param ID of student
+     * @param ID of running course
+     * @return user's course result
+     * @throws DAOException if an DAO error occurs
+     */
 	@Override
 	public Result getCourseResult(int studentID, int runningCourseID) throws DAOException {
 		Result result = null;
@@ -66,7 +94,14 @@ public class ResultDAOImpl implements ResultDAO{
         return result;
 	}
 
-
+	/**
+     * Adds user's result SQL
+     *
+     * @param ID of CourseParticipant
+     * @param user's course rating
+     * @param user's course review
+     * @throws DAOException if an DAO error occurs
+     */
 	@Override
 	public void addResult(int coursePartisipantID, int rating, String review) throws DAOException {
 		int resultID;
@@ -89,6 +124,13 @@ public class ResultDAOImpl implements ResultDAO{
         }
 	}
 
+	/**
+     * Adds user's result to Results Table
+     *
+     * @param user's course rating
+     * @param user's course review
+     * @throws DAOException if an DAO error occurs
+     */
 	private int addResultToResults(int rating, String review) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;

@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import by.epam.lobanok.dao.CourseDAO;
 import by.epam.lobanok.dao.RunningCourseDAO;
 import by.epam.lobanok.dao.exception.DAOException;
 import by.epam.lobanok.dao.pool.ConnectionPool;
@@ -19,11 +18,26 @@ import by.epam.lobanok.entity.Course;
 import by.epam.lobanok.entity.RunningCourse;
 import by.epam.lobanok.entity.User;
 
+/**
+ * Implementation  of RunningCourseDAO 
+ *
+ * @author hope_nadya_hope
+ */
 public class RunningCourseDAOImpl implements RunningCourseDAO {
+	/**
+     * Instance of a connection pool
+     */
 	private static final ConnectionPool pool = ConnectionPool.getInstance();
-	private static final Logger logger = LogManager.getLogger(CourseDAO.class);
+	
+	/**
+     * Logger for a RunningCourseDAO.class
+     */
+	private static final Logger logger = LogManager.getLogger(RunningCourseDAO.class);
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+     * SQL statement to find all running courses for a given course
+     */
 	private static final String FIND_RUNNING_COURSES = "SELECT running_courses.id, running_courses.start, running_courses.end, running_courses.passing, " + 
 			"courses.courseName, courses.description, users.name, users.surname " + 
 			"FROM running_courses " + 
@@ -31,6 +45,9 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			"JOIN users ON running_courses.users_id = users.id " + 
 			"WHERE courses_id = ?";	
 	
+	/**
+     * SQL statement to find running course by ID
+     */
 	private static final String FIND_RUNNING_COURSE = "SELECT running_courses.id as runningCourseID, running_courses.start, running_courses.end, running_courses.passing, "+
 			" courses.id as courseID, courses.courseName, courses.description, users.id as userID, users.name, users.surname "+
 			"FROM running_courses "+
@@ -38,6 +55,9 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			"JOIN users ON running_courses.users_id = users.id  "+
 			"WHERE running_courses.id = ?";
 	
+	/**
+     * SQL statement to find all courses for a given student
+     */
 	private static final String FIND_STUDENT_COURSES = "SELECT  running_courses.id, running_courses.start, running_courses.end, running_courses.passing,"+
 			"courses.courseName, courses.description, users.name, users.surname "+ 
 			"FROM running_courses "+
@@ -49,6 +69,9 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 										"JOIN users ON users.id=course_participants.users_id "+
 										"WHERE course_participants.users_id=?)";
 	
+	/**
+     * SQL statement to find all courses for a given teacher
+     */
 	private static final String FIND_TEACHER_COURSES = "SELECT  running_courses.id, running_courses.start, running_courses.end, running_courses.passing, "+
 			"courses.courseName, courses.description "+ 
 			"FROM courses "+
@@ -56,8 +79,14 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			"JOIN users ON users.id = running_courses.users_id "+
 			"WHERE running_courses.users_id = ?";
 	
-	
+	/**
+     * SQL statement to add running course
+     */
 	private static final String ADD_RUNNING_COURSE = "INSERT INTO running_courses(courses_id,users_id,start,end,passing) VALUES(?,?,?,?,?)";
+	
+	/**
+     * SQL statement to edit running course
+     */
 	private static final String EDIT_RUNNING_COURSE = "UPDATE running_courses SET users_id=?,start=?,end=?,passing=? WHERE running_courses.id=?";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,6 +104,13 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 	private static final String SURNAME = "surname";
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+     * Find all running courses for a given course SQL
+     *
+     * @param ID of a given course
+     * @return List of running courses for a given course
+     * @throws DAOException if an DAO error occurs
+     */
 	@Override
 	public List<RunningCourse> findRunningCourses(int courseID) throws DAOException {
 		List<RunningCourse> runningCourses = new ArrayList<RunningCourse>();
@@ -119,7 +155,14 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
         return runningCourses;
 	}
 	
-
+	
+	/**
+     * Find running course details by the running course ID SQL
+     *
+     * @param ID of the running course
+     * @return RunningCourse on this ID
+     * @throws DAOException if an DAO error occurs
+     */
 	@Override
 	public RunningCourse findRunningCourse(int runningCourseID) throws DAOException {
 		RunningCourse runningCourse = null;
@@ -163,6 +206,13 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 	}
 	
 	
+	/**
+     * Find all running courses for a given student SQL
+     *
+     * @param ID of a student
+     * @return List of running courses for a given student
+     * @throws DAOException if an DAO error occurs
+     */
 	@Override
 	public List<RunningCourse> findStudentCourses(int userID) throws DAOException {
 		List<RunningCourse> runningCourses = new ArrayList<RunningCourse>();
@@ -209,6 +259,13 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 	}
 	
 	
+	/**
+     * Find all running courses for a given teacher
+     *
+     * @param ID of a teacher
+     * @return List of running courses for a given teacher
+     * @throws DAOException if an DAO error occurs
+     */
 	@Override
 	public List<RunningCourse> findTeacherCourses(int userID) throws DAOException {
 		List<RunningCourse> runningCourses = new ArrayList<RunningCourse>();
@@ -249,7 +306,13 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
         return runningCourses;
 	}
 
-
+	
+	/**
+     * Adds running course SQL
+     *
+     * @param RunningCourse to add
+     * @throws DAOException if an DAO error occurs
+     */
 	@Override
 	public void addRunningCourse(RunningCourse runningCourse) throws DAOException {
 		Connection con = null;
@@ -260,8 +323,8 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			
 			ps.setInt(1, runningCourse.getCourse().getId());
 			ps.setInt(2, runningCourse.getTeacher().getId());
-			ps.setString(3, "2020-10-01");////////////////////////////////////////////////////////
-			ps.setString(4, "2020-12-01");////////////////////////////////////////////////////////
+			ps.setDate(3, Date.valueOf(runningCourse.getStart()));
+			ps.setDate(4, Date.valueOf(runningCourse.getEnd()));
 			ps.setString(5, runningCourse.getPassing());	
 			
 			ps.executeUpdate();
@@ -273,7 +336,13 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
         }
 	}
 
-
+	
+	/**
+     * Edits running course SQL
+     *
+     * @param RunningCourse to edit
+     * @throws DAOException if an DAO error occurs
+     */
 	@Override
 	public void editRunningCourse(RunningCourse editedRunningCourse) throws DAOException {
 		Connection con = null;
@@ -283,8 +352,8 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			ps = con.prepareStatement(EDIT_RUNNING_COURSE); 
 
 			ps.setInt(1, editedRunningCourse.getTeacher().getId());
-			ps.setDate(2, Date.valueOf(editedRunningCourse.getStart()));////////////////////////////////////////////////////////
-			ps.setDate(3, Date.valueOf(editedRunningCourse.getEnd()));////////////////////////////////////////////////////////
+			ps.setDate(2, Date.valueOf(editedRunningCourse.getStart()));
+			ps.setDate(3, Date.valueOf(editedRunningCourse.getEnd()));
 			ps.setString(4, editedRunningCourse.getPassing());		
 			ps.setInt(5, editedRunningCourse.getId());
 			

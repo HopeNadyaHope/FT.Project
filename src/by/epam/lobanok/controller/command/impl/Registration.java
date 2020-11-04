@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epam.lobanok.controller.command.Command;
-import by.epam.lobanok.controller.validator.Validator;
+import by.epam.lobanok.controller.validator.UserValidator;
 import by.epam.lobanok.entity.RegistrationData;
 import by.epam.lobanok.service.RegistrationService;
 import by.epam.lobanok.service.ServiceFactory;
@@ -47,7 +47,7 @@ public class Registration implements Command {
 		regData.setEmail(request.getParameter(EMAIL));
 		regData.setRole(request.getParameter(ROLE));
 		
-		if(!Validator.getInstance().validateRegistrationData(regData)) {			
+		if(!UserValidator.getInstance().validateRegistrationData(regData)) {			
 			request.setAttribute(SERVER_EXCEPTION, UNCORRECT_DATA);			
 			request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);		
 		}

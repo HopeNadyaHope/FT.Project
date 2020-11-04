@@ -11,8 +11,8 @@ import by.epam.lobanok.controller.command.Command;
 import by.epam.lobanok.entity.Course;
 import by.epam.lobanok.entity.User;
 import by.epam.lobanok.service.CourseService;
-import by.epam.lobanok.service.EntranceService;
 import by.epam.lobanok.service.ServiceFactory;
+import by.epam.lobanok.service.UserService;
 import by.epam.lobanok.service.exception.ServiceException;
 
 public class GoToAddRunningCoursePage implements Command {
@@ -35,7 +35,7 @@ public class GoToAddRunningCoursePage implements Command {
 		course = courseService.findCourse(courseID);
 		request.setAttribute(COURSE, course);		
 		
-		EntranceService userService = ServiceFactory.getInstance().getEntranceService();
+		UserService userService = ServiceFactory.getInstance().getUserService();
 		List<User> teachers;
 		teachers = userService.findAllTeachers();		
 		request.setAttribute(TEACHERS, teachers);
