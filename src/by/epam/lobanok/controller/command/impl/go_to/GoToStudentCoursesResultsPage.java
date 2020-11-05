@@ -32,7 +32,9 @@ public class GoToStudentCoursesResultsPage implements Command {
 		CourseParticipantService courseParticipantService = ServiceFactory.getInstance().getCourseParticipantService();
 		List<CourseParticipant> results;
 		results = courseParticipantService.getCoursesParticipantResults(studentID);
-		request.setAttribute(RESULTS, results);
+		if(results.size() > 0) {
+			request.setAttribute(RESULTS, results);
+		}	
 		
 		request.getRequestDispatcher(STUDENT_RESULTS_PAGE).forward(request, response);	
 	}

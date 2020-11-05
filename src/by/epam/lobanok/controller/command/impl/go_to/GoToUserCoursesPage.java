@@ -17,6 +17,7 @@ import by.epam.lobanok.service.exception.ServiceException;
 public class GoToUserCoursesPage implements Command{
 
 	private static final String USER = "user";
+	private static final String ERROR_PAGE = "WEB-INF/errorPage.jsp";
 	private static final String RUNNING_COURSES = "runningCourses";
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,12 +27,20 @@ public class GoToUserCoursesPage implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ServiceException {
-		RunningCourseService runningcourseService = ServiceFactory.getInstance().getRunningCourseService();
+		User user = (User)request.getSession().getAttribute(USER);
 		
-		List<RunningCourse> runningCourses;
-		runningCourses = runningcourseService.findUserCourses((User)request.getSession().getAttribute(USER));		
-		request.setAttribute(RUNNING_COURSES, runningCourses);
-
-		request.getRequestDispatcher(USER_COURSES_PAGE).forward(request, response);			
+		if((user == null)) {
+			request.getRequestDispatcher(ERROR_PAGE).forward(request, response);		
+		
+		}else {
+			RunningCourseService runningcourseService = ServiceFactory.getInstance().getRunningCourseService();
+			List<RunningCourse> runningCourses;
+			runningCourses = runningcourseService.findUserCourses(user);		
+			
+			if(runningCourses.size() > 0) {
+				request.setAttribute(RUNNING_COURSES, runningCourses);
+			}			
+			request.getRequestDispatcher(USER_COURSES_PAGE).forward(request, response);	
+		}
 	}
 }
