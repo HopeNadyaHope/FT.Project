@@ -61,4 +61,27 @@ public class EntranceData implements Serializable{
 	public String toString() {
 		return "EntranceData [login=" + login + ", password=" + password + "]";
 	}
+	
+	/////////////////////////////////////////////////////////////////////////////////
+	public static class Builder {
+		private EntranceData entranceData;
+		
+		public Builder() {
+			entranceData = new EntranceData();
+		}
+		
+		public Builder withLogin(String login) {
+			entranceData.login = login;
+			return this;			
+		}
+		
+		public Builder withPassword(String password) {
+			entranceData.password = password;
+			return this;			
+		}
+		
+		public EntranceData build() {
+			return entranceData;
+		}		
+	}
 }

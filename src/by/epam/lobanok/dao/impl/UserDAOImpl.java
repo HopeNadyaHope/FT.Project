@@ -84,6 +84,7 @@ public class UserDAOImpl implements UserDAO {
 			ps.setString(4, editedUser.getSex());
 			ps.setString(5, editedUser.getEmail());
             ps.setInt(6, editedUser.getId());
+            ////URL
 			ps.executeUpdate();
 		}catch (SQLException e) {
 			logger.info("DAOException in SQL (edit profile)");
@@ -115,13 +116,14 @@ public class UserDAOImpl implements UserDAO {
 			resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {
-                teacher = new User();
-                teacher.setId(Integer.parseInt(resultSet.getString(ID)));
-				teacher.setName(resultSet.getString(NAME));
-				teacher.setSurname(resultSet.getString(SURNAME));
-				teacher.setAge(resultSet.getInt(AGE));
-				teacher.setSex(resultSet.getString(SEX));
-				teacher.setEmail(resultSet.getString(EMAIL));
+                teacher = new User.Builder()
+						 .withID(Integer.parseInt(resultSet.getString(ID)))
+						 .withName(resultSet.getString(NAME))
+						 .withSurname(resultSet.getString(SURNAME))
+						 .withAge(resultSet.getInt(AGE))
+						 .withSex(resultSet.getString(SEX))
+						 .withEmail(resultSet.getString(EMAIL))
+						 .build();
 				
                 teachers.add(teacher);
 			}
@@ -157,13 +159,15 @@ public class UserDAOImpl implements UserDAO {
 			resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {
-				student = new User();
-				student.setId(Integer.parseInt(resultSet.getString(ID)));
-				student.setName(resultSet.getString(NAME));
-				student.setSurname(resultSet.getString(SURNAME));
-				student.setAge(resultSet.getInt(AGE));
-				student.setSex(resultSet.getString(SEX));
-				student.setEmail(resultSet.getString(EMAIL));
+				
+				student = new User.Builder()
+						 .withID(Integer.parseInt(resultSet.getString(ID)))
+						 .withName(resultSet.getString(NAME))
+						 .withSurname(resultSet.getString(SURNAME))
+						 .withAge(resultSet.getInt(AGE))
+						 .withSex(resultSet.getString(SEX))
+						 .withEmail(resultSet.getString(EMAIL))
+						 .build();
 				
 				students.add(student);
 			}

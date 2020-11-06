@@ -37,15 +37,27 @@ public class Registration implements Command {
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException {	
-		RegistrationData regData = new RegistrationData();		
-		regData.setLogin(request.getParameter(LOGIN));
-		regData.setPassword(request.getParameter(PASSWORD));
-		regData.setName(request.getParameter(NAME));
-		regData.setSurname(request.getParameter(SURNAME));
-		regData.setAge(Integer.parseInt(request.getParameter(AGE)));
-		regData.setSex(request.getParameter(SEX));
-		regData.setEmail(request.getParameter(EMAIL));
-		regData.setRole(request.getParameter(ROLE));
+//		RegistrationData regData = new RegistrationData();		
+//		regData.setLogin(request.getParameter(LOGIN));
+//		regData.setPassword(request.getParameter(PASSWORD));
+//		regData.setName(request.getParameter(NAME));
+//		regData.setSurname(request.getParameter(SURNAME));
+//		regData.setAge(Integer.parseInt(request.getParameter(AGE)));
+//		regData.setSex(request.getParameter(SEX));
+//		regData.setEmail(request.getParameter(EMAIL));
+//		regData.setRole(request.getParameter(ROLE));
+		
+		RegistrationData regData;
+		regData = new RegistrationData.Builder()
+				.withLogin(request.getParameter(LOGIN))
+				.withPassword(request.getParameter(PASSWORD))
+				.withName(request.getParameter(NAME))
+				.withSurname(request.getParameter(SURNAME))
+				.withAge(Integer.parseInt(request.getParameter(AGE)))
+				.withSex(request.getParameter(SEX))
+				.withEmail(request.getParameter(EMAIL))
+				.withRole(request.getParameter(ROLE))
+				.build();
 		
 		if(!UserValidator.getInstance().validateRegistrationData(regData)) {			
 			request.setAttribute(SERVER_EXCEPTION, UNCORRECT_DATA);			

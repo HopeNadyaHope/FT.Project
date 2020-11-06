@@ -2,6 +2,7 @@ package by.epam.lobanok.entity;
 
 import java.io.Serializable;
 
+
 public class CourseParticipant implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -89,4 +90,37 @@ public class CourseParticipant implements Serializable{
 		return "CourseParticipant [id=" + id + ", student=" + student + ", runningCourse=" + runningCourse + ", result="
 				+ result + "]";
 	}	
+	
+	/////////////////////////////////////////////////////////////////////////////////
+	public static class Builder {
+		private CourseParticipant courseParticipant;
+		
+		public Builder() {
+			courseParticipant = new CourseParticipant();
+		}
+		
+		public Builder withID(int id) {
+			courseParticipant.id = id;
+			return this;			
+		}
+		
+		public Builder withStudent(User student) {
+			courseParticipant.student = student;
+			return this;			
+		}
+		
+		public Builder withRunningCourse(RunningCourse runningCourse) {
+			courseParticipant.runningCourse = runningCourse;
+			return this;			
+		}
+		
+		public Builder withResult(Result result) {
+			courseParticipant.result = result;
+			return this;			
+		}
+		
+		public CourseParticipant build() {
+			return courseParticipant;
+		}	
+	}
 }

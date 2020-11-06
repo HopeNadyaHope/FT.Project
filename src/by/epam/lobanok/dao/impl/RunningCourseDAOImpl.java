@@ -127,21 +127,25 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {
-                runningCourse = new RunningCourse();
-                runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));                
-                runningCourse.setStart(resultSet.getDate(START).toLocalDate());
-                runningCourse.setEnd(resultSet.getDate(END).toLocalDate());
-                runningCourse.setPassing(resultSet.getString(PASSING));
+
+                User teacher = new User.Builder()
+                			  .withName(resultSet.getString(NAME))
+                			  .withSurname(resultSet.getString(SURNAME))
+                			  .build();
+
+                Course course = new Course.Builder()
+                			   .withCourseName(resultSet.getString(COURSE_NAME))
+                			   .withDescription(resultSet.getString(DESCRIPTION))
+                			   .build();
                 
-                User teacher = new User();
-                teacher.setName(resultSet.getString(NAME));
-                teacher.setSurname(resultSet.getString(SURNAME));
-                runningCourse.setTeacher(teacher);
-                
-                Course course = new Course();
-                course.setCourseName(resultSet.getString(COURSE_NAME));
-                course.setDescription(resultSet.getString(DESCRIPTION));
-                runningCourse.setCourse(course);
+                runningCourse = new RunningCourse.Builder()
+                			   .withID(Integer.parseInt(resultSet.getString(ID)))
+                			   .withTeacher(teacher)
+                			   .withCourse(course)
+                			   .withStart(resultSet.getDate(START).toLocalDate())
+                			   .withEnd(resultSet.getDate(END).toLocalDate())
+                			   .withPassing(resultSet.getString(PASSING))
+                			   .build();               
                 
                 runningCourses.add(runningCourse);
 			}
@@ -178,23 +182,28 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {
-                runningCourse = new RunningCourse();
-                runningCourse.setId(Integer.parseInt(resultSet.getString(RUNNING_COURSE_ID)));
-                runningCourse.setStart(resultSet.getDate(START).toLocalDate());
-                runningCourse.setEnd(resultSet.getDate(END).toLocalDate());
-                runningCourse.setPassing(resultSet.getString(PASSING));
+				User teacher = new User.Builder()
+                			  .withID(resultSet.getInt(USER_ID))
+                			  .withName(resultSet.getString(NAME))
+                			  .withSurname(resultSet.getString(SURNAME))
+                			  .build();
                 
-                User teacher = new User();
-                teacher.setId(resultSet.getInt(USER_ID));
-                teacher.setName(resultSet.getString(NAME));
-                teacher.setSurname(resultSet.getString(SURNAME));
-                runningCourse.setTeacher(teacher);
                 
-                Course course = new Course();
-                course.setId(resultSet.getInt(COURSE_ID));
-                course.setCourseName(resultSet.getString(COURSE_NAME));
-                course.setDescription(resultSet.getString(DESCRIPTION));
-                runningCourse.setCourse(course);
+                Course course = new Course.Builder()
+                			   .withID(resultSet.getInt(COURSE_ID))
+                			   .withCourseName(resultSet.getString(COURSE_NAME))
+                			   .withDescription(resultSet.getString(DESCRIPTION))
+                			   .build();
+               
+                
+                runningCourse = new RunningCourse.Builder()
+                			   .withID(Integer.parseInt(resultSet.getString(RUNNING_COURSE_ID)))
+                			   .withTeacher(teacher)
+                			   .withCourse(course)
+                			   .withStart(resultSet.getDate(START).toLocalDate())
+                			   .withEnd(resultSet.getDate(END).toLocalDate())
+                			   .withPassing(resultSet.getString(PASSING))
+                			   .build();
 			}			
 		}catch (SQLException e) {
 			logger.info("DAOException");
@@ -229,22 +238,25 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {
-				runningCourse = new RunningCourse();
+				Course course = new Course.Builder()
+							   .withCourseName(resultSet.getString(COURSE_NAME))
+						       .withDescription(resultSet.getString(DESCRIPTION))	
+						       .build();
 				
-				runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));
-	            runningCourse.setStart(resultSet.getDate(START).toLocalDate());
-	            runningCourse.setEnd(resultSet.getDate(END).toLocalDate());
-				runningCourse.setPassing(resultSet.getString(PASSING));
 				
-				Course course = new Course();
-				course.setCourseName(resultSet.getString(COURSE_NAME));
-				course.setDescription(resultSet.getString(DESCRIPTION));				
-				runningCourse.setCourse(course);
+				User teacher = new User.Builder()
+							  .withName(resultSet.getString(NAME))
+						      .withSurname(resultSet.getString(SURNAME))
+						      .build();
 				
-				User teacher = new User();
-				teacher.setName(resultSet.getString(NAME));
-				teacher.setSurname(resultSet.getString(SURNAME));
-				runningCourse.setTeacher(teacher);
+				runningCourse = new RunningCourse.Builder()
+         			   .withID(Integer.parseInt(resultSet.getString(ID)))
+         			   .withTeacher(teacher)
+         			   .withCourse(course)
+         			   .withStart(resultSet.getDate(START).toLocalDate())
+         			   .withEnd(resultSet.getDate(END).toLocalDate())
+         			   .withPassing(resultSet.getString(PASSING))
+         			   .build();
 				
 				runningCourses.add(runningCourse);
 			}
@@ -282,17 +294,18 @@ public class RunningCourseDAOImpl implements RunningCourseDAO {
 			resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {
-				runningCourse = new RunningCourse();
+				Course course = new Course.Builder()
+						   .withCourseName(resultSet.getString(COURSE_NAME))
+					       .withDescription(resultSet.getString(DESCRIPTION))	
+					       .build();				
 				
-				runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));
-	            runningCourse.setStart(resultSet.getDate(START).toLocalDate());
-	            runningCourse.setEnd(resultSet.getDate(END).toLocalDate());
-				runningCourse.setPassing(resultSet.getString(PASSING));
-				
-				Course course = new Course();
-				course.setCourseName(resultSet.getString(COURSE_NAME));
-				course.setDescription(resultSet.getString(DESCRIPTION));				
-				runningCourse.setCourse(course);
+				runningCourse = new RunningCourse.Builder()
+	         			   .withID(Integer.parseInt(resultSet.getString(ID)))
+	         			   .withCourse(course)
+	         			   .withStart(resultSet.getDate(START).toLocalDate())
+	         			   .withEnd(resultSet.getDate(END).toLocalDate())
+	         			   .withPassing(resultSet.getString(PASSING))
+	         			   .build();
 
 				runningCourses.add(runningCourse);
 			}

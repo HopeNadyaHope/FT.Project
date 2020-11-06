@@ -30,5 +30,4 @@ public class GoToAllStudentsPage implements Command{
 		
 		request.getRequestDispatcher(ALL_STUDENTS_PAGE).forward(request, response);		
 	}
-
 }

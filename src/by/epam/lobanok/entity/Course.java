@@ -75,4 +75,32 @@ public class Course implements Serializable{
 	public String toString() {
 		return "Course [id=" + id + ", courseName=" + courseName + ", description=" + description + "]";
 	}	
+	
+	/////////////////////////////////////////////////////////////////////////////////
+	public static class Builder {
+		private Course course;
+		
+		public Builder() {
+			course = new Course();
+		}
+		
+		public Builder withID(int id) {
+			course.id = id;
+			return this;			
+		}
+		
+		public Builder withCourseName(String courseName) {
+			course.courseName = courseName;
+			return this;			
+		}
+		
+		public Builder withDescription(String description) {
+			course.description = description;
+			return this;			
+		}
+		
+		public Course build() {
+			return course;
+		}		
+	}
 }

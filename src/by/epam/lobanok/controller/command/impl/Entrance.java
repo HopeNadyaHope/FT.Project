@@ -37,9 +37,16 @@ public class Entrance implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceException{			
 		String page;
 		
-		EntranceData entrData = new EntranceData();
-		entrData.setLogin(request.getParameter(LOGIN));
-		entrData.setPassword(request.getParameter(PASSWORD));
+		/*
+		 * EntranceData entrData = new EntranceData();
+		 * entrData.setLogin(request.getParameter(LOGIN));
+		 * entrData.setPassword(request.getParameter(PASSWORD));
+		 */
+		EntranceData entrData;
+		entrData = new EntranceData.Builder()
+				  .withLogin(request.getParameter(LOGIN))
+				  .withPassword(request.getParameter(PASSWORD))
+				  .build();
 		
 		if(!UserValidator.getInstance().validateEntranceData(entrData)) {
 			page = GO_TO_MAIN_PAGE + EXCEPTION_MESSAGE_ATTRIBUTE + UNCORRECT_DATA;

@@ -5,10 +5,19 @@ import java.io.Serializable;
 public class Result implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	private int id;
 	private int rating;
 	private String review;
 	
 	public Result() {}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getRating() {
 		return rating;
@@ -30,6 +39,7 @@ public class Result implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + id;
 		result = prime * result + rating;
 		result = prime * result + ((review == null) ? 0 : review.hashCode());
 		return result;
@@ -44,6 +54,8 @@ public class Result implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Result other = (Result) obj;
+		if (id != other.id)
+			return false;
 		if (rating != other.rating)
 			return false;
 		if (review == null) {
@@ -56,6 +68,35 @@ public class Result implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Result [rating=" + rating + ", review=" + review + "]";
+		return "Result [id=" + id + ", rating=" + rating + ", review=" + review + "]";
 	}
+	
+	/////////////////////////////////////////////////////////////////////////////////
+	public static class Builder {
+		private Result result;
+		
+		public Builder() {
+			result = new Result();
+		}
+		
+		public Builder withID(int id) {
+			result.id = id;
+			return this;			
+		}
+		
+		public Builder withRating(int rating) {
+			result.rating = rating;
+			return this;			
+		}
+		
+		public Builder withReview(String review) {
+			result.review = review;
+			return this;			
+		}
+		
+		public Result build() {
+			return result;
+		}		
+	}
+	
 }

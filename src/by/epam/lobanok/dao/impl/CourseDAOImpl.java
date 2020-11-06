@@ -74,10 +74,17 @@ public class CourseDAOImpl implements CourseDAO{
 			resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {
-                course = new Course();
-                course.setId(Integer.parseInt(resultSet.getString(ID)));
-                course.setCourseName(resultSet.getString(COURSE_NAME));
-                course.setDescription(resultSet.getString(DESCRIPTION));
+				/*
+				 * course = new Course();
+				 * course.setId(Integer.parseInt(resultSet.getString(ID)));
+				 * course.setCourseName(resultSet.getString(COURSE_NAME));
+				 * course.setDescription(resultSet.getString(DESCRIPTION));
+				 */
+				course = new Course.Builder()
+						.withID(Integer.parseInt(resultSet.getString(ID)))
+						.withCourseName(resultSet.getString(COURSE_NAME))
+				 		.withDescription(resultSet.getString(DESCRIPTION))
+				 		.build();
                 courses.add(course);
 			}
 			
@@ -113,10 +120,17 @@ public class CourseDAOImpl implements CourseDAO{
 			resultSet = ps.executeQuery();			
 			resultSet.next();
 			
-            course = new Course();
-            course.setId(Integer.parseInt(resultSet.getString(ID)));
-            course.setCourseName(resultSet.getString(COURSE_NAME));
-            course.setDescription(resultSet.getString(DESCRIPTION));
+			/*
+			 * course = new Course();
+			 * course.setId(Integer.parseInt(resultSet.getString(ID)));
+			 * course.setCourseName(resultSet.getString(COURSE_NAME));
+			 * course.setDescription(resultSet.getString(DESCRIPTION));
+			 */
+			course = new Course.Builder()
+					.withID(Integer.parseInt(resultSet.getString(ID)))
+					.withCourseName(resultSet.getString(COURSE_NAME))
+			 		.withDescription(resultSet.getString(DESCRIPTION))
+			 		.build();
 			
 		}catch (SQLException e) {
 			logger.info("DAOException: in SQL (findCourse)");

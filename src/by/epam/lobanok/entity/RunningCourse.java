@@ -106,4 +106,47 @@ public class RunningCourse implements Serializable{
 		return "RunningCourse [id=" + id + ", teacher=" + teacher + ", course=" + course + ", start=" + start + ", end="
 				+ end + ", passing=" + passing + "]";
 	}	
+	
+	////////////////////////////////////////////////////////////////////////////////////////////
+	public static class Builder {
+		private RunningCourse runningCourse;
+		
+		public Builder() {
+			runningCourse = new RunningCourse();			
+		}
+		
+		public Builder withID(int id) {
+			runningCourse.id = id;
+			return this;			
+		}
+		
+		public Builder withTeacher(User teacher) {
+			runningCourse.teacher = teacher;
+			return this;			
+		}
+		
+		public Builder withCourse(Course course) {
+			runningCourse.course = course;
+			return this;			
+		}
+		
+		public Builder withStart(LocalDate start) {
+			runningCourse.start = start;
+			return this;			
+		}
+		
+		public Builder withEnd(LocalDate end) {
+			runningCourse.end = end;
+			return this;			
+		}
+		
+		public Builder withPassing(String passing) {
+			runningCourse.passing = passing;
+			return this;			
+		}
+
+		public RunningCourse build() {
+			return runningCourse;
+		}
+	}
 }

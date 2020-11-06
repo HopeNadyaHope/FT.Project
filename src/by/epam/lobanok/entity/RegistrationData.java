@@ -2,6 +2,7 @@ package by.epam.lobanok.entity;
 
 import java.io.Serializable;
 
+
 public class RegistrationData implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -148,5 +149,59 @@ public class RegistrationData implements Serializable {
 	public String toString() {
 		return "LoginationData [login=" + login + ", password=" + password + ", name=" + name + ", surname=" + surname
 				+ ", age=" + age + ", sex=" + sex + ", email=" + email + ", role=" + role + "]";
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////
+	public static class Builder {
+		private RegistrationData regData;
+		
+		public Builder() {
+			regData = new RegistrationData();
+			
+		}
+		
+		public Builder withLogin(String login) {
+			regData.login = login;
+			return this;			
+		}
+		
+		public Builder withPassword(String password) {
+			regData.password = password;
+			return this;			
+		}
+		
+		public Builder withName(String name) {
+			regData.name = name;
+			return this;			
+		}
+		
+		public Builder withSurname(String surname) {
+			regData.surname = surname;
+			return this;			
+		}
+		
+		public Builder withAge(int age) {
+			regData.age = age;
+			return this;			
+		}
+		
+		public Builder withEmail(String email) {
+			regData.email = email;
+			return this;			
+		}
+		
+		public Builder withSex(String sex) {
+			regData.sex = sex;
+			return this;			
+		}
+		
+		public Builder withRole(String role) {
+			regData.role = role;
+			return this;			
+		}
+		
+		public RegistrationData build() {
+			return regData;
+		}		
 	}
 }

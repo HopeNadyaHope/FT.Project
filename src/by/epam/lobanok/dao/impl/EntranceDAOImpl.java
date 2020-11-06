@@ -79,15 +79,16 @@ public class EntranceDAOImpl implements EntranceDAO{
 				throw new NoSuchUserDAOException();
 			}			
 			
-			user = new User();			
-			user.setId(resultSet.getInt(ID));
-            user.setName(resultSet.getString(NAME));
-            user.setSurname(resultSet.getString(SURNAME));
-            user.setAge(resultSet.getInt(AGE));
-            user.setSex(resultSet.getString(SEX));
-            user.setEmail(resultSet.getString(EMAIL));
-            user.setRole(resultSet.getString(ROLE));
-            user.setPhotoURL(resultSet.getString(PHOTO_URL));           
+			user = new User.Builder()
+				  .withID(resultSet.getInt(ID))
+				  .withName(resultSet.getString(NAME))
+				  .withSurname(resultSet.getString(SURNAME))
+				  .withAge(resultSet.getInt(AGE))
+				  .withSex(resultSet.getString(SEX))
+				  .withEmail(resultSet.getString(EMAIL))
+				  .withRole(resultSet.getString(ROLE))
+				  .withPhotoURL(resultSet.getString(PHOTO_URL))
+				  .build();
             
 		}catch (SQLException e) {
 			logger.info("DAOException in SQL (entrance)");

@@ -155,4 +155,57 @@ public class User implements Serializable{
 		return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", sex=" + sex + ", age=" + age
 				+ ", email=" + email + ", role=" + role + ", photo_url=" + photoURL + "]";
 	}	
+	
+	////////////////////////////////////////////////////////////////////////////////////////////
+	public static class Builder {
+		private User user;
+		
+		public Builder() {
+			user = new User();			
+		}
+		
+		public Builder withID(int id) {
+			user.id = id;
+			return this;			
+		}
+		
+		public Builder withName(String name) {
+			user.name = name;
+			return this;			
+		}
+		
+		public Builder withSurname(String surname) {
+			user.surname = surname;
+			return this;			
+		}
+		
+		public Builder withAge(int age) {
+			user.age = age;
+			return this;			
+		}
+		
+		public Builder withEmail(String email) {
+			user.email = email;
+			return this;			
+		}
+		
+		public Builder withSex(String sex) {
+			user.sex = sex;
+			return this;			
+		}
+		
+		public Builder withRole(String role) {
+			user.role = role;
+			return this;			
+		}
+		
+		public Builder withPhotoURL(String photoURL) {
+			user.photoURL = photoURL;
+			return this;			
+		}
+		
+		public User build() {
+			return user;
+		}		
+	}
 }

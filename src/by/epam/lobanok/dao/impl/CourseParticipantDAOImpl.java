@@ -123,24 +123,25 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 			ps.setInt(1, runningCourseID);
 			resultSet = ps.executeQuery();
 			
-			while(resultSet.next()) {
-                courseParticipant = new CourseParticipant();
-                courseParticipant.setId(Integer.parseInt(resultSet.getString(ID)));
-                
-				
-				  User student = new User();
-				  student.setId(Integer.parseInt(resultSet.getString(USER_ID)));
-				  student.setName(resultSet.getString(NAME));
-				  student.setSurname(resultSet.getString(SURNAME));
-				  courseParticipant.setStudent(student);
+			while(resultSet.next()) {                
+				User student = new User.Builder()
+							   .withID(Integer.parseInt(resultSet.getString(USER_ID)))
+							   .withName(resultSet.getString(NAME))
+							   .withSurname(resultSet.getString(SURNAME))
+							   .build();
 				 
                 Result result = new Result();
                 if(resultSet.getString(RATING) != null) {
                 	result.setRating(Integer.parseInt(resultSet.getString(RATING)));
                 }
                 result.setReview(resultSet.getString(REVIEW));
-                courseParticipant.setResult(result);
-
+                
+                courseParticipant = new CourseParticipant.Builder()
+                					.withID(Integer.parseInt(resultSet.getString(ID)))
+                					.withStudent(student)
+                					.withResult(result)
+                					.build();
+                
                 courseParticipants.add(courseParticipant);
 			}
 			
@@ -176,37 +177,45 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
 			resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {
-                courseParticipantResult = new CourseParticipant(); 
-                User student = new User();
-                student.setId(studentID);
-                courseParticipantResult.setStudent(student);
+                User student = new User.Builder()
+                			  .withID(studentID)
+                			  .build();
+               
                 
-				RunningCourse runningCourse = new RunningCourse();
-				runningCourse.setId(Integer.parseInt(resultSet.getString(ID)));
-                runningCourse.setStart(resultSet.getDate(START).toLocalDate());
-                runningCourse.setEnd(resultSet.getDate(END).toLocalDate());
-                runningCourse.setPassing(resultSet.getString(PASSING));
+                Course course = new Course.Builder()
+                			   .withID(Integer.parseInt(resultSet.getString(COURSE_ID)))
+                		       .withCourseName(resultSet.getString(COURSE_NAME))
+                		       .withDescription(resultSet.getString(DESCRIPTION))
+                		       .build();   
                 
-                Course course = new Course();
-                course.setId(Integer.parseInt(resultSet.getString(COURSE_ID)));
-                course.setCourseName(resultSet.getString(COURSE_NAME));
-                course.setDescription(resultSet.getString(DESCRIPTION));
-                runningCourse.setCourse(course);      
+                User teacher = new User.Builder()
+                			  .withID(Integer.parseInt(resultSet.getString(TEACHER_ID)))
+                			  .withName(resultSet.getString(NAME))
+                              .withSurname(resultSet.getString(SURNAME))
+                              .build();
                 
-                User teacher = new User();
-                teacher.setId(Integer.parseInt(resultSet.getString(TEACHER_ID)));
-                teacher.setName(resultSet.getString(NAME));
-                teacher.setSurname(resultSet.getString(SURNAME));
-                runningCourse.setTeacher(teacher);
+                RunningCourse runningCourse = new RunningCourse.Builder()
+						 					 .withID(Integer.parseInt(resultSet.getString(ID)))
+						 					 .withCourse(course)
+						 					 .withTeacher(teacher)
+						 					 .withStart(resultSet.getDate(START).toLocalDate())
+						 					 .withEnd(resultSet.getDate(END).toLocalDate())
+						 					 .withPassing(resultSet.getString(PASSING))
+						 					 .build();
                 
-                courseParticipantResult.setRunningCourse(runningCourse);
                 
                 Result result = new Result();
                 if(resultSet.getString(RATING) != null) {
                 	result.setRating(Integer.parseInt(resultSet.getString(RATING)));
                 }
                 result.setReview(resultSet.getString(REVIEW));
-                courseParticipantResult.setResult(result);
+                
+                
+                courseParticipantResult = new CourseParticipant.Builder()
+                						 .withStudent(student)		
+                						 .withRunningCourse(runningCourse)
+                						 .withResult(result)
+                						 .build();
 
                 coursesParticipantResults.add(courseParticipantResult);
 			}
@@ -309,6 +318,5 @@ public class CourseParticipantDAOImpl implements CourseParticipantDAO{
         } finally {
         	pool.closeConnection(con, ps);
         }
-	}
-	
+	}	
 }

@@ -30,6 +30,7 @@ public class GoToAddRunningCoursePage implements Command {
 		
 		int courseID;
 		courseID = Integer.parseInt(request.getParameter(COURSE_ID));
+		
 		CourseService courseService = ServiceFactory.getInstance().getCourseService();
 		Course course;
 		course = courseService.findCourse(courseID);

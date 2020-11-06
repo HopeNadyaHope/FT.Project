@@ -33,16 +33,26 @@ public class EditProfile implements Command {
 		int userID;
 		userID = user.getId();
 		
-		User editedUser = new User();
-		//Validator
-		editedUser.setId(userID);
-		editedUser.setName(request.getParameter(NAME));
-		editedUser.setSurname(request.getParameter(SURNAME));
-		editedUser.setAge(Integer.parseInt(request.getParameter(AGE)));
-		editedUser.setSex(request.getParameter(SEX));
-		editedUser.setEmail(request.getParameter(EMAIL));
-		editedUser.setRole(request.getParameter(ROLE));
-		
+//		User editedUser = new User();
+//		//Validator
+//		editedUser.setId(userID);
+//		editedUser.setName(request.getParameter(NAME));
+//		editedUser.setSurname(request.getParameter(SURNAME));
+//		editedUser.setAge(Integer.parseInt(request.getParameter(AGE)));
+//		editedUser.setSex(request.getParameter(SEX));
+//		editedUser.setEmail(request.getParameter(EMAIL));
+//		editedUser.setRole(request.getParameter(ROLE));
+//		
+		User editedUser;
+		editedUser = new User.Builder()
+					.withID(userID)
+					.withName(request.getParameter(NAME))
+					.withSurname(request.getParameter(SURNAME))
+					.withAge(Integer.parseInt(request.getParameter(AGE)))
+					.withSex(request.getParameter(SEX))
+					.withEmail(request.getParameter(EMAIL))
+					.withRole(request.getParameter(ROLE))
+					.build();
 		
 		UserService userService = ServiceFactory.getInstance().getUserService();
 		userService.editProfile(editedUser);
